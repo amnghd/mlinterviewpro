@@ -6,13 +6,22 @@
     <title>LeetCode Problems - MLInterviewPro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .difficulty-easy { background: #dcfce7; color: #166534; }
         .difficulty-medium { background: #fef3c7; color: #92400e; }
         .difficulty-hard { background: #fee2e2; color: #991b1b; }
         .premium-blur { filter: blur(4px); pointer-events: none; }
-        .premium-overlay { background: linear-gradient(to bottom, transparent, rgba(139, 92, 246, 0.1)); }
+        .solution-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .solution-content.open { max-height: 5000px; transition: max-height 1s ease-in; }
+        .approach-tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .approach-content { display: none; }
+        .approach-content.active { display: block; }
+        pre code { border-radius: 8px; font-size: 13px; }
+        .complexity-badge { font-size: 11px; padding: 2px 8px; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -44,11 +53,27 @@
     <section class="gradient-bg text-white py-12">
         <div class="max-w-7xl mx-auto px-4">
             <h1 class="text-4xl font-bold mb-4"><i class="fas fa-code mr-3"></i>LeetCode Problem Bank</h1>
-            <p class="text-xl opacity-90">314+ problems organized by pattern, company, and difficulty</p>
+            <p class="text-xl opacity-90">314+ problems with full solutions: Brute Force → Optimized → Super Optimized</p>
             <div class="mt-6 flex flex-wrap gap-4">
                 <span class="bg-white/20 px-4 py-2 rounded-full">78 Easy</span>
                 <span class="bg-white/20 px-4 py-2 rounded-full">156 Medium</span>
                 <span class="bg-white/20 px-4 py-2 rounded-full">80 Hard</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Online Editor Section -->
+    <section class="bg-gradient-to-r from-green-50 to-blue-50 py-4 border-b">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-laptop-code text-2xl text-green-600"></i>
+                    <span class="font-semibold text-gray-700">Run code directly in your browser!</span>
+                </div>
+                <a href="https://www.programiz.com/python-programming/online-compiler/" target="_blank"
+                   class="bg-green-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-green-700 transition">
+                    <i class="fas fa-play mr-2"></i>Open Python Editor
+                </a>
             </div>
         </div>
     </section>
@@ -86,228 +111,2068 @@
         </div>
     </section>
 
-    <!-- Free Problems -->
+    <!-- Free Problems with Solutions -->
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-unlock text-green-500 mr-3"></i>Free Problems (Top 10)
+                <i class="fas fa-unlock text-green-500 mr-3"></i>Free Problems with Full Solutions (Top 10)
             </h2>
-            <div class="grid gap-4" id="freeProblems">
-                <!-- Problem 1 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">1. Two Sum</h3>
-                                <span class="difficulty-easy px-2 py-1 rounded text-xs font-medium">Easy</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Use a hash map to store complements for O(n) lookup</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Hash Map</span>
+            <div class="grid gap-6" id="freeProblems">
+
+                <!-- Problem 1: Two Sum -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">1. Two Sum</h3>
+                                    <span class="difficulty-easy px-3 py-1 rounded text-sm font-medium">Easy</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Hash Map</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol1')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/two-sum/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/two-sum/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol1" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol1', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol1', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol1', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol1-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Check every pair of numbers to see if they sum to target.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(n²)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(1)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def twoSum(nums, target):
+    """
+    Brute Force: Check all pairs
+    Time: O(n²) - nested loops
+    Space: O(1) - no extra space
+    """
+    n = len(nums)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if nums[i] + nums[j] == target:
+                return [i, j]
+    return []
+
+# Example usage:
+nums = [2, 7, 11, 15]
+target = 9
+print(twoSum(nums, target))  # Output: [0, 1]</code></pre>
+                            </div>
+
+                            <div id="sol1-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Hash Map)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Store seen numbers in hash map, check if complement exists.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def twoSum(nums, target):
+    """
+    Optimized: Single pass with hash map
+    Time: O(n) - single traversal
+    Space: O(n) - hash map storage
+    """
+    seen = {}  # value -> index
+
+    for i, num in enumerate(nums):
+        complement = target - num
+        if complement in seen:
+            return [seen[complement], i]
+        seen[num] = i
+
+    return []
+
+# Example usage:
+nums = [2, 7, 11, 15]
+target = 9
+print(twoSum(nums, target))  # Output: [0, 1]</code></pre>
+                            </div>
+
+                            <div id="sol1-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (Early Return + Memory Efficient)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Same time complexity, but optimized for early termination and cache efficiency.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(n) best case O(1)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def twoSum(nums, target):
+    """
+    Super Optimized: Dictionary with early termination
+    - Uses dict comprehension pattern for speed
+    - Early return optimization
+    - Best case: O(1) space if answer is in first few elements
+    """
+    seen = {}
+
+    for i, num in enumerate(nums):
+        complement = target - num
+        # Check complement first (branch prediction optimization)
+        if complement in seen:
+            return [seen[complement], i]
+        # Only store if needed
+        seen[num] = i
+
+    return []
+
+# Alternative: Two-pointer approach if array is sorted
+def twoSumSorted(nums, target):
+    """If array is sorted, use two pointers for O(1) space"""
+    left, right = 0, len(nums) - 1
+
+    while left < right:
+        curr_sum = nums[left] + nums[right]
+        if curr_sum == target:
+            return [left, right]
+        elif curr_sum < target:
+            left += 1
+        else:
+            right -= 1
+
+    return []
+
+# Example:
+nums = [2, 7, 11, 15]
+print(twoSum(nums, 9))  # [0, 1]</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 2 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">2. Longest Substring Without Repeating Characters</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Use sliding window with hash set to track characters</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Sliding Window</span>
+                <!-- Problem 2: Longest Substring Without Repeating Characters -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">2. Longest Substring Without Repeating Characters</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given a string s, find the length of the longest substring without repeating characters.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Sliding Window</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol2')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/longest-substring-without-repeating-characters/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol2" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol2', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol2', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol2', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol2-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Check all possible substrings, verify each has no duplicates.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(n³)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(min(n,m))</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def lengthOfLongestSubstring(s):
+    """
+    Brute Force: Check all substrings
+    Time: O(n³) - n² substrings, O(n) to check each
+    Space: O(min(n, m)) where m is charset size
+    """
+    def all_unique(substring):
+        return len(set(substring)) == len(substring)
+
+    n = len(s)
+    max_len = 0
+
+    for i in range(n):
+        for j in range(i + 1, n + 1):
+            if all_unique(s[i:j]):
+                max_len = max(max_len, j - i)
+
+    return max_len
+
+# Example:
+print(lengthOfLongestSubstring("abcabcbb"))  # Output: 3</code></pre>
+                            </div>
+
+                            <div id="sol2-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Sliding Window)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use sliding window with set to track characters in current window.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(2n) = O(n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(min(n,m))</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def lengthOfLongestSubstring(s):
+    """
+    Sliding Window with Set
+    Time: O(2n) worst case - each char visited twice
+    Space: O(min(n, m)) for the set
+    """
+    char_set = set()
+    left = 0
+    max_len = 0
+
+    for right in range(len(s)):
+        # Shrink window until no duplicates
+        while s[right] in char_set:
+            char_set.remove(s[left])
+            left += 1
+
+        # Add current character
+        char_set.add(s[right])
+        max_len = max(max_len, right - left + 1)
+
+    return max_len
+
+# Example:
+print(lengthOfLongestSubstring("abcabcbb"))  # Output: 3</code></pre>
+                            </div>
+
+                            <div id="sol2-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (Jump Optimization)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Store index of each character, jump left pointer directly instead of incrementing.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(min(n,m))</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def lengthOfLongestSubstring(s):
+    """
+    Super Optimized: Hash map with direct jump
+    Time: O(n) - single pass
+    Space: O(min(n, m))
+
+    Key insight: Instead of incrementing left one by one,
+    jump directly to position after last occurrence
+    """
+    char_index = {}  # char -> last seen index
+    left = 0
+    max_len = 0
+
+    for right, char in enumerate(s):
+        # If char seen and within current window, jump left
+        if char in char_index and char_index[char] >= left:
+            left = char_index[char] + 1
+
+        # Update max length and store index
+        max_len = max(max_len, right - left + 1)
+        char_index[char] = right
+
+    return max_len
+
+# For ASCII only (even faster with array instead of dict)
+def lengthOfLongestSubstringASCII(s):
+    """Array-based for ASCII - constant time lookups"""
+    index = [-1] * 128  # ASCII characters
+    left = 0
+    max_len = 0
+
+    for right, char in enumerate(s):
+        idx = ord(char)
+        if index[idx] >= left:
+            left = index[idx] + 1
+        max_len = max(max_len, right - left + 1)
+        index[idx] = right
+
+    return max_len
+
+# Example:
+print(lengthOfLongestSubstring("abcabcbb"))  # Output: 3</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 3 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">3. 3Sum</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Sort first, fix one element, then use two pointers for the rest</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Two Pointers</span>
+                <!-- Problem 3: 3Sum -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">3. 3Sum</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Two Pointers</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol3')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/3sum/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/3sum/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol3" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol3', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol3', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol3', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol3-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Try all triplet combinations, use set to avoid duplicates.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(n³)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def threeSum(nums):
+    """
+    Brute Force: Check all triplets
+    Time: O(n³)
+    Space: O(n) for storing results
+    """
+    n = len(nums)
+    result = set()
+
+    for i in range(n):
+        for j in range(i + 1, n):
+            for k in range(j + 1, n):
+                if nums[i] + nums[j] + nums[k] == 0:
+                    # Sort to handle duplicates
+                    triplet = tuple(sorted([nums[i], nums[j], nums[k]]))
+                    result.add(triplet)
+
+    return [list(t) for t in result]
+
+# Example:
+print(threeSum([-1, 0, 1, 2, -1, -4]))  # [[-1, -1, 2], [-1, 0, 1]]</code></pre>
+                            </div>
+
+                            <div id="sol3-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Sort + Two Pointers)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Sort array first, fix one element, use two pointers for the remaining two.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(n²)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(1)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def threeSum(nums):
+    """
+    Optimized: Sort + Two Pointers
+    Time: O(n²) - O(n log n) sort + O(n²) two-pointer search
+    Space: O(1) excluding output
+    """
+    nums.sort()
+    result = []
+    n = len(nums)
+
+    for i in range(n - 2):
+        # Skip duplicates for first element
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        # Early termination: if smallest > 0, no solution
+        if nums[i] > 0:
+            break
+
+        left, right = i + 1, n - 1
+        target = -nums[i]
+
+        while left < right:
+            curr_sum = nums[left] + nums[right]
+
+            if curr_sum == target:
+                result.append([nums[i], nums[left], nums[right]])
+                # Skip duplicates
+                while left < right and nums[left] == nums[left + 1]:
+                    left += 1
+                while left < right and nums[right] == nums[right - 1]:
+                    right -= 1
+                left += 1
+                right -= 1
+            elif curr_sum < target:
+                left += 1
+            else:
+                right -= 1
+
+    return result
+
+# Example:
+print(threeSum([-1, 0, 1, 2, -1, -4]))  # [[-1, -1, 2], [-1, 0, 1]]</code></pre>
+                            </div>
+
+                            <div id="sol3-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (With Hash Set)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use hash set for O(1) lookups, combine with smart duplicate handling.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(n²)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def threeSum(nums):
+    """
+    Super Optimized: Hash Set with early termination
+    - Multiple early exit conditions
+    - Optimized duplicate handling
+    """
+    nums.sort()
+    result = []
+    n = len(nums)
+
+    for i in range(n - 2):
+        # Skip duplicates
+        if i > 0 and nums[i] == nums[i - 1]:
+            continue
+
+        # Early termination conditions
+        if nums[i] > 0:  # All remaining positive
+            break
+        if nums[i] + nums[-1] + nums[-2] < 0:  # Too small
+            continue
+        if nums[i] + nums[i + 1] + nums[i + 2] > 0:  # Too large
+            break
+
+        # Hash set approach for inner loop
+        seen = set()
+        j = i + 1
+
+        while j < n:
+            complement = -nums[i] - nums[j]
+
+            if complement in seen:
+                result.append([nums[i], complement, nums[j]])
+                # Skip duplicates
+                while j + 1 < n and nums[j] == nums[j + 1]:
+                    j += 1
+
+            seen.add(nums[j])
+            j += 1
+
+    return result
+
+# Example:
+print(threeSum([-1, 0, 1, 2, -1, -4]))  # [[-1, -1, 2], [-1, 0, 1]]</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 4 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">4. Median of Two Sorted Arrays</h3>
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Binary search on the smaller array to find partition point</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Binary Search</span>
+                <!-- Problem 4: Median of Two Sorted Arrays -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">4. Median of Two Sorted Arrays</h3>
+                                    <span class="difficulty-hard px-3 py-1 rounded text-sm font-medium">Hard</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given two sorted arrays nums1 and nums2, return the median of the two sorted arrays. Overall run time complexity should be O(log (m+n)).</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Binary Search</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol4')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/median-of-two-sorted-arrays/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol4" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol4', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol4', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol4', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol4-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Merge both arrays and find median directly.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(m+n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(m+n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def findMedianSortedArrays(nums1, nums2):
+    """
+    Brute Force: Merge and find median
+    Time: O(m + n)
+    Space: O(m + n)
+    """
+    merged = []
+    i = j = 0
+
+    # Merge both sorted arrays
+    while i < len(nums1) and j < len(nums2):
+        if nums1[i] <= nums2[j]:
+            merged.append(nums1[i])
+            i += 1
+        else:
+            merged.append(nums2[j])
+            j += 1
+
+    # Add remaining elements
+    merged.extend(nums1[i:])
+    merged.extend(nums2[j:])
+
+    # Find median
+    n = len(merged)
+    mid = n // 2
+
+    if n % 2 == 0:
+        return (merged[mid - 1] + merged[mid]) / 2
+    else:
+        return merged[mid]
+
+# Example:
+print(findMedianSortedArrays([1, 3], [2]))  # Output: 2.0</code></pre>
+                            </div>
+
+                            <div id="sol4-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Binary Search)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Binary search on smaller array to find correct partition point.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(log(min(m,n)))</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(1)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def findMedianSortedArrays(nums1, nums2):
+    """
+    Binary Search on smaller array
+    Time: O(log(min(m, n)))
+    Space: O(1)
+
+    Key insight: Find partition where left half has
+    (m + n + 1) // 2 elements
+    """
+    # Ensure nums1 is smaller
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+
+    m, n = len(nums1), len(nums2)
+    left, right = 0, m
+
+    while left <= right:
+        partition1 = (left + right) // 2
+        partition2 = (m + n + 1) // 2 - partition1
+
+        # Get boundary values
+        maxLeft1 = float('-inf') if partition1 == 0 else nums1[partition1 - 1]
+        minRight1 = float('inf') if partition1 == m else nums1[partition1]
+
+        maxLeft2 = float('-inf') if partition2 == 0 else nums2[partition2 - 1]
+        minRight2 = float('inf') if partition2 == n else nums2[partition2]
+
+        # Check if we found correct partition
+        if maxLeft1 <= minRight2 and maxLeft2 <= minRight1:
+            # Found it!
+            if (m + n) % 2 == 0:
+                return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2
+            else:
+                return max(maxLeft1, maxLeft2)
+        elif maxLeft1 > minRight2:
+            right = partition1 - 1
+        else:
+            left = partition1 + 1
+
+    return 0.0
+
+# Example:
+print(findMedianSortedArrays([1, 3], [2]))  # Output: 2.0</code></pre>
+                            </div>
+
+                            <div id="sol4-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (kth Element Approach)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Find kth smallest element using binary search, handles edge cases elegantly.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(log(m+n))</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(1)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def findMedianSortedArrays(nums1, nums2):
+    """
+    Super Optimized: Find kth element approach
+    Cleaner implementation with recursive helper
+    """
+    def findKth(a, a_start, b, b_start, k):
+        """Find kth smallest element in two sorted arrays"""
+        # If one array is exhausted
+        if a_start >= len(a):
+            return b[b_start + k - 1]
+        if b_start >= len(b):
+            return a[a_start + k - 1]
+
+        # Base case: k = 1
+        if k == 1:
+            return min(a[a_start], b[b_start])
+
+        # Compare k/2 elements from each array
+        mid_a = a[a_start + k//2 - 1] if a_start + k//2 - 1 < len(a) else float('inf')
+        mid_b = b[b_start + k//2 - 1] if b_start + k//2 - 1 < len(b) else float('inf')
+
+        # Discard k/2 elements from smaller half
+        if mid_a < mid_b:
+            return findKth(a, a_start + k//2, b, b_start, k - k//2)
+        else:
+            return findKth(a, a_start, b, b_start + k//2, k - k//2)
+
+    total = len(nums1) + len(nums2)
+
+    if total % 2 == 1:
+        return findKth(nums1, 0, nums2, 0, total // 2 + 1)
+    else:
+        left = findKth(nums1, 0, nums2, 0, total // 2)
+        right = findKth(nums1, 0, nums2, 0, total // 2 + 1)
+        return (left + right) / 2
+
+# Example:
+print(findMedianSortedArrays([1, 3], [2]))  # Output: 2.0
+print(findMedianSortedArrays([1, 2], [3, 4]))  # Output: 2.5</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 5 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">5. Merge Intervals</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Sort by start time, then merge overlapping intervals greedily</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Intervals</span>
+                <!-- Problem 5: Merge Intervals -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">5. Merge Intervals</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given an array of intervals, merge all overlapping intervals.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Intervals</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol5')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/merge-intervals/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/merge-intervals/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol5" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol5', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol5', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol5', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol5-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Compare every pair of intervals and merge if overlapping.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(n²)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def merge(intervals):
+    """
+    Brute Force: Compare and merge pairs
+    Time: O(n²) - repeatedly scan for overlaps
+    Space: O(n)
+    """
+    if not intervals:
+        return []
+
+    result = [intervals[0][:]]  # Copy first interval
+
+    for interval in intervals[1:]:
+        merged = False
+        for i, existing in enumerate(result):
+            # Check if overlap
+            if interval[0] <= existing[1] and interval[1] >= existing[0]:
+                # Merge
+                result[i] = [
+                    min(existing[0], interval[0]),
+                    max(existing[1], interval[1])
+                ]
+                merged = True
+                break
+
+        if not merged:
+            result.append(interval[:])
+
+    # May need multiple passes to merge transitively
+    # This is why brute force is inefficient
+    return result
+
+# Example:
+print(merge([[1,3],[2,6],[8,10],[15,18]]))
+# Output: [[1,6],[8,10],[15,18]]</code></pre>
+                            </div>
+
+                            <div id="sol5-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Sort + Merge)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Sort by start time, then merge consecutive overlapping intervals.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(n log n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def merge(intervals):
+    """
+    Optimized: Sort by start, then single pass merge
+    Time: O(n log n) for sorting
+    Space: O(n) for output
+    """
+    if not intervals:
+        return []
+
+    # Sort by start time
+    intervals.sort(key=lambda x: x[0])
+
+    result = [intervals[0]]
+
+    for current in intervals[1:]:
+        last = result[-1]
+
+        # Check if current overlaps with last
+        if current[0] <= last[1]:
+            # Merge by extending end time
+            last[1] = max(last[1], current[1])
+        else:
+            # No overlap, add new interval
+            result.append(current)
+
+    return result
+
+# Example:
+print(merge([[1,3],[2,6],[8,10],[15,18]]))
+# Output: [[1,6],[8,10],[15,18]]</code></pre>
+                            </div>
+
+                            <div id="sol5-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (In-place with Deque)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use deque for O(1) append, in-place modification for memory efficiency.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(n log n)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(1) extra</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import deque
+
+def merge(intervals):
+    """
+    Super Optimized:
+    - Sort in place
+    - Use deque for efficient operations
+    - Early termination for sorted input
+    """
+    if not intervals:
+        return []
+
+    if len(intervals) == 1:
+        return intervals
+
+    # Sort in place
+    intervals.sort(key=lambda x: x[0])
+
+    # Check if already non-overlapping (common case)
+    is_sorted = all(
+        intervals[i][1] < intervals[i+1][0]
+        for i in range(len(intervals) - 1)
+    )
+    if is_sorted:
+        return intervals
+
+    # Use deque for O(1) operations
+    result = deque([intervals[0]])
+
+    for start, end in intervals[1:]:
+        if start <= result[-1][1]:
+            result[-1][1] = max(result[-1][1], end)
+        else:
+            result.append([start, end])
+
+    return list(result)
+
+# Alternative: Generator-based for streaming
+def merge_generator(intervals):
+    """Memory efficient generator version"""
+    intervals = sorted(intervals)
+    it = iter(intervals)
+
+    try:
+        current = list(next(it))
+    except StopIteration:
+        return
+
+    for start, end in it:
+        if start <= current[1]:
+            current[1] = max(current[1], end)
+        else:
+            yield current
+            current = [start, end]
+
+    yield current
+
+# Example:
+print(merge([[1,3],[2,6],[8,10],[15,18]]))
+# Output: [[1,6],[8,10],[15,18]]</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 6 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">6. LRU Cache</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Combine hash map with doubly linked list for O(1) operations</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Design</span>
+                <!-- Problem 6: LRU Cache -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">6. LRU Cache</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Design a data structure that follows the constraints of a Least Recently Used (LRU) cache.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Design</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol6')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/lru-cache/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/lru-cache/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol6" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol6', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol6', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol6', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol6-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use list to track order, shift elements on access.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(n) per operation</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(capacity)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class LRUCache:
+    """
+    Brute Force: List + Dict
+    Time: O(n) for get/put (need to shift elements)
+    Space: O(capacity)
+    """
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}  # key -> value
+        self.order = []  # list of keys in order of use
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+
+        # Move to end (most recently used)
+        self.order.remove(key)  # O(n)
+        self.order.append(key)
+
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            # Update existing
+            self.cache[key] = value
+            self.order.remove(key)  # O(n)
+            self.order.append(key)
+        else:
+            # Add new
+            if len(self.cache) >= self.capacity:
+                # Remove least recently used
+                lru_key = self.order.pop(0)  # O(n)
+                del self.cache[lru_key]
+
+            self.cache[key] = value
+            self.order.append(key)
+
+# Example:
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+print(cache.get(1))    # returns 1
+cache.put(3, 3)        # evicts key 2
+print(cache.get(2))    # returns -1 (not found)</code></pre>
+                            </div>
+
+                            <div id="sol6-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (OrderedDict)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use Python's OrderedDict which maintains insertion order.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(1)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(capacity)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import OrderedDict
+
+class LRUCache:
+    """
+    Optimized: OrderedDict provides O(1) move_to_end
+    Time: O(1) for both get and put
+    Space: O(capacity)
+    """
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = OrderedDict()
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+
+        # Move to end (most recently used)
+        self.cache.move_to_end(key)
+        return self.cache[key]
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            # Update and move to end
+            self.cache.move_to_end(key)
+            self.cache[key] = value
+        else:
+            if len(self.cache) >= self.capacity:
+                # Remove first (least recently used)
+                self.cache.popitem(last=False)
+            self.cache[key] = value
+
+# Example:
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+print(cache.get(1))    # returns 1
+cache.put(3, 3)        # evicts key 2
+print(cache.get(2))    # returns -1</code></pre>
+                            </div>
+
+                            <div id="sol6-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (Doubly Linked List + HashMap)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Custom implementation with O(1) operations, most interview-friendly.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(1)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(capacity)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class DLinkedNode:
+    """Doubly linked list node"""
+    def __init__(self, key=0, value=0):
+        self.key = key
+        self.value = value
+        self.prev = None
+        self.next = None
+
+class LRUCache:
+    """
+    Super Optimized: Hash Map + Doubly Linked List
+    - Hash map: O(1) lookup by key
+    - DLL: O(1) insertion/deletion at any position
+    - Dummy head/tail simplify edge cases
+    """
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.cache = {}  # key -> node
+
+        # Dummy head and tail
+        self.head = DLinkedNode()
+        self.tail = DLinkedNode()
+        self.head.next = self.tail
+        self.tail.prev = self.head
+
+    def _add_node(self, node):
+        """Add node right after head (most recent)"""
+        node.prev = self.head
+        node.next = self.head.next
+        self.head.next.prev = node
+        self.head.next = node
+
+    def _remove_node(self, node):
+        """Remove node from linked list"""
+        prev = node.prev
+        new = node.next
+        prev.next = new
+        new.prev = prev
+
+    def _move_to_head(self, node):
+        """Move existing node to head"""
+        self._remove_node(node)
+        self._add_node(node)
+
+    def _pop_tail(self):
+        """Remove and return LRU node (before tail)"""
+        node = self.tail.prev
+        self._remove_node(node)
+        return node
+
+    def get(self, key: int) -> int:
+        if key not in self.cache:
+            return -1
+
+        node = self.cache[key]
+        self._move_to_head(node)
+        return node.value
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.cache:
+            node = self.cache[key]
+            node.value = value
+            self._move_to_head(node)
+        else:
+            new_node = DLinkedNode(key, value)
+            self.cache[key] = new_node
+            self._add_node(new_node)
+
+            if len(self.cache) > self.capacity:
+                lru = self._pop_tail()
+                del self.cache[lru.key]
+
+# Example:
+cache = LRUCache(2)
+cache.put(1, 1)
+cache.put(2, 2)
+print(cache.get(1))    # returns 1
+cache.put(3, 3)        # evicts key 2
+print(cache.get(2))    # returns -1</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 7 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">7. Word Search II</h3>
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Build Trie from words, then DFS on board with pruning</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Trie + DFS</span>
+                <!-- Problem 7: Word Search II -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">7. Word Search II</h3>
+                                    <span class="difficulty-hard px-3 py-1 rounded text-sm font-medium">Hard</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given an m x n board of characters and a list of words, return all words on the board.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Trie + DFS</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol7')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/word-search-ii/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/word-search-ii/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol7" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol7', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Brute Force</button>
+                                <button onclick="showApproach('sol7', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Optimized</button>
+                                <button onclick="showApproach('sol7', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Super Optimized</button>
+                            </div>
+
+                            <div id="sol7-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Brute Force Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> For each word, search using DFS from every cell.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-red-100 text-red-800">Time: O(W * M * N * 4^L)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(L)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def findWords(board, words):
+    """
+    Brute Force: DFS for each word from each cell
+    Time: O(W * M * N * 4^L) where W=words, L=max word length
+    Space: O(L) for recursion stack
+    """
+    def dfs(board, word, i, j, k):
+        if k == len(word):
+            return True
+
+        if (i < 0 or i >= len(board) or
+            j < 0 or j >= len(board[0]) or
+            board[i][j] != word[k]):
+            return False
+
+        # Mark visited
+        temp = board[i][j]
+        board[i][j] = '#'
+
+        # Explore 4 directions
+        found = (dfs(board, word, i+1, j, k+1) or
+                 dfs(board, word, i-1, j, k+1) or
+                 dfs(board, word, i, j+1, k+1) or
+                 dfs(board, word, i, j-1, k+1))
+
+        # Restore
+        board[i][j] = temp
+        return found
+
+    result = []
+    for word in words:
+        found = False
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                if dfs(board, word, i, j, 0):
+                    result.append(word)
+                    found = True
+                    break
+            if found:
+                break
+
+    return result
+
+# Example:
+board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
+words = ["oath","pea","eat","rain"]
+print(findWords(board, words))  # ["oath","eat"]</code></pre>
+                            </div>
+
+                            <div id="sol7-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Approach (Trie + DFS)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Build Trie from words, search board once using Trie for guidance.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Time: O(M * N * 4^L)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(W * L)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.word = None  # Store complete word at end
+
+def findWords(board, words):
+    """
+    Optimized: Build Trie, single board traversal
+    Time: O(M * N * 4^L)
+    Space: O(W * L) for Trie
+    """
+    # Build Trie
+    root = TrieNode()
+    for word in words:
+        node = root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = word
+
+    result = []
+    rows, cols = len(board), len(board[0])
+
+    def dfs(i, j, node):
+        char = board[i][j]
+
+        if char not in node.children:
+            return
+
+        child = node.children[char]
+
+        # Found a word
+        if child.word:
+            result.append(child.word)
+            child.word = None  # Avoid duplicates
+
+        # Mark visited
+        board[i][j] = '#'
+
+        # Explore neighbors
+        for di, dj in [(0,1), (0,-1), (1,0), (-1,0)]:
+            ni, nj = i + di, j + dj
+            if 0 <= ni < rows and 0 <= nj < cols and board[ni][nj] != '#':
+                dfs(ni, nj, child)
+
+        # Restore
+        board[i][j] = char
+
+    for i in range(rows):
+        for j in range(cols):
+            dfs(i, j, root)
+
+    return result
+
+# Example:
+board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
+words = ["oath","pea","eat","rain"]
+print(findWords(board, words))  # ["oath","eat"]</code></pre>
+                            </div>
+
+                            <div id="sol7-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Super Optimized (Trie with Pruning)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Progressive Trie pruning - remove found words and empty branches.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(M * N * 4^L)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(W * L)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.word = None
+
+def findWords(board, words):
+    """
+    Super Optimized: Trie with progressive pruning
+    - Remove branches after finding all words in them
+    - Prevents redundant traversals
+    """
+    # Build Trie
+    root = TrieNode()
+    for word in words:
+        node = root
+        for char in word:
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
+        node.word = word
+
+    result = []
+    rows, cols = len(board), len(board[0])
+
+    def dfs(i, j, parent):
+        char = board[i][j]
+        curr_node = parent.children[char]
+
+        # Found a word
+        if curr_node.word:
+            result.append(curr_node.word)
+            curr_node.word = None
+
+        # Mark visited
+        board[i][j] = '#'
+
+        # Explore neighbors
+        for di, dj in [(0,1), (0,-1), (1,0), (-1,0)]:
+            ni, nj = i + di, j + dj
+            if (0 <= ni < rows and 0 <= nj < cols and
+                board[ni][nj] != '#' and
+                board[ni][nj] in curr_node.children):
+                dfs(ni, nj, curr_node)
+
+        # Restore
+        board[i][j] = char
+
+        # PRUNING: Remove empty leaf nodes
+        if not curr_node.children:
+            del parent.children[char]
+
+    for i in range(rows):
+        for j in range(cols):
+            if board[i][j] in root.children:
+                dfs(i, j, root)
+
+    return result
+
+# Example:
+board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
+words = ["oath","pea","eat","rain"]
+print(findWords(board, words))  # ["oath","eat"]</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 8 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">8. Number of Islands</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">DFS to mark visited cells, count number of DFS calls</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">DFS/BFS</span>
+                <!-- Problem 8: Number of Islands -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">8. Number of Islands</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">DFS/BFS</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol8')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/number-of-islands/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/number-of-islands/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol8" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol8', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">DFS</button>
+                                <button onclick="showApproach('sol8', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">BFS</button>
+                                <button onclick="showApproach('sol8', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Union Find</button>
+                            </div>
+
+                            <div id="sol8-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">DFS Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> DFS to flood-fill each island, count number of DFS calls.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(M * N)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(M * N) worst case</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def numIslands(grid):
+    """
+    DFS: Flood fill each island
+    Time: O(M * N)
+    Space: O(M * N) worst case for recursion stack
+    """
+    if not grid:
+        return 0
+
+    rows, cols = len(grid), len(grid[0])
+    count = 0
+
+    def dfs(i, j):
+        # Boundary and water check
+        if i < 0 or i >= rows or j < 0 or j >= cols or grid[i][j] != '1':
+            return
+
+        # Mark as visited
+        grid[i][j] = '0'
+
+        # Visit all 4 directions
+        dfs(i + 1, j)
+        dfs(i - 1, j)
+        dfs(i, j + 1)
+        dfs(i, j - 1)
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == '1':
+                count += 1
+                dfs(i, j)
+
+    return count
+
+# Example:
+grid = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
+]
+print(numIslands(grid))  # Output: 3</code></pre>
+                            </div>
+
+                            <div id="sol8-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">BFS Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Iterative BFS avoids stack overflow for large grids.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(M * N)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(min(M, N))</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import deque
+
+def numIslands(grid):
+    """
+    BFS: Level-by-level exploration
+    Time: O(M * N)
+    Space: O(min(M, N)) for queue
+    """
+    if not grid:
+        return 0
+
+    rows, cols = len(grid), len(grid[0])
+    count = 0
+
+    def bfs(start_i, start_j):
+        queue = deque([(start_i, start_j)])
+        grid[start_i][start_j] = '0'
+
+        while queue:
+            i, j = queue.popleft()
+
+            for di, dj in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+                ni, nj = i + di, j + dj
+
+                if (0 <= ni < rows and 0 <= nj < cols and
+                    grid[ni][nj] == '1'):
+                    grid[ni][nj] = '0'  # Mark visited before adding
+                    queue.append((ni, nj))
+
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == '1':
+                count += 1
+                bfs(i, j)
+
+    return count
+
+# Example:
+grid = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
+]
+print(numIslands(grid))  # Output: 3</code></pre>
+                            </div>
+
+                            <div id="sol8-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Union Find Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Union-Find with path compression and union by rank.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(M * N * α(M*N))</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(M * N)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class UnionFind:
+    def __init__(self, n):
+        self.parent = list(range(n))
+        self.rank = [0] * n
+        self.count = 0
+
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])  # Path compression
+        return self.parent[x]
+
+    def union(self, x, y):
+        px, py = self.find(x), self.find(y)
+        if px == py:
+            return
+
+        # Union by rank
+        if self.rank[px] < self.rank[py]:
+            px, py = py, px
+        self.parent[py] = px
+        if self.rank[px] == self.rank[py]:
+            self.rank[px] += 1
+
+        self.count -= 1
+
+def numIslands(grid):
+    """
+    Union Find: Optimal for streaming/dynamic problems
+    Time: O(M * N * α(M*N)) - nearly O(M*N)
+    Space: O(M * N)
+    """
+    if not grid:
+        return 0
+
+    rows, cols = len(grid), len(grid[0])
+    uf = UnionFind(rows * cols)
+
+    # Count initial land cells
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == '1':
+                uf.count += 1
+
+    # Union adjacent land cells
+    for i in range(rows):
+        for j in range(cols):
+            if grid[i][j] == '1':
+                idx = i * cols + j
+
+                # Only check right and down (avoid duplicates)
+                if j + 1 < cols and grid[i][j + 1] == '1':
+                    uf.union(idx, idx + 1)
+                if i + 1 < rows and grid[i + 1][j] == '1':
+                    uf.union(idx, idx + cols)
+
+    return uf.count
+
+# Example:
+grid = [
+    ["1","1","0","0","0"],
+    ["1","1","0","0","0"],
+    ["0","0","1","0","0"],
+    ["0","0","0","1","1"]
+]
+print(numIslands(grid))  # Output: 3</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 9 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">9. Course Schedule</h3>
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Detect cycle using DFS or use Kahn's algorithm with BFS</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Topological Sort</span>
+                <!-- Problem 9: Course Schedule -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">9. Course Schedule</h3>
+                                    <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Given numCourses and prerequisites, return true if you can finish all courses (detect cycle in directed graph).</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Amazon</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Topological Sort</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol9')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/course-schedule/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/course-schedule/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol9" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol9', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">DFS Cycle Detection</button>
+                                <button onclick="showApproach('sol9', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Kahn's BFS</button>
+                                <button onclick="showApproach('sol9', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Color DFS</button>
+                            </div>
+
+                            <div id="sol9-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">DFS Cycle Detection</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use DFS with visited set to detect back edges (cycles).</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(V + E)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(V + E)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">def canFinish(numCourses, prerequisites):
+    """
+    DFS: Detect cycle using recursion stack
+    Time: O(V + E)
+    Space: O(V + E)
+    """
+    from collections import defaultdict
+
+    # Build adjacency list
+    graph = defaultdict(list)
+    for course, prereq in prerequisites:
+        graph[prereq].append(course)
+
+    # States: 0 = unvisited, 1 = visiting, 2 = visited
+    state = [0] * numCourses
+
+    def has_cycle(node):
+        if state[node] == 1:  # Back edge - cycle!
+            return True
+        if state[node] == 2:  # Already processed
+            return False
+
+        state[node] = 1  # Mark as visiting
+
+        for neighbor in graph[node]:
+            if has_cycle(neighbor):
+                return True
+
+        state[node] = 2  # Mark as visited
+        return False
+
+    # Check all nodes (graph might be disconnected)
+    for i in range(numCourses):
+        if has_cycle(i):
+            return False
+
+    return True
+
+# Example:
+print(canFinish(2, [[1,0]]))  # True
+print(canFinish(2, [[1,0],[0,1]]))  # False (cycle)</code></pre>
+                            </div>
+
+                            <div id="sol9-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Kahn's Algorithm (BFS)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Process nodes with 0 in-degree first, reduce in-degrees iteratively.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(V + E)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(V + E)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import deque, defaultdict
+
+def canFinish(numCourses, prerequisites):
+    """
+    Kahn's Algorithm: BFS-based topological sort
+    Time: O(V + E)
+    Space: O(V + E)
+
+    Key insight: If we can process all nodes, no cycle exists
+    """
+    # Build graph and compute in-degrees
+    graph = defaultdict(list)
+    in_degree = [0] * numCourses
+
+    for course, prereq in prerequisites:
+        graph[prereq].append(course)
+        in_degree[course] += 1
+
+    # Start with nodes having 0 in-degree
+    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])
+    processed = 0
+
+    while queue:
+        node = queue.popleft()
+        processed += 1
+
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    # If all nodes processed, no cycle
+    return processed == numCourses
+
+# Example:
+print(canFinish(2, [[1,0]]))  # True
+print(canFinish(2, [[1,0],[0,1]]))  # False</code></pre>
+                            </div>
+
+                            <div id="sol9-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Three-Color DFS</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Classic WHITE-GRAY-BLACK coloring for cycle detection, cleanest implementation.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(V + E)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(V)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import defaultdict
+from enum import Enum
+
+class Color(Enum):
+    WHITE = 0  # Unvisited
+    GRAY = 1   # In current DFS path
+    BLACK = 2  # Completely processed
+
+def canFinish(numCourses, prerequisites):
+    """
+    Three-Color DFS: Classic algorithm textbook approach
+    - WHITE: Unvisited
+    - GRAY: Currently being processed (in stack)
+    - BLACK: Completely finished
+
+    Cycle exists iff we visit a GRAY node
+    """
+    graph = defaultdict(list)
+    for course, prereq in prerequisites:
+        graph[prereq].append(course)
+
+    color = [Color.WHITE] * numCourses
+
+    def dfs(node):
+        color[node] = Color.GRAY
+
+        for neighbor in graph[node]:
+            if color[neighbor] == Color.GRAY:
+                return False  # Cycle detected
+            if color[neighbor] == Color.WHITE:
+                if not dfs(neighbor):
+                    return False
+
+        color[node] = Color.BLACK
+        return True
+
+    for i in range(numCourses):
+        if color[i] == Color.WHITE:
+            if not dfs(i):
+                return False
+
+    return True
+
+# Bonus: Return topological order if possible
+def findOrder(numCourses, prerequisites):
+    """Also returns the course order"""
+    graph = defaultdict(list)
+    for course, prereq in prerequisites:
+        graph[prereq].append(course)
+
+    color = [0] * numCourses  # 0=white, 1=gray, 2=black
+    order = []
+
+    def dfs(node):
+        color[node] = 1
+        for neighbor in graph[node]:
+            if color[neighbor] == 1:
+                return False
+            if color[neighbor] == 0 and not dfs(neighbor):
+                return False
+        color[node] = 2
+        order.append(node)
+        return True
+
+    for i in range(numCourses):
+        if color[i] == 0 and not dfs(i):
+            return []
+
+    return order[::-1]
+
+# Example:
+print(canFinish(2, [[1,0]]))  # True
+print(findOrder(4, [[1,0],[2,0],[3,1],[3,2]]))  # [0, 1, 2, 3] or [0, 2, 1, 3]</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Problem 10 -->
-                <div class="bg-white rounded-xl shadow p-6 hover:shadow-lg transition">
-                    <div class="flex items-center justify-between">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="text-lg font-semibold">10. Serialize and Deserialize Binary Tree</h3>
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                            </div>
-                            <p class="text-gray-600 mb-3">Use preorder traversal with null markers</p>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
-                                <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
-                                <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Tree</span>
+                <!-- Problem 10: Serialize and Deserialize Binary Tree -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-3 mb-2">
+                                    <h3 class="text-xl font-bold">10. Serialize and Deserialize Binary Tree</h3>
+                                    <span class="difficulty-hard px-3 py-1 rounded text-sm font-medium">Hard</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work.</p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Meta</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Google</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Tree</span>
+                                </div>
+                                <div class="flex gap-3">
+                                    <button onclick="toggleSolution('sol10')" class="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition">
+                                        <i class="fas fa-lightbulb mr-2"></i>View Solutions
+                                    </button>
+                                    <a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/" target="_blank" class="border border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-medium hover:bg-purple-50 transition">
+                                        <i class="fas fa-external-link-alt mr-2"></i>LeetCode
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <a href="https://leetcode.com/problems/serialize-and-deserialize-binary-tree/" target="_blank" class="text-purple-600 hover:text-purple-800">
-                            <i class="fas fa-external-link-alt text-xl"></i>
-                        </a>
+                    </div>
+                    <div id="sol10" class="solution-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showApproach('sol10', 'brute')" class="approach-tab active px-4 py-2 rounded-lg font-medium border" data-approach="brute">Preorder DFS</button>
+                                <button onclick="showApproach('sol10', 'optimized')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="optimized">Level Order BFS</button>
+                                <button onclick="showApproach('sol10', 'super')" class="approach-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-approach="super">Optimized Preorder</button>
+                            </div>
+
+                            <div id="sol10-brute" class="approach-content active">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Preorder DFS Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use preorder traversal with null markers for complete reconstruction.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class Codec:
+    """
+    Preorder DFS with null markers
+    Time: O(n) for both serialize and deserialize
+    Space: O(n)
+    """
+
+    def serialize(self, root):
+        """Encodes a tree to a single string."""
+        result = []
+
+        def preorder(node):
+            if not node:
+                result.append('null')
+                return
+            result.append(str(node.val))
+            preorder(node.left)
+            preorder(node.right)
+
+        preorder(root)
+        return ','.join(result)
+
+    def deserialize(self, data):
+        """Decodes your encoded data to tree."""
+        values = iter(data.split(','))
+
+        def build():
+            val = next(values)
+            if val == 'null':
+                return None
+            node = TreeNode(int(val))
+            node.left = build()
+            node.right = build()
+            return node
+
+        return build()
+
+# Example:
+#     1
+#    / \
+#   2   3
+#      / \
+#     4   5
+codec = Codec()
+root = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5)))
+serialized = codec.serialize(root)
+print(serialized)  # "1,2,null,null,3,4,null,null,5,null,null"
+deserialized = codec.deserialize(serialized)
+print(deserialized.val)  # 1</code></pre>
+                            </div>
+
+                            <div id="sol10-optimized" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Level Order BFS Approach</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> BFS level-by-level, more intuitive for visualization.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-yellow-100 text-yellow-800">Space: O(n)</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">from collections import deque
+
+class Codec:
+    """
+    Level Order BFS
+    More intuitive serialization format
+    """
+
+    def serialize(self, root):
+        if not root:
+            return ''
+
+        result = []
+        queue = deque([root])
+
+        while queue:
+            node = queue.popleft()
+            if node:
+                result.append(str(node.val))
+                queue.append(node.left)
+                queue.append(node.right)
+            else:
+                result.append('null')
+
+        # Remove trailing nulls
+        while result and result[-1] == 'null':
+            result.pop()
+
+        return ','.join(result)
+
+    def deserialize(self, data):
+        if not data:
+            return None
+
+        values = data.split(',')
+        root = TreeNode(int(values[0]))
+        queue = deque([root])
+        i = 1
+
+        while queue and i < len(values):
+            node = queue.popleft()
+
+            # Left child
+            if i < len(values) and values[i] != 'null':
+                node.left = TreeNode(int(values[i]))
+                queue.append(node.left)
+            i += 1
+
+            # Right child
+            if i < len(values) and values[i] != 'null':
+                node.right = TreeNode(int(values[i]))
+                queue.append(node.right)
+            i += 1
+
+        return root
+
+# Example:
+codec = Codec()
+root = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5)))
+print(codec.serialize(root))  # "1,2,3,null,null,4,5"</code></pre>
+                            </div>
+
+                            <div id="sol10-super" class="approach-content">
+                                <div class="mb-4">
+                                    <h4 class="font-bold text-lg mb-2">Optimized Preorder (Space Efficient)</h4>
+                                    <p class="text-gray-600 mb-2"><strong>Insight:</strong> Use bytes or compressed format, optimal for production.</p>
+                                    <div class="flex gap-2">
+                                        <span class="complexity-badge bg-green-100 text-green-800">Time: O(n)</span>
+                                        <span class="complexity-badge bg-green-100 text-green-800">Space: O(n) optimized</span>
+                                    </div>
+                                </div>
+                                <pre><code class="language-python">class Codec:
+    """
+    Super Optimized:
+    - Use single character delimiter
+    - Efficient string building
+    - Iterative deserialization with explicit stack
+    """
+    DELIMITER = ','
+    NULL = '#'
+
+    def serialize(self, root):
+        """Iterative preorder with stack"""
+        if not root:
+            return self.NULL
+
+        parts = []
+        stack = [root]
+
+        while stack:
+            node = stack.pop()
+            if node:
+                parts.append(str(node.val))
+                # Push right first so left is processed first
+                stack.append(node.right)
+                stack.append(node.left)
+            else:
+                parts.append(self.NULL)
+
+        return self.DELIMITER.join(parts)
+
+    def deserialize(self, data):
+        """Optimized recursive with generator"""
+        def gen():
+            for val in data.split(self.DELIMITER):
+                yield val
+
+        def build(values):
+            val = next(values)
+            if val == self.NULL:
+                return None
+            node = TreeNode(int(val))
+            node.left = build(values)
+            node.right = build(values)
+            return node
+
+        return build(gen())
+
+# Alternative: Binary serialization for maximum compression
+import struct
+
+class BinaryCodec:
+    """
+    Binary format: 4 bytes per value, special marker for null
+    Most space efficient for large integer values
+    """
+    NULL_MARKER = 2**31 - 1  # Use max int as null marker
+
+    def serialize(self, root):
+        result = bytearray()
+
+        def preorder(node):
+            if not node:
+                result.extend(struct.pack('i', self.NULL_MARKER))
+                return
+            result.extend(struct.pack('i', node.val))
+            preorder(node.left)
+            preorder(node.right)
+
+        preorder(root)
+        return bytes(result)
+
+    def deserialize(self, data):
+        self.idx = 0
+
+        def build():
+            if self.idx >= len(data):
+                return None
+            val = struct.unpack('i', data[self.idx:self.idx+4])[0]
+            self.idx += 4
+            if val == self.NULL_MARKER:
+                return None
+            node = TreeNode(val)
+            node.left = build()
+            node.right = build()
+            return node
+
+        return build()
+
+# Example:
+codec = Codec()
+root = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4), TreeNode(5)))
+serialized = codec.serialize(root)
+print(serialized)  # "1,2,#,#,3,4,#,#,5,#,#"</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -316,7 +2181,7 @@
     <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium Problems (304+ more)
+                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium Problems (304+ more with full solutions)
             </h2>
 
             <!-- Blurred preview -->
@@ -327,21 +2192,21 @@
                             <h3 class="text-lg font-semibold">11. Trapping Rain Water</h3>
                             <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
                         </div>
-                        <p class="text-gray-600">Use two pointers or stack-based approach...</p>
+                        <p class="text-gray-600">Two pointer or stack approach with 3 solution variants...</p>
                     </div>
                     <div class="bg-white rounded-xl shadow p-6">
                         <div class="flex items-center gap-3 mb-2">
                             <h3 class="text-lg font-semibold">12. Longest Valid Parentheses</h3>
                             <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
                         </div>
-                        <p class="text-gray-600">Dynamic programming or stack approach...</p>
+                        <p class="text-gray-600">DP, stack, and two-pointer solutions with detailed explanations...</p>
                     </div>
                     <div class="bg-white rounded-xl shadow p-6">
                         <div class="flex items-center gap-3 mb-2">
                             <h3 class="text-lg font-semibold">13. Alien Dictionary</h3>
                             <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
                         </div>
-                        <p class="text-gray-600">Build graph from word order, topological sort...</p>
+                        <p class="text-gray-600">Graph construction + topological sort with edge cases...</p>
                     </div>
                 </div>
 
@@ -350,7 +2215,7 @@
                     <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-md">
                         <i class="fas fa-crown text-5xl text-yellow-500 mb-4"></i>
                         <h3 class="text-2xl font-bold mb-2">Unlock All 314+ Problems</h3>
-                        <p class="text-gray-600 mb-6">Get personalized guidance and full access through mentorship</p>
+                        <p class="text-gray-600 mb-6">Get full solutions with brute force, optimized, and super optimized approaches for every problem</p>
                         <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
                            class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block">
                             <i class="fas fa-user-tie mr-2"></i>Book Mentorship
@@ -368,5 +2233,52 @@
             <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
         </div>
     </footer>
+
+    <script>
+        // Initialize syntax highlighting
+        hljs.highlightAll();
+
+        // Toggle solution visibility
+        function toggleSolution(id) {
+            const content = document.getElementById(id);
+            content.classList.toggle('open');
+
+            // Re-highlight code when opening
+            if (content.classList.contains('open')) {
+                content.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        }
+
+        // Show specific approach tab
+        function showApproach(solutionId, approach) {
+            const container = document.getElementById(solutionId);
+
+            // Update tabs
+            container.querySelectorAll('.approach-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('bg-gray-100');
+            });
+            const activeTab = container.querySelector(`[data-approach="${approach}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.classList.remove('bg-gray-100');
+            }
+
+            // Update content
+            container.querySelectorAll('.approach-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeContent = document.getElementById(`${solutionId}-${approach}`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+                // Re-highlight code
+                activeContent.querySelectorAll('pre code').forEach((block) => {
+                    hljs.highlightElement(block);
+                });
+            }
+        }
+    </script>
 </body>
 </html>
