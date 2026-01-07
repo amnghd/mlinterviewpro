@@ -22,10 +22,10 @@
     <nav class="bg-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="text-2xl font-bold text-purple-600">
-                    <i class="fas fa-brain mr-2"></i>MLInterviewPro
+                <a href="index.html" class="text-xl sm:text-2xl font-bold text-purple-600">
+                    <i class="fas fa-brain mr-2"></i><span class="hidden sm:inline">MLInterviewPro</span><span class="sm:hidden">MLIP</span>
                 </a>
-                <div class="hidden md:flex space-x-6">
+                <div class="hidden lg:flex space-x-6">
                     <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
                     <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
                     <a href="ml-coding.html" class="text-purple-600 font-bold">ML Coding</a>
@@ -34,13 +34,38 @@
                     <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
                     <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
                 </div>
-                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                   class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:shadow-lg transition">
-                    <i class="fas fa-user-tie mr-2"></i>Book Mentorship
-                </a>
+                <div class="flex items-center gap-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
+                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
+            <div class="px-4 py-3 space-y-2">
+                <a href="leetcode.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-lg font-medium">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
+                <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
+                <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
             </div>
         </div>
     </nav>
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+    </script>
 
     <!-- Hero with Stats -->
     <section class="gradient-bg text-white py-12">
