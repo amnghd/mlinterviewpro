@@ -9,6 +9,19 @@
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .card-hover:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        .premium-blur { filter: blur(4px); pointer-events: none; }
+        .question-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
+        .question-content.open { max-height: 3000px; transition: max-height 1s ease-in; }
+        .level-tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .level-content { display: none; }
+        .level-content.active { display: block; }
+        .company-google { border-left: 4px solid #4285F4; }
+        .company-meta { border-left: 4px solid #0668E1; }
+        .company-netflix { border-left: 4px solid #E50914; }
+        .company-airbnb { border-left: 4px solid #FF5A5F; }
+        .company-deepmind { border-left: 4px solid #0F9D58; }
+        .company-openai { border-left: 4px solid #10A37F; }
+        .company-anthropic { border-left: 4px solid #D4A574; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -40,7 +53,12 @@
     <section class="gradient-bg text-white py-12">
         <div class="max-w-7xl mx-auto px-4">
             <h1 class="text-4xl font-bold mb-4"><i class="fas fa-comments mr-3"></i>Behavioral Interview Prep</h1>
-            <p class="text-xl opacity-90">Master the STAR method with 50+ curated questions and proven frameworks</p>
+            <p class="text-xl opacity-90 mb-4">Master behavioral interviews at Meta, Google, Netflix, Airbnb, DeepMind & more</p>
+            <div class="flex flex-wrap gap-4 mt-6">
+                <span class="bg-white/20 px-4 py-2 rounded-full">50+ Common Questions</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">Seniority-Specific Answers</span>
+                <span class="bg-white/20 px-4 py-2 rounded-full">Company-Specific Prep</span>
+            </div>
         </div>
     </section>
 
@@ -175,125 +193,702 @@
         </div>
     </section>
 
-    <!-- Common Questions (Free) -->
+    <!-- Common Questions with Seniority-Based Answers (FREE) -->
     <section class="py-12 bg-white">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-question-circle text-blue-500 mr-3"></i>Common Behavioral Questions
+            <h2 class="text-2xl font-bold mb-2 flex items-center">
+                <i class="fas fa-unlock text-green-500 mr-3"></i>Common Questions with Seniority-Based Answers
             </h2>
+            <p class="text-gray-600 mb-8">Click on any question to see how to answer at different career levels</p>
 
-            <div class="grid md:grid-cols-2 gap-4">
-                <!-- Leadership Questions -->
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="font-bold text-lg mb-4 text-blue-600"><i class="fas fa-users mr-2"></i>Leadership</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about a time you led a project from start to finish.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Describe a situation where you had to influence without authority.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>How do you handle underperforming team members?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about a time you mentored someone.</span>
-                        </li>
-                    </ul>
+            <div class="space-y-4" id="commonQuestions">
+
+                <!-- Question 1: Leadership -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q1')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Leadership</span>
+                                <h3 class="text-lg font-semibold">Tell me about a time you led a project from start to finish.</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q1-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q1" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q1', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q1', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q1', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q1-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior Engineer Answer Focus</h4>
+                                    <p class="text-blue-700 text-sm">Focus on technical leadership within your team, ownership of a feature or component, and collaboration with immediate stakeholders.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation & Task:</h5>
+                                        <p class="text-gray-700">"Our recommendation system was showing 15% lower engagement than competitors. I was tasked with leading a project to improve our model's performance while maintaining latency SLAs."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action (Key for Senior):</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Owned the technical design and implementation</li>
+                                            <li>Collaborated with 2 other engineers on the team</li>
+                                            <li>Worked with PM to define success metrics</li>
+                                            <li>Led code reviews and ensured quality</li>
+                                            <li>Communicated progress to manager weekly</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"Improved recommendation CTR by 23% over 3 months. The project was recognized in our team's quarterly review."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q1-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff Engineer Answer Focus</h4>
+                                    <p class="text-green-700 text-sm">Emphasize cross-team coordination, influencing without authority, technical strategy decisions, and broader organizational impact.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation & Task:</h5>
+                                        <p class="text-gray-700">"Our ML platform was fragmenting across 5 teams, causing duplicated work and inconsistent model deployments. I identified this as a strategic problem and proposed leading a platform consolidation initiative."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action (Key for Staff):</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Built consensus across 5 team leads on unified approach</li>
+                                            <li>Created technical design doc reviewed by principal engineers</li>
+                                            <li>Influenced roadmap priorities across multiple teams</li>
+                                            <li>Mentored 3 engineers who became primary contributors</li>
+                                            <li>Established new patterns now used org-wide</li>
+                                            <li>Presented quarterly updates to engineering leadership</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"Reduced model deployment time from 2 weeks to 2 days. Saved estimated $2M/year in duplicated infrastructure. Platform is now used by 200+ engineers across the org."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q1-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+ Answer Focus</h4>
+                                    <p class="text-purple-700 text-sm">Demonstrate company-wide or industry impact, setting technical direction, executive stakeholder management, and organizational transformation.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation & Task:</h5>
+                                        <p class="text-gray-700">"Our company's ML infrastructure was becoming a competitive disadvantage. Models took 6 months from research to production. As Technical Lead, I proposed and led a company-wide initiative to transform our ML platform."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action (Key for Senior Staff+):</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Presented business case to VP of Engineering and CTO</li>
+                                            <li>Secured $5M budget and 15-person team allocation</li>
+                                            <li>Defined 2-year technical roadmap with clear milestones</li>
+                                            <li>Established new ML Engineering role and career ladder</li>
+                                            <li>Created architectural standards adopted company-wide</li>
+                                            <li>Built partnerships with Google Cloud for MLOps tooling</li>
+                                            <li>Published learnings at internal tech conference (500+ attendees)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"Reduced model deployment from 6 months to 2 weeks. Enabled 3 new ML-powered products generating $50M ARR. Grew ML org from 20 to 80 engineers. Approach became a case study in our engineering blog with 100K+ views."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Conflict Questions -->
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="font-bold text-lg mb-4 text-red-600"><i class="fas fa-handshake mr-2"></i>Conflict</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about a disagreement with a coworker. How did you resolve it?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Describe a time you had to push back on a decision.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>How do you handle working with difficult personalities?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about a time you received critical feedback.</span>
-                        </li>
-                    </ul>
+                <!-- Question 2: Conflict -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q2')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Conflict</span>
+                                <h3 class="text-lg font-semibold">Tell me about a disagreement with a coworker. How did you resolve it?</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q2-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q2" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q2', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q2', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q2', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q2-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior Engineer Answer Focus</h4>
+                                    <p class="text-blue-700 text-sm">Show you can have productive technical disagreements, listen to others, and find solutions collaboratively.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"A teammate and I disagreed on whether to use a batch or streaming approach for our data pipeline. He preferred batch for simplicity; I advocated for streaming due to latency requirements."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Scheduled 1:1 to understand his concerns (maintenance, complexity)</li>
+                                            <li>Created a comparison doc with pros/cons of each approach</li>
+                                            <li>Proposed a hybrid solution that addressed both concerns</li>
+                                            <li>Brought in senior engineer for tie-breaker perspective</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"We implemented the hybrid approach. Met latency requirements while keeping maintenance simple. We now use this pattern as a template for future pipelines."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q2-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff Engineer Answer Focus</h4>
+                                    <p class="text-green-700 text-sm">Demonstrate handling cross-team conflicts, navigating organizational politics, and driving alignment at scale.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"Two teams were building competing feature stores. Each team lead was convinced their approach was correct. This was causing confusion and wasted resources across the org."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Met individually with both tech leads to understand motivations</li>
+                                            <li>Identified common ground: both wanted low-latency, high-reliability</li>
+                                            <li>Facilitated joint design session with clear evaluation criteria</li>
+                                            <li>Proposed unified solution incorporating best of both approaches</li>
+                                            <li>Got buy-in from both engineering directors</li>
+                                            <li>Created migration path to avoid disrupting either team's roadmap</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"Unified feature store launched in 6 months. Both teams contributed key components. Saved ~$1.5M in duplicated infrastructure. Both tech leads became strong advocates for the unified approach."</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q2-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+ Answer Focus</h4>
+                                    <p class="text-purple-700 text-sm">Show executive-level conflict resolution, strategic trade-off decisions, and organizational change management.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"Product leadership wanted to ship a new AI feature in 3 months using an approach I believed was technically unsound and could create security vulnerabilities. The VP of Product was pushing hard for the aggressive timeline."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Action:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Documented specific technical and security risks with probability estimates</li>
+                                            <li>Quantified business impact of potential failures ($XM in liability, brand damage)</li>
+                                            <li>Proposed alternative 5-month timeline with phased rollout</li>
+                                            <li>Escalated to CTO with clear data, not emotions</li>
+                                            <li>Offered to personally oversee accelerated review process</li>
+                                            <li>Created weekly exec checkpoint to maintain trust and transparency</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Result:</h5>
+                                        <p class="text-gray-700">"Secured the 5-month timeline. Feature launched successfully with zero security incidents. VP of Product later thanked me for 'saving us from a potential disaster.' Established new AI review process used for all subsequent launches."</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Challenge Questions -->
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="font-bold text-lg mb-4 text-yellow-600"><i class="fas fa-mountain mr-2"></i>Challenges</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>What's the most challenging problem you've solved?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about a time you failed. What did you learn?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Describe a situation where you had incomplete information.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>How do you handle ambiguity?</span>
-                        </li>
-                    </ul>
+                <!-- Question 3: Failure -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q3')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Failure</span>
+                                <h3 class="text-lg font-semibold">Tell me about a time you failed. What did you learn?</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q3-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q3" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q3', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q3', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q3', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q3-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior Engineer Answer Focus</h4>
+                                    <p class="text-blue-700 text-sm">Show ownership of a technical mistake, honest reflection, and concrete changes you made afterward.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"I deployed a model update that caused a 40% increase in false positives for our fraud detection system. The issue wasn't caught in testing because I hadn't created comprehensive edge case tests."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What went wrong:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Rushed deployment to meet sprint deadline</li>
+                                            <li>Skipped thorough A/B testing phase</li>
+                                            <li>Didn't have proper monitoring for edge cases</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What I learned & changed:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Created comprehensive test suite covering 50+ edge cases</li>
+                                            <li>Implemented shadow deployment process for all model updates</li>
+                                            <li>Added real-time alerting for false positive rate changes</li>
+                                            <li>Now budget 20% extra time for model validation</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q3-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff Engineer Answer Focus</h4>
+                                    <p class="text-green-700 text-sm">Demonstrate learning from a project-level or strategic failure, and how you improved processes for the broader org.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"I led an initiative to migrate our ML training infrastructure to Kubernetes. Six months in, we realized the approach wasn't working - costs were 3x higher and training times were worse."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What went wrong:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Didn't do sufficient proof-of-concept with realistic workloads</li>
+                                            <li>Underestimated GPU scheduling complexity</li>
+                                            <li>Moved too fast without checkpoints to validate assumptions</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What I learned & changed:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Pivoted to hybrid approach that met original goals</li>
+                                            <li>Instituted "proof-of-concept first" policy for major infra changes</li>
+                                            <li>Created checkpoint review process with clear go/no-go criteria</li>
+                                            <li>Shared post-mortem widely - became reference for other teams</li>
+                                            <li>Now run monthly "lessons learned" sessions for the org</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="q3-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+ Answer Focus</h4>
+                                    <p class="text-purple-700 text-sm">Show strategic-level failure, how you handled executive accountability, and org-wide improvements you drove.</p>
+                                </div>
+                                <div class="space-y-4">
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">Situation:</h5>
+                                        <p class="text-gray-700">"I championed and led a $10M investment in building an in-house ML platform. After 18 months, we realized we should have used managed services - we'd built something inferior at 3x the cost."</p>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What went wrong:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Underestimated pace of improvement in cloud ML offerings</li>
+                                            <li>Let "not invented here" syndrome influence the decision</li>
+                                            <li>Didn't establish clear "abandon" criteria upfront</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h5 class="font-semibold text-purple-700">What I learned & changed:</h5>
+                                        <ul class="list-disc list-inside text-gray-700 space-y-1">
+                                            <li>Owned the failure publicly with the executive team</li>
+                                            <li>Led the pivot to managed services, saved $5M annually</li>
+                                            <li>Created "build vs. buy" framework now used company-wide</li>
+                                            <li>Established quarterly "strategic pivot" reviews for major initiatives</li>
+                                            <li>Write about this failure in onboarding materials - it's now a learning case study</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Technical/ML Specific -->
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <h3 class="font-bold text-lg mb-4 text-green-600"><i class="fas fa-robot mr-2"></i>ML-Specific</h3>
-                    <ul class="space-y-3">
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Tell me about an ML project that didn't work. What happened?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>How do you handle disagreements about technical approaches?</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>Describe a time you had to explain ML concepts to non-technical stakeholders.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <i class="fas fa-chevron-right text-purple-500 mr-2 mt-1 text-sm"></i>
-                            <span>How do you prioritize which models to build?</span>
-                        </li>
-                    </ul>
+                <!-- Question 4: Impact -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q4')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">Impact</span>
+                                <h3 class="text-lg font-semibold">What's the most impactful project you've worked on?</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q4-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q4" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q4', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q4', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q4', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q4-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior: Team-level impact</h4>
+                                    <p class="text-blue-700 text-sm">Focus on direct technical contribution with measurable team or product impact.</p>
+                                </div>
+                                <p class="text-gray-700">"Built a real-time personalization model that increased user engagement by 35%. I owned the entire ML pipeline from feature engineering to deployment, coordinating with 2 backend engineers. The model now serves 10M daily predictions and became the foundation for our recommendations team."</p>
+                            </div>
+
+                            <div id="q4-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff: Multi-team impact</h4>
+                                    <p class="text-green-700 text-sm">Emphasize cross-team influence, architectural decisions, and enabling others' success.</p>
+                                </div>
+                                <p class="text-gray-700">"Led the design and implementation of our unified feature platform that now serves 15 ML teams. I drove alignment across 5 teams, created architectural standards, and mentored 8 engineers. The platform reduced feature engineering time by 70% and enabled 3 new product launches. My design is now the reference architecture for all ML projects."</p>
+                            </div>
+
+                            <div id="q4-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+: Org/company-wide impact</h4>
+                                    <p class="text-purple-700 text-sm">Demonstrate company-wide or industry impact, executive influence, and organizational transformation.</p>
+                                </div>
+                                <p class="text-gray-700">"Defined and executed the company's AI strategy that transformed us from an AI-adopter to an AI-first company. I built the business case for a $50M investment, recruited and grew the ML org from 10 to 100 engineers, and established partnerships with key vendors. This enabled 5 new AI-powered products generating $200M ARR. The strategy became a case study at our board meetings and I've presented it at 3 industry conferences."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 5: Technical Disagreement -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q5')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Technical</span>
+                                <h3 class="text-lg font-semibold">How do you handle disagreements about technical approaches?</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q5-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q5" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q5', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q5', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q5', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q5-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior Engineer Framework</h4>
+                                </div>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li><strong>Listen first:</strong> Understand their perspective fully before responding</li>
+                                    <li><strong>Data-driven:</strong> Propose experiments or benchmarks to validate approaches</li>
+                                    <li><strong>Document trade-offs:</strong> Create comparison docs with pros/cons</li>
+                                    <li><strong>Escalate thoughtfully:</strong> Bring in senior engineers when needed, with clear context</li>
+                                    <li><strong>Disagree and commit:</strong> Once decided, fully support the chosen direction</li>
+                                </ul>
+                            </div>
+
+                            <div id="q5-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff Engineer Framework</h4>
+                                </div>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li><strong>Understand motivations:</strong> Technical disagreements often have organizational roots</li>
+                                    <li><strong>Align on goals first:</strong> Ensure everyone agrees on success criteria before solutions</li>
+                                    <li><strong>Facilitate, don't dictate:</strong> Guide teams to reach consensus rather than imposing decisions</li>
+                                    <li><strong>Consider long-term:</strong> Factor in maintenance, team skills, and organizational direction</li>
+                                    <li><strong>Build coalitions:</strong> Get buy-in from key stakeholders before major decisions</li>
+                                    <li><strong>Document decisions:</strong> Create ADRs (Architecture Decision Records) for future reference</li>
+                                </ul>
+                            </div>
+
+                            <div id="q5-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+ Framework</h4>
+                                </div>
+                                <ul class="list-disc list-inside text-gray-700 space-y-2">
+                                    <li><strong>Strategic alignment:</strong> Ensure technical decisions align with company strategy</li>
+                                    <li><strong>Organizational design:</strong> Consider how decisions affect team structures and incentives</li>
+                                    <li><strong>Executive communication:</strong> Frame technical trade-offs in business impact terms</li>
+                                    <li><strong>Industry perspective:</strong> Bring external context and industry trends to discussions</li>
+                                    <li><strong>Create frameworks:</strong> Develop decision-making frameworks others can apply</li>
+                                    <li><strong>Accept accountability:</strong> Own the outcomes of strategic technical decisions</li>
+                                    <li><strong>Build culture:</strong> Model healthy technical debate for the organization</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Question 6: Ambiguity -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border">
+                    <div class="p-6 cursor-pointer hover:bg-gray-50" onclick="toggleQuestion('q6')">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">Ambiguity</span>
+                                <h3 class="text-lg font-semibold">Tell me about a time you had to make a decision with incomplete information.</h3>
+                            </div>
+                            <i class="fas fa-chevron-down text-gray-400 transition-transform" id="q6-icon"></i>
+                        </div>
+                    </div>
+                    <div id="q6" class="question-content bg-gray-50 border-t">
+                        <div class="p-6">
+                            <div class="flex gap-2 mb-4 flex-wrap">
+                                <button onclick="showLevel('q6', 'senior')" class="level-tab active px-4 py-2 rounded-lg font-medium border" data-level="senior">Senior (L5/E5)</button>
+                                <button onclick="showLevel('q6', 'staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="staff">Staff (L6/E6)</button>
+                                <button onclick="showLevel('q6', 'senior-staff')" class="level-tab px-4 py-2 rounded-lg font-medium border bg-gray-100" data-level="senior-staff">Senior Staff+ (L7/E7+)</button>
+                            </div>
+
+                            <div id="q6-senior" class="level-content active">
+                                <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-user mr-2"></i>Senior: Navigate technical ambiguity</h4>
+                                </div>
+                                <p class="text-gray-700">"We needed to choose a vector database for our semantic search feature, but had no production experience with any option. I created evaluation criteria (latency, cost, scalability), ran benchmarks with realistic data, and chose Pinecone despite limited docs. I built in abstraction layers so we could switch if needed. Six months later, it's handling 100K queries/day successfully."</p>
+                            </div>
+
+                            <div id="q6-staff" class="level-content">
+                                <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-green-800 mb-2"><i class="fas fa-user-tie mr-2"></i>Staff: Navigate organizational ambiguity</h4>
+                                </div>
+                                <p class="text-gray-700">"Product wanted 'better recommendations' but couldn't define success metrics. I led a cross-functional workshop to align on what 'better' meant. We identified 3 candidate metrics, ran A/A tests to understand variance, and agreed on CTR as primary with revenue as guardrail. This framework became how we scope all ML projects now."</p>
+                            </div>
+
+                            <div id="q6-senior-staff" class="level-content">
+                                <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                    <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-crown mr-2"></i>Senior Staff+: Navigate strategic ambiguity</h4>
+                                </div>
+                                <p class="text-gray-700">"The company was debating whether to build or buy our ML platform with incomplete data on either option. I proposed a time-boxed evaluation: 6 weeks to build POC in-house, parallel vendor evaluation. Created decision matrix weighted by strategic priorities. Presented to exec team with clear recommendation and risks. We chose hybrid approach - it's now our competitive advantage. Process became template for future build-vs-buy decisions."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Company-Specific Sections (PREMIUM - Locked) -->
+    <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-2 flex items-center">
+                <i class="fas fa-building text-purple-500 mr-3"></i>Company-Specific Interview Questions
+            </h2>
+            <p class="text-gray-600 mb-8">Tailored questions and frameworks for top tech companies</p>
+
+            <div class="relative">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 premium-blur">
+                    <!-- Meta -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 company-meta">
+                        <div class="flex items-center mb-4">
+                            <i class="fab fa-meta text-3xl text-blue-600 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">Meta</h3>
+                                <p class="text-sm text-gray-500">15 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• "Move Fast" culture fit questions</li>
+                            <li>• Impact and metrics-focused scenarios</li>
+                            <li>• Scale and growth challenges</li>
+                            <li>• Cross-functional collaboration</li>
+                        </ul>
+                    </div>
+
+                    <!-- Google -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 company-google">
+                        <div class="flex items-center mb-4">
+                            <i class="fab fa-google text-3xl text-blue-500 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">Google</h3>
+                                <p class="text-sm text-gray-500">18 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• "Googleyness" assessment questions</li>
+                            <li>• Leadership without authority</li>
+                            <li>• Cognitive ability scenarios</li>
+                            <li>• Role-related knowledge</li>
+                        </ul>
+                    </div>
+
+                    <!-- Netflix -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 company-netflix">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-play-circle text-3xl text-red-600 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">Netflix</h3>
+                                <p class="text-sm text-gray-500">12 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• "Keeper Test" scenarios</li>
+                            <li>• Freedom & responsibility examples</li>
+                            <li>• Radical candor situations</li>
+                            <li>• High performance culture fit</li>
+                        </ul>
+                    </div>
+
+                    <!-- Airbnb -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 company-airbnb">
+                        <div class="flex items-center mb-4">
+                            <i class="fab fa-airbnb text-3xl text-pink-500 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">Airbnb</h3>
+                                <p class="text-sm text-gray-500">14 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• Core values deep-dives</li>
+                            <li>• "Be a Host" mentality</li>
+                            <li>• Belonging and inclusion scenarios</li>
+                            <li>• Mission-driven decision making</li>
+                        </ul>
+                    </div>
+
+                    <!-- DeepMind -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 company-deepmind">
+                        <div class="flex items-center mb-4">
+                            <i class="fas fa-brain text-3xl text-green-600 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">DeepMind</h3>
+                                <p class="text-sm text-gray-500">10 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• Research collaboration scenarios</li>
+                            <li>• Intellectual curiosity assessment</li>
+                            <li>• Ethics in AI discussions</li>
+                            <li>• Long-term thinking examples</li>
+                        </ul>
+                    </div>
+
+                    <!-- Amazon -->
+                    <div class="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                        <div class="flex items-center mb-4">
+                            <i class="fab fa-amazon text-3xl text-orange-500 mr-3"></i>
+                            <div>
+                                <h3 class="font-bold text-lg">Amazon</h3>
+                                <p class="text-sm text-gray-500">16 questions</p>
+                            </div>
+                        </div>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li>• Leadership Principles deep-dives</li>
+                            <li>• "Disagree and Commit" scenarios</li>
+                            <li>• Customer obsession examples</li>
+                            <li>• Ownership and bias for action</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Premium Overlay -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-md">
+                        <i class="fas fa-lock text-5xl text-purple-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold mb-2">Company-Specific Prep</h3>
+                        <p class="text-gray-600 mb-6">Get targeted questions and answer frameworks for Meta, Google, Netflix, Airbnb, DeepMind, and Amazon</p>
+                        <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                           class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block">
+                            <i class="fas fa-user-tie mr-2"></i>Unlock with Mentorship
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Premium Stories CTA -->
-    <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
+    <!-- Coming Soon: OpenAI & Anthropic -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center">
+                <i class="fas fa-rocket text-orange-500 mr-3"></i>Coming Soon: AI Labs Interview Prep
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- OpenAI -->
+                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6 border-2 border-dashed border-green-300 company-openai">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-robot text-green-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">OpenAI</h3>
+                            <span class="bg-green-200 text-green-800 px-2 py-1 rounded text-xs font-medium">Coming Q2 2025</span>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Mission alignment questions</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>AI safety & ethics scenarios</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Research-to-product mindset</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Scaling challenges at the frontier</li>
+                    </ul>
+                    <p class="text-sm text-gray-500 italic">Interview frameworks being developed with current/former OpenAI engineers</p>
+                </div>
+
+                <!-- Anthropic -->
+                <div class="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 border-2 border-dashed border-amber-300 company-anthropic">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-shield-alt text-amber-600 text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg">Anthropic</h3>
+                            <span class="bg-amber-200 text-amber-800 px-2 py-1 rounded text-xs font-medium">Coming Q2 2025</span>
+                        </div>
+                    </div>
+                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
+                        <li><i class="fas fa-check text-amber-500 mr-2"></i>Constitutional AI discussions</li>
+                        <li><i class="fas fa-check text-amber-500 mr-2"></i>Safety-first mindset examples</li>
+                        <li><i class="fas fa-check text-amber-500 mr-2"></i>Research culture fit</li>
+                        <li><i class="fas fa-check text-amber-500 mr-2"></i>Long-term AI alignment questions</li>
+                    </ul>
+                    <p class="text-sm text-gray-500 italic">Frameworks being developed with AI safety researchers</p>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <p class="text-gray-600 mb-4">Want early access to OpenAI & Anthropic interview prep?</p>
+                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                   class="inline-flex items-center text-purple-600 font-semibold hover:underline">
+                    <i class="fas fa-bell mr-2"></i>Join the waitlist through mentorship
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium CTA -->
+    <section class="py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
         <div class="max-w-4xl mx-auto px-4 text-center">
-            <i class="fas fa-book-open text-6xl text-purple-400 mb-6"></i>
-            <h2 class="text-3xl font-bold mb-4">Ready to Practice Your Stories?</h2>
-            <p class="text-gray-600 mb-8">Get personalized feedback on your behavioral responses through 1:1 mentorship</p>
+            <i class="fas fa-star text-6xl text-yellow-300 mb-6"></i>
+            <h2 class="text-3xl font-bold mb-4">Ready to Ace Your Behavioral Interview?</h2>
+            <p class="text-xl opacity-90 mb-8">Get personalized feedback and company-specific coaching through 1:1 mentorship</p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                   class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-lg transition inline-flex items-center justify-center">
+                   class="bg-white text-purple-600 px-8 py-4 rounded-full font-bold hover:shadow-lg transition inline-flex items-center justify-center">
                     <i class="fas fa-user-tie mr-2"></i>Book Mock Interview
                 </a>
                 <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                   class="border-2 border-purple-600 text-purple-600 px-8 py-4 rounded-full font-bold hover:bg-purple-600 hover:text-white transition inline-flex items-center justify-center">
+                   class="border-2 border-white text-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-purple-600 transition inline-flex items-center justify-center">
                     <i class="fas fa-comments mr-2"></i>Get Story Feedback
                 </a>
             </div>
+            <p class="mt-6 text-sm opacity-75">200+ mentees helped | 5.0/5.0 rating | Google, Meta, Airbnb placements</p>
         </div>
     </section>
 
@@ -304,5 +899,40 @@
             <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
         </div>
     </footer>
+
+    <script>
+        function toggleQuestion(id) {
+            const content = document.getElementById(id);
+            const icon = document.getElementById(id + '-icon');
+            content.classList.toggle('open');
+            if (icon) {
+                icon.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+            }
+        }
+
+        function showLevel(questionId, level) {
+            const container = document.getElementById(questionId);
+
+            // Update tabs
+            container.querySelectorAll('.level-tab').forEach(tab => {
+                tab.classList.remove('active');
+                tab.classList.add('bg-gray-100');
+            });
+            const activeTab = container.querySelector(`[data-level="${level}"]`);
+            if (activeTab) {
+                activeTab.classList.add('active');
+                activeTab.classList.remove('bg-gray-100');
+            }
+
+            // Update content
+            container.querySelectorAll('.level-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            const activeContent = document.getElementById(`${questionId}-${level}`);
+            if (activeContent) {
+                activeContent.classList.add('active');
+            }
+        }
+    </script>
 </body>
 </html>
