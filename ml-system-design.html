@@ -14,6 +14,8 @@
         .topic-search { border-left: 4px solid #3b82f6; }
         .topic-content { border-left: 4px solid #ef4444; }
         .topic-ads { border-left: 4px solid #f59e0b; }
+        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+        .collapsible-content.open { max-height: 5000px; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -29,6 +31,7 @@
                     <a href="ml-system-design.html" class="text-purple-600 font-bold">ML System Design</a>
                     <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
                     <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
+                    <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
                 </div>
                 <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
                    class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:shadow-lg transition">
@@ -47,7 +50,7 @@
                 <span class="bg-green-500/30 px-4 py-2 rounded-full">RecSys</span>
                 <span class="bg-blue-500/30 px-4 py-2 rounded-full">Search & Ranking</span>
                 <span class="bg-red-500/30 px-4 py-2 rounded-full">Content Moderation</span>
-                <span class="bg-yellow-500/30 px-4 py-2 rounded-full">Ads</span>
+                <span class="bg-yellow-500/30 px-4 py-2 rounded-full">Ads & Pricing</span>
             </div>
         </div>
     </section>
@@ -76,229 +79,593 @@
         </div>
     </section>
 
-    <!-- Free Cases Section -->
+    <!-- Free Cases Section with Full Examples -->
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-unlock text-green-500 mr-3"></i>Free Case Studies (5 Full Solutions)
+                <i class="fas fa-unlock text-green-500 mr-3"></i>Full Example System Design Interviews
             </h2>
 
-            <div class="space-y-6">
-                <!-- Case 1: YouTube Video Search -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-search">
+            <div class="space-y-8">
+                <!-- Case 1: YouTube Video Recommendation (FULL) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-recsys">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
-                                <h3 class="text-xl font-bold mt-2">YouTube Video Search</h3>
-                                <p class="text-gray-600">Design a video search system that returns relevant videos for text queries</p>
+                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Full Example</span>
+                                <h3 class="text-2xl font-bold mt-2">YouTube Video Recommendation System</h3>
+                                <p class="text-gray-600">Design a recommendation system for YouTube's homepage feed</p>
                             </div>
                             <span class="text-sm text-gray-500">YouTube/Google</span>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-question-circle text-purple-500 mr-2"></i>Clarifying Questions</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Catalog size? Text search only? Multi-language?</li>
-                                    <li>• Personalized vs query-video match?</li>
-                                    <li>• Latency budget? QPS requirements?</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-sitemap text-blue-500 mr-2"></i>High-Level Design</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Two-tower model (query tower + video tower)</li>
-                                    <li>• Query understanding + expansion + retrieval + reranking</li>
-                                    <li>• 150ms latency budget</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button onclick="toggleContent('yt-rec')" class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-cogs text-green-500 mr-2"></i>Feature Engineering</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Query: Normalization, tokenization (BPE), DistilBERT embeddings</li>
-                                    <li>• Video: Frame extraction, 3D transformers, BERT for transcription</li>
-                                    <li>• Video metadata: genre, likes (bucketized), channel features</li>
+                        <div id="yt-rec" class="collapsible-content">
+                            <!-- Clarifying Questions -->
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Catalog size?</strong> 1B videos</li>
+                                    <li><strong>Multi-lingual?</strong> Yes, global audience</li>
+                                    <li><strong>Context?</strong> Homepage feed (not video page)</li>
+                                    <li><strong>Latency budget?</strong> 200ms</li>
+                                    <li><strong>QPS?</strong> 50k QPS</li>
+                                    <li><strong>KPI?</strong> Video completion rate, guardrail on churn rate</li>
+                                    <li><strong>User interactions available?</strong> Like, comment, watch time, click, share</li>
                                 </ul>
                             </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-chart-line text-orange-500 mr-2"></i>Evaluation</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Offline: MRR, MAP (click/completion weighted)</li>
-                                    <li>• Online: Completion rate, watch time, CTR</li>
-                                    <li>• Sliced by country/language</li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-brain text-pink-500 mr-2"></i>Key Modeling Insights</h4>
-                            <p class="text-sm text-gray-600">
-                                Use contrastive loss with in-batch negatives. ANN indexing with SCANN/FAISS for log(n) retrieval.
-                                Continual learning with drift detection. Handle cold start with content-based fallback for new videos.
-                            </p>
+                            <!-- High Level Design -->
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Objective:</strong> Maximize user engagement on video catalog</li>
+                                    <li><strong>KPI:</strong> Watch time (dwell time), weighted sum of engagement signals</li>
+                                    <li><strong>Architecture:</strong> Candidate Generator + Heavy Ranker + Reranker</li>
+                                    <li><strong>Guardrails:</strong> Churn rate, report rate, negative feedback</li>
+                                </ul>
+                            </div>
+
+                            <!-- Data Engineering -->
+                            <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-database mr-2"></i>Data Engineering & Labels</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p class="mb-2"><strong>Label Construction:</strong></p>
+                                    <ul class="list-disc ml-4 space-y-1">
+                                        <li>Weighted sum: w1 x like + w2 x comment sentiment + w3 x share + w4 x watch time + w5 x dwell time</li>
+                                        <li>Negative samples: In-session impressed but not engaged (per task)</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Feature Engineering -->
+                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
+                                <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold mb-2">User Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>User age, demographics</li>
+                                            <li>User embeddings (sequence model)</li>
+                                            <li>Search history embeddings (aggregated)</li>
+                                            <li>Video genre clusters</li>
+                                            <li>Historical engagement patterns</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Video Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Video ID embedding</li>
+                                            <li>Content: Frame extraction, 3D transformers</li>
+                                            <li>Transcription: BERT embeddings</li>
+                                            <li>Genre (one-hot)</li>
+                                            <li>Likes/impressions (bucketized, log-transformed)</li>
+                                            <li>Channel ID embedding, subscriber count</li>
+                                            <li>Video age (freshness)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Context Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Time of day, day of week</li>
+                                            <li>Device type, network type</li>
+                                            <li>Session context</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modeling Architecture -->
+                            <div class="bg-pink-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Architecture</h4>
+                                <div class="text-sm text-gray-700 space-y-3">
+                                    <div>
+                                        <p class="font-semibold">Candidate Generator:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Collaborative filtering (fast, simple, WALS for continual training)</li>
+                                            <li>Two-tower model (handles cold start, requires ANN serving)</li>
+                                            <li>Content-based filtering for cold start items</li>
+                                            <li>Goal: Improve recall within latency budget</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Heavy Ranker (Single Tower):</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Learning to rank (pointwise for simplicity, pairwise/listwise for NDCG)</li>
+                                            <li>Feature crosses: DCN V2 for efficient deep crosses</li>
+                                            <li>MMOE for multi-task learning (avoid task competition)</li>
+                                            <li>Goal: Improve precision</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Reranker:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Business logic enforcement</li>
+                                            <li>Freshness boost for new content</li>
+                                            <li>Diversity constraints (near-duplicate removal)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Training -->
+                            <div class="bg-yellow-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-yellow-800 mb-3"><i class="fas fa-graduation-cap mr-2"></i>Model Training</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li><strong>Class Imbalance:</strong> Downsample majority class</li>
+                                    <li><strong>Focal Loss:</strong> Avoid loss domination by easy examples</li>
+                                    <li><strong>Gradient Blending:</strong> Balance multi-task learning</li>
+                                    <li><strong>Calibration:</strong> Not strictly needed for ranking</li>
+                                </ul>
+                            </div>
+
+                            <!-- Evaluation -->
+                            <div class="bg-indigo-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-indigo-800 mb-3"><i class="fas fa-chart-line mr-2"></i>Evaluation Metrics</h4>
+                                <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold">Offline:</p>
+                                        <ul class="list-disc ml-4">
+                                            <li>Per-head AUC, weighted loss</li>
+                                            <li>MAP (rank of results)</li>
+                                            <li>Diversity (aggregated cosine similarity)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Online:</p>
+                                        <ul class="list-disc ml-4">
+                                            <li>Weighted engagement score</li>
+                                            <li>CTR, dwell time, LTV</li>
+                                            <li>Guardrails: reports, dislike rate</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Serving & Deployment -->
+                            <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-server mr-2"></i>Serving & Deployment</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Efficiency:</strong> Distill heavy ranker to light ranker, embedding quantization, ANN, caching</p>
+                                    <p><strong>Freshness:</strong> Continual learning with learning rate decay (avoid catastrophic forgetting)</p>
+                                    <p><strong>Deployment:</strong> Shadow testing, canary, A/B testing, holdback, multi-arm bandit</p>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Topics -->
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h4 class="font-bold text-red-800 mb-3"><i class="fas fa-rocket mr-2"></i>Advanced Topics</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Bias Handling:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Popularity bias: Apply penalty in reranker</li>
+                                        <li>Position bias: Add position as feature, serve same position at inference</li>
+                                        <li>Serving bias: Epsilon-greedy exploration</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>Cold Start:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Two-tower and ranker use context features</li>
+                                        <li>Dropout ID features during training</li>
+                                        <li>Fallback model for new users (trendy, popular)</li>
+                                        <li>Content-based filtering for new items</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Case 2: LinkedIn Feed Ranking -->
+                <!-- Case 2: People You May Know (PYMK) -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-recsys">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div>
                                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
-                                <h3 class="text-xl font-bold mt-2">LinkedIn Feed Ranking</h3>
-                                <p class="text-gray-600">Rank posts, articles, jobs in the homepage feed</p>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Full Example</span>
+                                <h3 class="text-2xl font-bold mt-2">People You May Know (PYMK)</h3>
+                                <p class="text-gray-600">Design LinkedIn's friend/connection recommendation system using GNNs</p>
                             </div>
                             <span class="text-sm text-gray-500">LinkedIn</span>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-sitemap text-blue-500 mr-2"></i>Architecture</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• 3-stage: Retrieval (40ms) → Heavy Ranker (80ms) → Reranker (30ms)</li>
-                                    <li>• Multi-objective: dwell, click, reaction, comment, share, report</li>
-                                    <li>• MMOE with DCNv2 crosses</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-database text-purple-500 mr-2"></i>Features</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Member: title/industry embeddings, interests, activity rates</li>
-                                    <li>• Content: MiniLM embeddings, topics, freshness, creator quality</li>
-                                    <li>• Graph: connection depth, social proof, creator-member affinity</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button onclick="toggleContent('pymk')" class="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
 
-                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-brain text-pink-500 mr-2"></i>Key Insights</h4>
-                            <p class="text-sm text-gray-600">
-                                Sequence encoder (Transformer) over member's recent interactions for short-term intent.
-                                Calibration per-region with isotonic regression. Reranker handles freshness boost, diversity caps, and creator fairness.
-                            </p>
+                        <div id="pymk" class="collapsible-content">
+                            <!-- Clarifying Questions -->
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Bidirectional?</strong> Yes, friendships are two-sided</li>
+                                    <li><strong>Scope?</strong> All users or specific geo/company slice</li>
+                                    <li><strong>Goal:</strong> Maximize connection requests sent, accepted, and 30d/90d engagement</li>
+                                    <li><strong>Connection limits?</strong> Max connections per person</li>
+                                    <li><strong>Data available?</strong> Work experience, activities, education</li>
+                                    <li><strong>Scale?</strong> DAU, graph size</li>
+                                    <li><strong>Graph dynamics?</strong> Friendships don't change rapidly</li>
+                                    <li><strong>Latency budget?</strong> Cold start handling? Explainability?</li>
+                                </ul>
+                            </div>
+
+                            <!-- High Level -->
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Objective:</strong> Maximize formed connections (durable 30/90d engagement)</li>
+                                    <li><strong>Candidate Generation:</strong> Friend-of-Friend (FoF), same school, same location</li>
+                                    <li><strong>Approach:</strong> Edge prediction (predicting if graph edge can form)</li>
+                                    <li><strong>Multi-objective:</strong> Send, accept, post-accept engagement</li>
+                                    <li><strong>Guardrails:</strong> Spam reports, blocks, dissatisfaction</li>
+                                </ul>
+                            </div>
+
+                            <!-- Feature Engineering -->
+                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
+                                <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold mb-2">User Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Demographics (one-hot, normalized, bucketized)</li>
+                                            <li>#connections, #followers, #following, #pending</li>
+                                            <li>Account age, action counts</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Affinity Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Schools in common, overlapping time</li>
+                                            <li>Companies in common, same industry</li>
+                                            <li>Profile visits, mutual connections</li>
+                                            <li>Time-discounted mutual connections</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <p class="mt-2 text-sm"><strong>Label:</strong> Formed connection X-days after impression; implicit negative if not connected</p>
+                            </div>
+
+                            <!-- Modeling -->
+                            <div class="bg-pink-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Techniques (GNN)</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Baseline:</strong> FoF with highest mutual, simple MLP</p>
+                                    <p><strong>Edge Prediction:</strong> GNN takes graph as input, generates node embeddings</p>
+                                    <p class="font-semibold mt-2">GNN Architectures:</p>
+                                    <ul class="list-disc ml-4 space-y-1">
+                                        <li><strong>R-GCN:</strong> Natively handles relational features</li>
+                                        <li><strong>GAT:</strong> Attention between users for aggregation</li>
+                                        <li><strong>LightGCN:</strong> For FoF-dominated scenarios, only graph structure</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>Last Layer:</strong> Dot product or MLP</p>
+                                    <p><strong>Loss:</strong> BCE or Bayesian Personalized Ranking (BPR)</p>
+                                </div>
+                            </div>
+
+                            <!-- Training -->
+                            <div class="bg-yellow-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-yellow-800 mb-3"><i class="fas fa-graduation-cap mr-2"></i>Model Training</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Snapshot of graph at time t, predict snapshot at t+1</li>
+                                    <li>Compute node vectors and edge vectors at time t</li>
+                                    <li>Create labels for time t+1 (missing vs existing edges)</li>
+                                    <li>Cross-entropy loss</li>
+                                </ul>
+                            </div>
+
+                            <!-- Serving -->
+                            <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-server mr-2"></i>Serving</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li><strong>Batch serving:</strong> Real-time too slow; graph changes slowly</li>
+                                    <li>Remove previously seen suggestions</li>
+                                    <li>Precompute only for active users</li>
+                                    <li>Lightweight ranker to reduce candidates</li>
+                                    <li>Add reranker for diversity</li>
+                                </ul>
+                            </div>
+
+                            <!-- Bias -->
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h4 class="font-bold text-red-800 mb-3"><i class="fas fa-balance-scale mr-2"></i>Bias Handling</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li><strong>Popularity bias:</strong> Apply penalty multiplier</li>
+                                    <li><strong>Selection bias:</strong> Exploration, inverse propensity scoring</li>
+                                    <li><strong>Position bias:</strong> Use as feature, same position for all at serving</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Case 3: Similar Listings (Airbnb) -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-recsys">
+                <!-- Case 3: Airbnb Dynamic Pricing -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-ads">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
-                                <h3 class="text-xl font-bold mt-2">Airbnb Similar Listings</h3>
-                                <p class="text-gray-600">Session-based recommendation for similar property suggestions</p>
+                                <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Pricing</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Full Example</span>
+                                <h3 class="text-2xl font-bold mt-2">Airbnb Dynamic Pricing</h3>
+                                <p class="text-gray-600">Design a dynamic pricing system to optimize revenue per listing</p>
                             </div>
                             <span class="text-sm text-gray-500">Airbnb</span>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Core Approach</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Session-based: predict next item from recent clicks</li>
-                                    <li>• Word2Vec-style embeddings on listing sequences</li>
-                                    <li>• Always include booked listing in training pairs</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-bullseye text-red-500 mr-2"></i>Training Strategy</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Positive pairs: central listing + neighbors in session</li>
-                                    <li>• Hard negatives: same city/neighborhood, not clicked</li>
-                                    <li>• Blend short-term + long-term user embeddings</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button onclick="toggleContent('pricing')" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
 
-                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-brain text-pink-500 mr-2"></i>Key Insights</h4>
-                            <p class="text-sm text-gray-600">
-                                Cold start: use average embeddings of local neighbors. Position bias mitigation via randomization, inverse propensity weighting,
-                                or positional features. Metrics: 1/rank of booked item, session book rate.
-                            </p>
+                        <div id="pricing" class="collapsible-content">
+                            <!-- CQ -->
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Optimization target?</strong> Price per night for bookings or long-term occupancy</li>
+                                    <li><strong>KPI:</strong> Increase booking revenue while maintaining occupancy and host satisfaction</li>
+                                    <li><strong>Guardrails:</strong> Cancellation rate, complaint rate, guest refund rate</li>
+                                    <li><strong>Update cadence:</strong> Daily (price recommendations per listing-day)</li>
+                                    <li><strong>Seasonality?</strong> Yes - holidays, local festivals, conferences</li>
+                                    <li><strong>External data?</strong> Competitor listings, demand heatmaps, macroeconomic trends</li>
+                                    <li><strong>Latency:</strong> Offline batch; online for what-if scenarios</li>
+                                </ul>
+                            </div>
+
+                            <!-- High Level -->
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p><strong>Goal:</strong> Predict optimal nightly price that maximizes expected booking revenue</p>
+                                    <p class="mt-2"><strong>Formula:</strong> price x P(booking | price, user, listing, context)</p>
+                                    <p class="mt-2"><strong>Two-stage design:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li><strong>Demand Estimation Model:</strong> Predict booking probability given listing and context</li>
+                                        <li><strong>Revenue Optimization Layer:</strong> Derive optimal price using elasticity modeling</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Features -->
+                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
+                                <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold mb-2">Listing Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Base price, amenities, bedrooms, rating</li>
+                                            <li>Photos (CLIP embeddings)</li>
+                                            <li>Host quality score</li>
+                                            <li>Lat/long, walkability, POI distance</li>
+                                            <li>Historical occupancy %, price trend (7d, 30d)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Context Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Date, DOW, season, holiday flag</li>
+                                            <li>Local events, weather forecast</li>
+                                            <li>Booking window (lead time)</li>
+                                            <li>Macro demand index</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Market Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Avg competitor price in radius</li>
+                                            <li>Supply/demand ratio per region-date</li>
+                                            <li>Historical price elasticity</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modeling -->
+                            <div class="bg-pink-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Architecture</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>1. Demand Estimation Model:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Wide & Deep: Wide for linear elasticity, Deep for nonlinear interactions</li>
+                                        <li>Inputs: log(price), listing features, seasonality embeddings, region embedding</li>
+                                        <li>Loss: Weighted BCE (rare bookings)</li>
+                                        <li>Output: Calibrated probability of booking</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>2. Revenue Optimization:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>For each listing-day: simulate bookings for price range [p_min, p_max]</li>
+                                        <li>Compute expected revenue and select optimal price</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Serving -->
+                            <div class="bg-gray-100 rounded-lg p-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-server mr-2"></i>Serving & Monitoring</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Batch pipeline:</strong> Daily Spark/Beam job, cache in KV store (listing_id, date)</p>
+                                    <p><strong>Online inference:</strong> Fast MLP for real-time what-if queries</p>
+                                    <p><strong>Feature freshness:</strong> Demand index hourly; static features cached</p>
+                                    <p><strong>Monitoring:</strong> Track daily drift, alert if booking rate drops >x%, PSI tests</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Case 4: Harmful Content Detection -->
+                <!-- Case 4: Bot Detection -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-content">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div>
-                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Content Moderation</span>
-                                <h3 class="text-xl font-bold mt-2">Harmful Content Detection</h3>
-                                <p class="text-gray-600">Multi-modal system to detect and remove harmful posts</p>
+                                <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Trust & Safety</span>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Full Example</span>
+                                <h3 class="text-2xl font-bold mt-2">Bot Detection in Social Media</h3>
+                                <p class="text-gray-600">Design a real-time system to detect and handle bot accounts</p>
                             </div>
                             <span class="text-sm text-gray-500">Meta/Social</span>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-layer-group text-indigo-500 mr-2"></i>Architecture</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Late fusion: separate models per modality, combine predictions</li>
-                                    <li>• Multi-task learning: violence, nudity, hate speech, misinformation</li>
-                                    <li>• Two paths: removal (high prob) vs demotion (review queue)</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-cogs text-green-500 mr-2"></i>Features</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Text: DistilBERT embeddings (multilingual)</li>
-                                    <li>• Image/Video: CLIP, SimCLR, VideoMOCO</li>
-                                    <li>• Author: violation history, report rate, account age</li>
-                                </ul>
-                            </div>
-                        </div>
+                        <button onclick="toggleContent('bot')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
 
-                        <div class="mt-4 p-4 bg-gray-50 rounded-lg">
-                            <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-chart-bar text-orange-500 mr-2"></i>Evaluation</h4>
-                            <p class="text-sm text-gray-600">
-                                Offline: PR-AUC, ROC-AUC. Online: Prevalence (uncaught/total), harmful impressions (impact), valid appeals (FP rate),
-                                proactive rate (ML detected / total detected). Handle human labeler bias with diverse teams and disagreement analysis.
-                            </p>
+                        <div id="bot" class="collapsible-content">
+                            <!-- CQ -->
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Platform?</strong> Which social media?</li>
+                                    <li><strong>Latency?</strong> Real-time detection?</li>
+                                    <li><strong>KPI:</strong> Maximize recall while FPR < 1% as guardrail</li>
+                                    <li><strong>Target?</strong> Single bots or coordinated networks?</li>
+                                    <li><strong>Actions?</strong> Demote posts, block (allow appeal)</li>
+                                </ul>
+                            </div>
+
+                            <!-- High Level -->
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p><strong>Two-stage architecture:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li><strong>Lightweight filter:</strong> Maximize throughput, low latency, simple MLP</li>
+                                        <li><strong>Heavy model:</strong> XGBoost, DNN, or GNN -> calibrate -> take action</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Labels -->
+                            <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-database mr-2"></i>Data Engineering & Labels</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Core labels:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Manual annotators: High precision, low volume (active learning)</li>
+                                        <li>User reports: Noisy, lower weight in loss</li>
+                                        <li>Heuristics: Clusters sharing IP or similar behavior</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>Active learning:</strong> Sample from 0.4-0.6 probability predictions for annotation</p>
+                                    <p><strong>Unsupervised:</strong> Flag outlier behavior to feed continual learning</p>
+                                </div>
+                            </div>
+
+                            <!-- Features -->
+                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Behavioral Sequence:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Inter-event timing distribution (too precise = non-human)</li>
+                                        <li>Circadian rhythm analysis</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>Network Topology:</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Following people who don't follow each other</li>
+                                        <li>Connection to known bots</li>
+                                    </ul>
+                                    <p class="mt-2"><strong>Similarity Features (strong signal):</strong></p>
+                                    <ul class="list-disc ml-4">
+                                        <li>Generate embeddings for all banned bots</li>
+                                        <li>Query ANN for top-k closest bots within small radius</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- Action Layer -->
+                            <div class="bg-gray-100 rounded-lg p-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-gavel mr-2"></i>Action Layer (Calibrated)</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li><strong>High probability:</strong> Ban/remove</li>
+                                    <li><strong>Mid probability:</strong> Limit visibility, restrict requests</li>
+                                    <li><strong>Near decision boundary:</strong> Send for manual review (also use as labels)</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Case 5: Event Recommendation -->
+                <!-- Case 5: Pinterest Feed Ranking -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden case-card transition-all duration-300 topic-recsys">
                     <div class="p-6">
                         <div class="flex items-start justify-between mb-4">
                             <div>
                                 <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
-                                <h3 class="text-xl font-bold mt-2">Event Recommendation</h3>
-                                <p class="text-gray-600">Location-based, time-sensitive event suggestions</p>
+                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Full Example</span>
+                                <h3 class="text-2xl font-bold mt-2">Pinterest Feed Ranking</h3>
+                                <p class="text-gray-600">Recommend Pins that users might engage with</p>
                             </div>
-                            <span class="text-sm text-gray-500">Eventbrite/Meetup</span>
+                            <span class="text-sm text-gray-500">Pinterest</span>
                         </div>
 
-                        <div class="grid md:grid-cols-2 gap-4 mt-4">
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-map-marker-alt text-red-500 mr-2"></i>Key Features</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Location: walk score, commute distance, same city</li>
-                                    <li>• Time: day-of-week ratio, convenience score, time left</li>
-                                    <li>• Social: friend attendance, invitation status, host connection</li>
+                        <button onclick="toggleContent('pinterest')" class="w-full bg-gradient-to-r from-pink-500 to-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
+
+                        <div id="pinterest" class="collapsible-content">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Scale:</strong> 100M DAU, 50k QPS, Billions of pins</li>
+                                    <li><strong>Latency:</strong> 100ms (ranker 40ms)</li>
+                                    <li><strong>Content:</strong> Images with text, keywords, hashtags</li>
+                                    <li><strong>Interactions:</strong> Like, comment, share, click, bookmark</li>
                                 </ul>
                             </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800 mb-2"><i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>Challenges</h4>
-                                <ul class="text-sm text-gray-600 space-y-1">
-                                    <li>• Heavy cold start (events are short-lived)</li>
-                                    <li>• Feature-heavy approach over collaborative filtering</li>
-                                    <li>• Start with XGBoost, graduate to neural network</li>
-                                </ul>
+
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p><strong>KPIs:</strong> Weighted engagement (click: baity, bookmark: sparse), DAU increase</p>
+                                    <p><strong>Guardrails:</strong> Churn, reports, dislikes, latency, TPU utilization</p>
+                                    <p><strong>Architecture:</strong> Two-tower retrieval -> MMOE + DCN V2 ranker -> Reranker</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-pink-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Model Architecture</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p><strong>Multi-task learning with MMOE:</strong> Different gating for each task (click, bookmark, share)</p>
+                                    <p><strong>DCN V2:</strong> Efficient deep feature crosses</p>
+                                    <p><strong>Loss:</strong> Weighted sum - CE for click/share/bookmark, MSE for comment sentiment</p>
+                                    <p><strong>Focal loss:</strong> Prevent majority class domination</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-gray-100 rounded-lg p-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-rocket mr-2"></i>Advanced Topics</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p><strong>Cold Start:</strong> Feature dropout on IDs (10%), content-based filtering for new items</p>
+                                    <p><strong>Biases:</strong> Position as feature, popularity penalty, epsilon-greedy exploration</p>
+                                    <p><strong>Continual Learning:</strong> Drift-triggered, learning rate decay</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
@@ -307,7 +674,7 @@
     <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium Cases (17+ more with full diagrams)
+                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium Cases (17+ more with full solutions)
             </h2>
 
             <div class="relative">
@@ -316,11 +683,6 @@
                         <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Ads</span>
                         <h3 class="font-bold mt-2">Ads pCTR Prediction</h3>
                         <p class="text-sm text-gray-600">Deep Factorization Machines, calibration...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">YouTube Video Recommendation</h3>
-                        <p class="text-sm text-gray-600">Two-stage retrieval + ranking, matrix factorization...</p>
                     </div>
                     <div class="bg-white rounded-xl shadow p-6">
                         <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Search</span>
@@ -333,14 +695,19 @@
                         <p class="text-sm text-gray-600">Skill matching, graph neural networks...</p>
                     </div>
                     <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Pricing</span>
-                        <h3 class="font-bold mt-2">Airbnb Dynamic Pricing</h3>
-                        <p class="text-sm text-gray-600">Demand forecasting, elasticity modeling...</p>
+                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Trust</span>
+                        <h3 class="font-bold mt-2">Scam Content Detection</h3>
+                        <p class="text-sm text-gray-600">Multi-modal, MMOE, focal loss...</p>
                     </div>
                     <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Trust</span>
-                        <h3 class="font-bold mt-2">Bot Detection</h3>
-                        <p class="text-sm text-gray-600">Behavioral features, graph-based detection...</p>
+                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
+                        <h3 class="font-bold mt-2">Event Recommendation</h3>
+                        <p class="text-sm text-gray-600">Location-based, time-sensitive...</p>
+                    </div>
+                    <div class="bg-white rounded-xl shadow p-6">
+                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Search</span>
+                        <h3 class="font-bold mt-2">YouTube Video Search</h3>
+                        <p class="text-sm text-gray-600">Two-tower, query understanding...</p>
                     </div>
                 </div>
 
@@ -348,11 +715,11 @@
                     <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-md">
                         <i class="fas fa-crown text-5xl text-yellow-500 mb-4"></i>
                         <h3 class="text-2xl font-bold mb-2">Unlock All 22 Cases</h3>
-                        <p class="text-gray-600 mb-4">Full solutions with Excalidraw diagrams</p>
+                        <p class="text-gray-600 mb-4">Full solutions with step-by-step walkthroughs</p>
                         <ul class="text-sm text-gray-600 mb-6 space-y-2">
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>YouTube Recommendation</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>Airbnb Dynamic Pricing</li>
-                            <li><i class="fas fa-check text-green-500 mr-2"></i>PYMK (People You May Know)</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Airbnb Search Ranking</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>LinkedIn Job Recommendation</li>
+                            <li><i class="fas fa-check text-green-500 mr-2"></i>Scam/Fraud Detection</li>
                             <li><i class="fas fa-check text-green-500 mr-2"></i>And 14 more...</li>
                         </ul>
                         <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
@@ -372,5 +739,12 @@
             <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
         </div>
     </footer>
+
+    <script>
+        function toggleContent(id) {
+            const content = document.getElementById(id);
+            content.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
