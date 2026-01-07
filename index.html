@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MLInterviewPro - Master ML Interviews</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .mentor-cta { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-purple-600">
+                    <i class="fas fa-brain mr-2"></i>MLInterviewPro
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
+                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
+                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
+                    <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
+                </div>
+                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                   class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-user-tie mr-2"></i>Book Mentorship
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="gradient-bg text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl font-bold mb-6">Master ML Engineering Interviews</h1>
+            <p class="text-xl mb-8 opacity-90">Curated resources from 314+ LeetCode problems, 22 ML System Design cases, and proven behavioral frameworks</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="leetcode.html" class="bg-white text-purple-600 px-8 py-3 rounded-full font-bold hover:shadow-lg transition">
+                    <i class="fas fa-code mr-2"></i>Start Coding
+                </a>
+                <a href="ml-system-design.html" class="bg-transparent border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition">
+                    <i class="fas fa-sitemap mr-2"></i>System Design
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-purple-600">314+</div>
+                    <div class="text-gray-600 mt-2">LeetCode Problems</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-purple-600">22</div>
+                    <div class="text-gray-600 mt-2">ML System Design Cases</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-purple-600">50+</div>
+                    <div class="text-gray-600 mt-2">Behavioral Questions</div>
+                </div>
+                <div class="p-6">
+                    <div class="text-4xl font-bold text-purple-600">128k+</div>
+                    <div class="text-gray-600 mt-2">Hours of Practice</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">What You'll Get</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- LeetCode Card -->
+                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-2xl text-green-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">LeetCode Mastery</h3>
+                    <p class="text-gray-600 mb-4">314+ curated problems organized by company, difficulty, and pattern. Each with key insights and optimal approaches.</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Top 10 FREE problems</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Company tags (Google, Meta, Amazon)</li>
+                        <li><i class="fas fa-check text-green-500 mr-2"></i>Pattern-based learning</li>
+                    </ul>
+                    <a href="leetcode.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
+                        Explore Problems <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- ML System Design Card -->
+                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-project-diagram text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">ML System Design</h3>
+                    <p class="text-gray-600 mb-4">22 comprehensive case studies from top companies. Full solutions with diagrams, feature engineering, and evaluation metrics.</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i>RecSys, Search, Ads, Content Mod</li>
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i>Excalidraw diagrams included</li>
+                        <li><i class="fas fa-check text-blue-500 mr-2"></i>Real interview frameworks</li>
+                    </ul>
+                    <a href="ml-system-design.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
+                        View Cases <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+
+                <!-- Behavioral Card -->
+                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
+                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-comments text-2xl text-orange-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Behavioral Prep</h3>
+                    <p class="text-gray-600 mb-4">Comprehensive question bank and story frameworks. STAR method templates for every interview scenario.</p>
+                    <ul class="text-sm text-gray-500 space-y-2">
+                        <li><i class="fas fa-check text-orange-500 mr-2"></i>50+ common questions</li>
+                        <li><i class="fas fa-check text-orange-500 mr-2"></i>Story category frameworks</li>
+                        <li><i class="fas fa-check text-orange-500 mr-2"></i>STAR method templates</li>
+                    </ul>
+                    <a href="behavioral.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
+                        Practice Now <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mentorship CTA Section -->
+    <section class="mentor-cta py-16 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Need Personalized Guidance?</h2>
+            <p class="text-xl mb-8 opacity-90">Get 1:1 mentorship from an ML Engineer who's been through the process</p>
+            <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+               class="bg-white text-pink-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
+                <i class="fas fa-calendar-check mr-2"></i>Book a Session on MentorCruise
+            </a>
+            <p class="mt-4 text-sm opacity-75">Limited spots available each month</p>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-8 text-gray-700">Problems from Top Companies</h2>
+            <div class="flex flex-wrap justify-center gap-8 text-3xl text-gray-400">
+                <span class="hover:text-blue-500 transition">Google</span>
+                <span class="hover:text-blue-600 transition">Meta</span>
+                <span class="hover:text-orange-500 transition">Amazon</span>
+                <span class="hover:text-blue-400 transition">LinkedIn</span>
+                <span class="hover:text-red-500 transition">Airbnb</span>
+                <span class="hover:text-green-500 transition">Netflix</span>
+                <span class="hover:text-pink-500 transition">Pinterest</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4"><i class="fas fa-brain mr-2"></i>MLInterviewPro</h3>
+                    <p class="text-gray-400">Master ML Engineering interviews with curated resources and expert guidance.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Resources</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="leetcode.html" class="hover:text-white">LeetCode</a></li>
+                        <li><a href="ml-system-design.html" class="hover:text-white">ML System Design</a></li>
+                        <li><a href="behavioral.html" class="hover:text-white">Behavioral</a></li>
+                        <li><a href="cheatsheet.html" class="hover:text-white">ML Cheatsheet</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Get Help</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">Resume Review</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">Mock Interviews</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 rounded-full font-semibold hover:shadow-lg transition">
+                        <i class="fas fa-user-tie mr-2"></i>MentorCruise
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
+                <p>&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

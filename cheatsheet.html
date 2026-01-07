@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Cheatsheet - MLInterviewPro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .concept-card { border-left: 4px solid; }
+        .concept-data { border-color: #3b82f6; }
+        .concept-model { border-color: #10b981; }
+        .concept-eval { border-color: #f59e0b; }
+        .concept-serve { border-color: #ef4444; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="text-2xl font-bold text-purple-600">
+                    <i class="fas fa-brain mr-2"></i>MLInterviewPro
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
+                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
+                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
+                    <a href="cheatsheet.html" class="text-purple-600 font-bold">Cheatsheet</a>
+                </div>
+                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                   class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-4 py-2 rounded-full font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-user-tie mr-2"></i>Book Mentorship
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="gradient-bg text-white py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h1 class="text-4xl font-bold mb-4"><i class="fas fa-file-alt mr-3"></i>ML Interview Cheatsheet</h1>
+            <p class="text-xl opacity-90">Quick reference for key ML concepts, metrics, and frameworks</p>
+        </div>
+    </section>
+
+    <!-- Quick Links -->
+    <section class="bg-white shadow py-4 sticky top-16 z-40">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#data" class="text-blue-600 hover:underline font-medium">Data & Features</a>
+                <a href="#models" class="text-green-600 hover:underline font-medium">Models</a>
+                <a href="#evaluation" class="text-yellow-600 hover:underline font-medium">Evaluation</a>
+                <a href="#serving" class="text-red-600 hover:underline font-medium">Serving</a>
+                <a href="#frameworks" class="text-purple-600 hover:underline font-medium">Frameworks</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Data & Features Section -->
+    <section id="data" class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center text-blue-600">
+                <i class="fas fa-database mr-3"></i>Data & Feature Engineering
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
+                    <h3 class="font-bold text-lg mb-3">Text Features</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Preprocessing:</strong> Lowercasing, tokenization, stopwords, stemming/lemma</li>
+                        <li><strong>Vectorization:</strong> BOW, TF-IDF (sparse), Word2Vec, BERT (dense)</li>
+                        <li><strong>Tokenization:</strong> BPE, WordPiece, SentencePiece</li>
+                        <li><strong>ID Encoding:</strong> Lookup table vs hashing (memory vs collision)</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
+                    <h3 class="font-bold text-lg mb-3">Image/Video Features</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Preprocessing:</strong> Resize, normalize, decode frames</li>
+                        <li><strong>Embeddings:</strong> ResNet, CLIP, SimCLR, VideoMOCO</li>
+                        <li><strong>Augmentation:</strong> Crop, rotate, flip, color jitter</li>
+                        <li><strong>Video:</strong> Frame sampling, 3D convolutions, temporal pooling</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
+                    <h3 class="font-bold text-lg mb-3">Numerical Features</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Scaling:</strong> StandardScaler, MinMax, RobustScaler</li>
+                        <li><strong>Bucketization:</strong> Equal-width, quantile-based, log transform</li>
+                        <li><strong>Missing values:</strong> Mean/median imputation, indicator column</li>
+                        <li><strong>Skewed data:</strong> Log transform, Box-Cox, Yeo-Johnson</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
+                    <h3 class="font-bold text-lg mb-3">Categorical Features</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Low cardinality:</strong> One-hot encoding</li>
+                        <li><strong>High cardinality:</strong> Embedding layers, hashing</li>
+                        <li><strong>Feature crosses:</strong> Manual or DCN (Deep Cross Network)</li>
+                        <li><strong>Target encoding:</strong> Mean encoding with regularization</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section id="models" class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center text-green-600">
+                <i class="fas fa-project-diagram mr-3"></i>Model Architectures
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
+                    <h3 class="font-bold text-lg mb-3">Recommendation Systems</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Content-based:</strong> Item features → similarity → recommend</li>
+                        <li><strong>Collaborative Filtering:</strong> User-item matrix factorization</li>
+                        <li><strong>Two-tower:</strong> User encoder + Item encoder, ANN retrieval</li>
+                        <li><strong>Sequential:</strong> Transformers over interaction history</li>
+                        <li><strong>MMOE:</strong> Multi-task with shared experts, task-specific towers</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
+                    <h3 class="font-bold text-lg mb-3">Ranking & Search</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Pointwise:</strong> Score items independently (log loss)</li>
+                        <li><strong>Pairwise:</strong> Learn relative order (RankNet, LambdaRank)</li>
+                        <li><strong>Listwise:</strong> Optimize full ranking (LambdaMART, NDCG)</li>
+                        <li><strong>Retrieval → Ranking → Reranking:</strong> Multi-stage pipeline</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
+                    <h3 class="font-bold text-lg mb-3">Classification Models</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Logistic Regression:</strong> Fast, interpretable, linear boundaries</li>
+                        <li><strong>XGBoost/LightGBM:</strong> Feature importance, no continual learning</li>
+                        <li><strong>DNN:</strong> Complex patterns, requires more data</li>
+                        <li><strong>Factorization Machines:</strong> Efficient feature crosses</li>
+                        <li><strong>DCN:</strong> Automatic cross features with DNN</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
+                    <h3 class="font-bold text-lg mb-3">Embeddings & Similarity</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Contrastive Loss:</strong> Push similar together, dissimilar apart</li>
+                        <li><strong>Triplet Loss:</strong> Anchor, positive, negative</li>
+                        <li><strong>In-batch Negatives:</strong> Use other batch items as negatives</li>
+                        <li><strong>ANN Search:</strong> FAISS, ScaNN, HNSW, LSH</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Evaluation Section -->
+    <section id="evaluation" class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center text-yellow-600">
+                <i class="fas fa-chart-line mr-3"></i>Evaluation Metrics
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
+                    <h3 class="font-bold text-lg mb-3">Classification</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Precision:</strong> TP / (TP + FP) - quality of positives</li>
+                        <li><strong>Recall:</strong> TP / (TP + FN) - coverage of positives</li>
+                        <li><strong>F1:</strong> Harmonic mean of P & R</li>
+                        <li><strong>AUC-ROC:</strong> Ranking quality across thresholds</li>
+                        <li><strong>PR-AUC:</strong> Better for imbalanced data</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
+                    <h3 class="font-bold text-lg mb-3">Ranking</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Precision@K:</strong> Relevant in top K</li>
+                        <li><strong>Recall@K:</strong> Coverage in top K</li>
+                        <li><strong>MRR:</strong> 1/rank of first relevant item</li>
+                        <li><strong>MAP:</strong> Mean AP across queries</li>
+                        <li><strong>NDCG:</strong> Graded relevance with position discount</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
+                    <h3 class="font-bold text-lg mb-3">Online Metrics</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>CTR:</strong> Clicks / Impressions</li>
+                        <li><strong>Conversion Rate:</strong> Purchases / Clicks</li>
+                        <li><strong>Dwell Time:</strong> Time spent on content</li>
+                        <li><strong>Session Time:</strong> Total engagement</li>
+                        <li><strong>Guardrails:</strong> Report rate, hide rate, churn</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 bg-yellow-50 rounded-xl p-6">
+                <h3 class="font-bold text-lg mb-3"><i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>When to Use What</h3>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <p><strong>Binary relevance:</strong> Precision@K, Recall@K, MAP</p>
+                        <p><strong>Graded relevance:</strong> NDCG</p>
+                        <p><strong>Single relevant item:</strong> MRR</p>
+                    </div>
+                    <div>
+                        <p><strong>Imbalanced classes:</strong> PR-AUC over ROC-AUC</p>
+                        <p><strong>Calibration needed:</strong> Brier score, ECE</p>
+                        <p><strong>Diversity needed:</strong> Coverage, intra-list diversity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serving Section -->
+    <section id="serving" class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center text-red-600">
+                <i class="fas fa-server mr-3"></i>Serving & Production
+            </h2>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
+                    <h3 class="font-bold text-lg mb-3">Latency Optimization</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Caching:</strong> Static features, precomputed embeddings</li>
+                        <li><strong>Batching:</strong> Combine requests for GPU efficiency</li>
+                        <li><strong>Distillation:</strong> Train smaller model from large teacher</li>
+                        <li><strong>Quantization:</strong> Reduce precision (FP16, INT8)</li>
+                        <li><strong>Pruning:</strong> Remove less important weights</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
+                    <h3 class="font-bold text-lg mb-3">Feature Store</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Offline features:</strong> Batch computed, daily refresh</li>
+                        <li><strong>Online features:</strong> Real-time, streaming updates</li>
+                        <li><strong>Train-serve consistency:</strong> Same logic for both</li>
+                        <li><strong>Point-in-time correctness:</strong> Avoid data leakage</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
+                    <h3 class="font-bold text-lg mb-3">Deployment Strategy</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Shadow mode:</strong> Run alongside, no user impact</li>
+                        <li><strong>Canary:</strong> Small % traffic, monitor metrics</li>
+                        <li><strong>A/B test:</strong> Statistical significance, holdout</li>
+                        <li><strong>Blue-green:</strong> Quick rollback capability</li>
+                    </ul>
+                </div>
+
+                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
+                    <h3 class="font-bold text-lg mb-3">Monitoring</h3>
+                    <ul class="text-sm text-gray-600 space-y-2">
+                        <li><strong>Data drift:</strong> PSI, KS test on feature distributions</li>
+                        <li><strong>Concept drift:</strong> Model performance degradation</li>
+                        <li><strong>Staleness:</strong> Feature freshness, update frequency</li>
+                        <li><strong>Latency:</strong> P50, P95, P99 percentiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Frameworks Section -->
+    <section id="frameworks" class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <h2 class="text-2xl font-bold mb-6 flex items-center text-purple-600">
+                <i class="fas fa-clipboard-list mr-3"></i>Interview Frameworks
+            </h2>
+
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h3 class="font-bold text-xl mb-4">ML System Design Template</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">1. Clarifying Questions (5 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Business objective & success metrics</li>
+                            <li>• Scale: users, QPS, data size</li>
+                            <li>• Latency requirements</li>
+                            <li>• Available data & labels</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">2. High-Level Design (5 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• System diagram</li>
+                            <li>• ML vs non-ML components</li>
+                            <li>• Online vs offline processing</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">3. Data Pipeline (10 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Training data construction</li>
+                            <li>• Label generation</li>
+                            <li>• Feature engineering</li>
+                            <li>• Negative sampling strategy</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">4. Model Architecture (10 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Model choice & justification</li>
+                            <li>• Loss function</li>
+                            <li>• Training strategy</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">5. Evaluation (5 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Offline metrics</li>
+                            <li>• Online metrics</li>
+                            <li>• A/B testing plan</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-purple-600 mb-2">6. Serving & Production (5 min)</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li>• Inference pipeline</li>
+                            <li>• Cold start handling</li>
+                            <li>• Monitoring & retraining</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-4">Want Deep-Dive Practice?</h2>
+            <p class="text-xl mb-8 opacity-90">Get personalized feedback and mock interviews</p>
+            <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+               class="bg-white text-purple-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
+                <i class="fas fa-user-tie mr-2"></i>Book Mentorship Session
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <p class="mb-4">Questions? <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-pink-400 hover:underline">Get personalized help</a></p>
+            <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
+        </div>
+    </footer>
+</body>
+</html>
