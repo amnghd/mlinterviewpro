@@ -1,0 +1,12 @@
+# robots.txt for MLInterviewPro
+# https://amnghd.github.io/mlinterviewpro/
+
+# Allow all crawlers to access all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://amnghd.github.io/mlinterviewpro/sitemap.xml
+
+# Crawl-delay (optional, helps prevent server overload)
+Crawl-delay: 1

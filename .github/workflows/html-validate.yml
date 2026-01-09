@@ -1,0 +1,70 @@
+name: HTML Validation & Linting
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '.github/workflows/html-validate.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '.github/workflows/html-validate.yml'
+
+jobs:
+  validate-html:
+    name: Validate HTML
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install html-validate
+        run: npm install -g html-validate
+
+      - name: Create html-validate config
+        run: |
+          cat > .htmlvalidate.json << 'EOF'
+          {
+            "extends": ["html-validate:recommended"],
+            "rules": {
+              "no-trailing-whitespace": "off",
+              "void-style": "off",
+              "attr-quotes": "off",
+              "doctype-style": "off",
+              "element-required-attributes": "warn",
+              "no-inline-style": "off",
+              "require-sri": "off"
+            }
+          }
+          EOF
+
+      - name: Validate HTML files
+        run: html-validate "*.html" --formatter stylish
+        continue-on-error: true
+
+      - name: Run HTMLHint for additional checks
+        run: |
+          npm install -g htmlhint
+          htmlhint "*.html" --config <(cat << 'EOF'
+          {
+            "tagname-lowercase": true,
+            "attr-lowercase": true,
+            "attr-value-double-quotes": true,
+            "doctype-first": true,
+            "tag-pair": true,
+            "spec-char-escape": true,
+            "id-unique": true,
+            "src-not-empty": true,
+            "attr-no-duplication": true,
+            "title-require": true
+          }
+          EOF
+          )

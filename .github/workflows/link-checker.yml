@@ -1,0 +1,61 @@
+name: Link Checker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '.github/workflows/link-checker.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.html'
+      - '.github/workflows/link-checker.yml'
+  # Allow manual trigger
+  workflow_dispatch:
+  # Run weekly to catch external link rot
+  schedule:
+    - cron: '0 0 * * 0'  # Every Sunday at midnight
+
+jobs:
+  check-links:
+    name: Check Links
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check links with lychee
+        uses: lycheeverse/lychee-action@v1
+        with:
+          # Check all HTML files
+          args: >-
+            --verbose
+            --no-progress
+            --accept 200,204,301,302,307,308
+            --exclude-mail
+            --exclude "^https://mentorcruise.com"
+            --exclude "^https://github.com/YOUR_USERNAME"
+            --exclude "localhost"
+            --exclude "127.0.0.1"
+            --timeout 30
+            --max-retries 3
+            --retry-wait-time 5
+            "*.html"
+          # Fail the action on broken links
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create link check report
+        if: failure()
+        run: |
+          echo "## Link Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Some links appear to be broken. Check the logs above for details." >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Common issues:" >> $GITHUB_STEP_SUMMARY
+          echo "- External sites may be temporarily down" >> $GITHUB_STEP_SUMMARY
+          echo "- Internal links may have typos" >> $GITHUB_STEP_SUMMARY
+          echo "- Anchors may reference non-existent IDs" >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,26 @@
+{
+  "name": "MLInterviewPro",
+  "short_name": "MLInterview",
+  "description": "Master ML Engineering Interviews with curated LeetCode problems, ML System Design cases, and behavioral prep resources",
+  "start_url": "/mlinterviewpro/",
+  "scope": "/mlinterviewpro/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#7c3aed",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "images/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "images/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"]
+}
