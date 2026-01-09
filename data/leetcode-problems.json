@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "totalProblems": 314,
+    "totalProblems": 334,
     "lastUpdated": "2026-01-08",
     "categories": ["Array", "String", "Hash Table", "Dynamic Programming", "Math", "Sorting", "Greedy", "Depth-First Search", "Binary Search", "Tree", "Breadth-First Search", "Stack", "Graph", "Linked List", "Heap", "Two Pointers", "Sliding Window", "Backtracking", "Union Find", "Trie", "Monotonic Stack", "Bit Manipulation"]
   },
@@ -539,6 +539,559 @@
           "isOptimal": true,
           "code": "from collections import Counter\n\ndef minWindow(s, t):\n    \"\"\"\n    Sliding Window: Expand right to include, shrink left to minimize\n    Time: O(m + n) - each char visited at most twice\n    Space: O(m + n) - counter for both strings\n    \n    Key insight: Track how many unique chars are satisfied\n    \"\"\"\n    if not s or not t or len(s) < len(t):\n        return \"\"\n    \n    # Count required characters\n    t_count = Counter(t)\n    required = len(t_count)\n    formed = 0\n    window_counts = {}\n    \n    left = 0\n    ans = float(\"inf\"), None, None\n    \n    for right, c in enumerate(s):\n        # Add character to window\n        window_counts[c] = window_counts.get(c, 0) + 1\n        \n        # Check if this char satisfies requirement\n        if c in t_count and window_counts[c] == t_count[c]:\n            formed += 1\n        \n        # Try to shrink window\n        while left <= right and formed == required:\n            # Update answer if smaller window found\n            if right - left + 1 < ans[0]:\n                ans = (right - left + 1, left, right)\n            \n            # Remove leftmost char\n            char = s[left]\n            window_counts[char] -= 1\n            if char in t_count and window_counts[char] < t_count[char]:\n                formed -= 1\n            left += 1\n    \n    return \"\" if ans[0] == float(\"inf\") else s[ans[1]:ans[2]+1]\n\n# ======== TEST CASES ========\nprint(\"=== Minimum Window Substring ===\")\n\ntest_cases = [\n    (\"ADOBECODEBANC\", \"ABC\", \"BANC\"),\n    (\"a\", \"a\", \"a\"),\n    (\"a\", \"aa\", \"\"),\n]\n\nfor s, t, expected in test_cases:\n    result = minWindow(s, t)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f'  {status} s=\"{s}\", t=\"{t}\" -> \"{result}\"')",
           "expectedOutput": "=== Minimum Window Substring ===\n  ✓ s=\"ADOBECODEBANC\", t=\"ABC\" -> \"BANC\"\n  ✓ s=\"a\", t=\"a\" -> \"a\"\n  ✓ s=\"a\", t=\"aa\" -> \"\""
+        }
+      ]
+    },
+    {
+      "id": 78,
+      "title": "Subsets",
+      "difficulty": "Medium",
+      "description": "Given an integer array nums of unique elements, return all possible subsets (the power set). The solution set must not contain duplicate subsets.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Backtracking", "Bit Manipulation"],
+      "leetcodeUrl": "https://leetcode.com/problems/subsets/",
+      "solutions": [
+        {
+          "approach": "Backtracking",
+          "timeComplexity": "O(n * 2^n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def subsets(nums):\n    \"\"\"\n    Backtracking: Include or exclude each element\n    Time: O(n * 2^n) - 2^n subsets, O(n) to copy each\n    Space: O(n) - recursion depth\n    \n    Key insight: At each position, choose to include or not\n    \"\"\"\n    result = []\n    \n    def backtrack(start, current):\n        # Add copy of current subset\n        result.append(current[:])\n        \n        # Try adding each remaining element\n        for i in range(start, len(nums)):\n            current.append(nums[i])\n            backtrack(i + 1, current)\n            current.pop()\n    \n    backtrack(0, [])\n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Subsets ===\")\n\ntest_cases = [\n    ([1, 2, 3], [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]),\n    ([0], [[], [0]]),\n    ([], [[]]),\n]\n\nfor nums, expected in test_cases:\n    result = subsets(nums)\n    print(f\"  Input: {nums}\")\n    print(f\"  Output: {result}\")\n    print(f\"  Count: {len(result)} subsets\")\n    print()",
+          "expectedOutput": "=== Subsets ===\n  Input: [1, 2, 3]\n  Output: [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]\n  Count: 8 subsets\n\n  Input: [0]\n  Output: [[], [0]]\n  Count: 2 subsets\n\n  Input: []\n  Output: [[]]\n  Count: 1 subsets"
+        },
+        {
+          "approach": "Iterative",
+          "timeComplexity": "O(n * 2^n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Simple implementation",
+          "isOptimal": true,
+          "code": "def subsets(nums):\n    \"\"\"\n    Iterative: Start with empty, add each num to all existing\n    Time: O(n * 2^n)\n    Space: O(1) extra (excluding result)\n    \n    Key insight: Each new number doubles the subsets\n    \"\"\"\n    result = [[]]\n    \n    for num in nums:\n        # Add num to copy of each existing subset\n        result += [subset + [num] for subset in result]\n    \n    return result\n\nprint(f\"Iterative: {subsets([1, 2, 3])}\")",
+          "expectedOutput": "Iterative: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]"
+        },
+        {
+          "approach": "Bit Manipulation",
+          "timeComplexity": "O(n * 2^n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding binary",
+          "isOptimal": true,
+          "code": "def subsets(nums):\n    \"\"\"\n    Bit Manipulation: Each number 0 to 2^n-1 represents a subset\n    Time: O(n * 2^n)\n    Space: O(1) extra\n    \n    Key insight: Bit i represents whether to include nums[i]\n    \"\"\"\n    n = len(nums)\n    result = []\n    \n    for mask in range(1 << n):  # 0 to 2^n - 1\n        subset = []\n        for i in range(n):\n            if mask & (1 << i):  # Check if bit i is set\n                subset.append(nums[i])\n        result.append(subset)\n    \n    return result\n\nprint(f\"Bit manipulation: {subsets([1, 2, 3])}\")",
+          "expectedOutput": "Bit manipulation: [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]]"
+        }
+      ]
+    },
+    {
+      "id": 79,
+      "title": "Word Search",
+      "difficulty": "Medium",
+      "description": "Given an m x n grid of characters board and a string word, return true if word exists in the grid. The word can be constructed from letters of sequentially adjacent cells.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Backtracking", "DFS"],
+      "leetcodeUrl": "https://leetcode.com/problems/word-search/",
+      "solutions": [
+        {
+          "approach": "DFS Backtracking",
+          "timeComplexity": "O(m * n * 4^L)",
+          "spaceComplexity": "O(L)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def exist(board, word):\n    \"\"\"\n    DFS Backtracking: Search from each cell\n    Time: O(m * n * 4^L) - L is word length, 4 directions\n    Space: O(L) - recursion depth\n    \n    Key insight: Mark visited cells, backtrack by unmarking\n    \"\"\"\n    if not board or not board[0]:\n        return False\n    \n    rows, cols = len(board), len(board[0])\n    \n    def dfs(r, c, index):\n        # Found complete word\n        if index == len(word):\n            return True\n        \n        # Boundary and character check\n        if (r < 0 or r >= rows or c < 0 or c >= cols or\n            board[r][c] != word[index]):\n            return False\n        \n        # Mark as visited\n        temp = board[r][c]\n        board[r][c] = '#'\n        \n        # Explore all 4 directions\n        found = (dfs(r + 1, c, index + 1) or\n                 dfs(r - 1, c, index + 1) or\n                 dfs(r, c + 1, index + 1) or\n                 dfs(r, c - 1, index + 1))\n        \n        # Restore cell (backtrack)\n        board[r][c] = temp\n        return found\n    \n    # Try starting from each cell\n    for r in range(rows):\n        for c in range(cols):\n            if dfs(r, c, 0):\n                return True\n    \n    return False\n\n# ======== TEST CASES ========\nprint(\"=== Word Search ===\")\n\nboard1 = [[\"A\",\"B\",\"C\",\"E\"],[\"S\",\"F\",\"C\",\"S\"],[\"A\",\"D\",\"E\",\"E\"]]\nprint(f\"  'ABCCED': {exist([row[:] for row in board1], 'ABCCED')}\")  # True\nprint(f\"  'SEE': {exist([row[:] for row in board1], 'SEE')}\")  # True\nprint(f\"  'ABCB': {exist([row[:] for row in board1], 'ABCB')}\")  # False",
+          "expectedOutput": "=== Word Search ===\n  'ABCCED': True\n  'SEE': True\n  'ABCB': False"
+        }
+      ]
+    },
+    {
+      "id": 98,
+      "title": "Validate Binary Search Tree",
+      "difficulty": "Medium",
+      "description": "Given the root of a binary tree, determine if it is a valid binary search tree (BST).",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Tree", "DFS", "Recursion"],
+      "leetcodeUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
+      "solutions": [
+        {
+          "approach": "Recursive with Range",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(h)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef isValidBST(root):\n    \"\"\"\n    Recursive: Pass valid range to each node\n    Time: O(n) - visit each node once\n    Space: O(h) - recursion depth (height of tree)\n    \n    Key insight: Each node must be within (min, max) range\n    \"\"\"\n    def validate(node, min_val, max_val):\n        if not node:\n            return True\n        \n        # Check current node value is within range\n        if node.val <= min_val or node.val >= max_val:\n            return False\n        \n        # Left subtree must be < node.val\n        # Right subtree must be > node.val\n        return (validate(node.left, min_val, node.val) and\n                validate(node.right, node.val, max_val))\n    \n    return validate(root, float('-inf'), float('inf'))\n\n# ======== TEST CASES ========\nprint(\"=== Validate Binary Search Tree ===\")\n\n# Test 1: Valid BST [2, 1, 3]\nroot1 = TreeNode(2, TreeNode(1), TreeNode(3))\nprint(f\"  [2, 1, 3]: {isValidBST(root1)}\")  # True\n\n# Test 2: Invalid BST [5, 1, 4, null, null, 3, 6]\nroot2 = TreeNode(5, TreeNode(1), TreeNode(4, TreeNode(3), TreeNode(6)))\nprint(f\"  [5, 1, 4, null, null, 3, 6]: {isValidBST(root2)}\")  # False\n\n# Test 3: Invalid BST [5, 4, 6, null, null, 3, 7]\nroot3 = TreeNode(5, TreeNode(4), TreeNode(6, TreeNode(3), TreeNode(7)))\nprint(f\"  [5, 4, 6, null, null, 3, 7]: {isValidBST(root3)}\")  # False",
+          "expectedOutput": "=== Validate Binary Search Tree ===\n  [2, 1, 3]: True\n  [5, 1, 4, null, null, 3, 6]: False\n  [5, 4, 6, null, null, 3, 7]: False"
+        },
+        {
+          "approach": "Inorder Traversal",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(h)",
+          "bestFor": "Elegant",
+          "isOptimal": true,
+          "code": "def isValidBST(root):\n    \"\"\"\n    Inorder: BST inorder traversal gives sorted sequence\n    Time: O(n)\n    Space: O(h)\n    \n    Key insight: Previous value must always be less than current\n    \"\"\"\n    prev = [float('-inf')]  # Use list to allow modification in nested function\n    \n    def inorder(node):\n        if not node:\n            return True\n        \n        # Check left subtree\n        if not inorder(node.left):\n            return False\n        \n        # Check current node against previous\n        if node.val <= prev[0]:\n            return False\n        prev[0] = node.val\n        \n        # Check right subtree\n        return inorder(node.right)\n    \n    return inorder(root)\n\nprint(\"Inorder approach works similarly\")",
+          "expectedOutput": "Inorder approach works similarly"
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "title": "Binary Tree Level Order Traversal",
+      "difficulty": "Medium",
+      "description": "Given the root of a binary tree, return the level order traversal of its nodes' values (i.e., from left to right, level by level).",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Tree", "BFS"],
+      "leetcodeUrl": "https://leetcode.com/problems/binary-tree-level-order-traversal/",
+      "solutions": [
+        {
+          "approach": "BFS with Queue",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "from collections import deque\n\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef levelOrder(root):\n    \"\"\"\n    BFS: Process level by level using queue\n    Time: O(n) - visit each node once\n    Space: O(n) - queue can hold up to n/2 nodes\n    \n    Key insight: Process all nodes at current level before moving to next\n    \"\"\"\n    if not root:\n        return []\n    \n    result = []\n    queue = deque([root])\n    \n    while queue:\n        level_size = len(queue)\n        level = []\n        \n        # Process all nodes at current level\n        for _ in range(level_size):\n            node = queue.popleft()\n            level.append(node.val)\n            \n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n        \n        result.append(level)\n    \n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Binary Tree Level Order Traversal ===\")\n\n# Test 1: [3, 9, 20, null, null, 15, 7]\nroot1 = TreeNode(3, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))\nprint(f\"  Tree [3,9,20,null,null,15,7]: {levelOrder(root1)}\")\n\n# Test 2: [1]\nroot2 = TreeNode(1)\nprint(f\"  Tree [1]: {levelOrder(root2)}\")\n\n# Test 3: Empty\nprint(f\"  Empty tree: {levelOrder(None)}\")",
+          "expectedOutput": "=== Binary Tree Level Order Traversal ===\n  Tree [3,9,20,null,null,15,7]: [[3], [9, 20], [15, 7]]\n  Tree [1]: [[1]]\n  Empty tree: []"
+        },
+        {
+          "approach": "DFS with Level Tracking",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(h)",
+          "bestFor": "Recursive approach",
+          "isOptimal": true,
+          "code": "def levelOrder(root):\n    \"\"\"\n    DFS: Track level and add to corresponding list\n    Time: O(n)\n    Space: O(h) for recursion\n    \"\"\"\n    result = []\n    \n    def dfs(node, level):\n        if not node:\n            return\n        \n        # Add new level list if needed\n        if level == len(result):\n            result.append([])\n        \n        result[level].append(node.val)\n        dfs(node.left, level + 1)\n        dfs(node.right, level + 1)\n    \n    dfs(root, 0)\n    return result\n\nprint(\"DFS approach also works\")",
+          "expectedOutput": "DFS approach also works"
+        }
+      ]
+    },
+    {
+      "id": 121,
+      "title": "Best Time to Buy and Sell Stock",
+      "difficulty": "Easy",
+      "description": "Given an array prices where prices[i] is the price of a stock on the ith day, find the maximum profit you can achieve. You may complete at most one transaction.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Dynamic Programming", "Greedy"],
+      "leetcodeUrl": "https://leetcode.com/problems/best-time-to-buy-and-sell-stock/",
+      "solutions": [
+        {
+          "approach": "Brute Force",
+          "timeComplexity": "O(n^2)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding only",
+          "isOptimal": false,
+          "code": "def maxProfit(prices):\n    \"\"\"\n    Brute Force: Check all buy-sell pairs\n    Time: O(n^2)\n    Space: O(1)\n    \"\"\"\n    max_profit = 0\n    for i in range(len(prices)):\n        for j in range(i + 1, len(prices)):\n            profit = prices[j] - prices[i]\n            max_profit = max(max_profit, profit)\n    return max_profit\n\nprint(f\"Brute force [7,1,5,3,6,4]: {maxProfit([7,1,5,3,6,4])}\")  # 5",
+          "expectedOutput": "Brute force [7,1,5,3,6,4]: 5"
+        },
+        {
+          "approach": "One Pass (Track Minimum)",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def maxProfit(prices):\n    \"\"\"\n    One Pass: Track minimum price seen so far\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: For each day, calculate profit if we sell today\n    after buying at the minimum price before today\n    \"\"\"\n    if not prices:\n        return 0\n    \n    min_price = float('inf')\n    max_profit = 0\n    \n    for price in prices:\n        # Update minimum price seen\n        min_price = min(min_price, price)\n        # Calculate profit if we sell today\n        profit = price - min_price\n        max_profit = max(max_profit, profit)\n    \n    return max_profit\n\n# ======== TEST CASES ========\nprint(\"=== Best Time to Buy and Sell Stock ===\")\n\ntest_cases = [\n    ([7, 1, 5, 3, 6, 4], 5),  # Buy at 1, sell at 6\n    ([7, 6, 4, 3, 1], 0),     # No profit possible\n    ([1, 2], 1),\n    ([2, 1, 2, 1, 0, 1, 2], 2),\n]\n\nfor prices, expected in test_cases:\n    result = maxProfit(prices)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {prices} -> {result}\")",
+          "expectedOutput": "=== Best Time to Buy and Sell Stock ===\n  Y [7, 1, 5, 3, 6, 4] -> 5\n  Y [7, 6, 4, 3, 1] -> 0\n  Y [1, 2] -> 1\n  Y [2, 1, 2, 1, 0, 1, 2] -> 2"
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "title": "Binary Tree Maximum Path Sum",
+      "difficulty": "Hard",
+      "description": "Given the root of a binary tree, return the maximum path sum of any non-empty path. A path can start and end at any node in the tree.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Tree", "DFS", "Dynamic Programming"],
+      "leetcodeUrl": "https://leetcode.com/problems/binary-tree-maximum-path-sum/",
+      "solutions": [
+        {
+          "approach": "DFS with Global Maximum",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(h)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\ndef maxPathSum(root):\n    \"\"\"\n    DFS: At each node, compute max path through it\n    Time: O(n) - visit each node once\n    Space: O(h) - recursion depth\n    \n    Key insight: For each node, path can either:\n    1. Go through node (left + node + right)\n    2. Continue upward (node + max(left, right))\n    \"\"\"\n    max_sum = [float('-inf')]  # Global max\n    \n    def dfs(node):\n        if not node:\n            return 0\n        \n        # Get max sum from left and right (ignore negative paths)\n        left_max = max(0, dfs(node.left))\n        right_max = max(0, dfs(node.right))\n        \n        # Path through current node (potential answer)\n        path_through = node.val + left_max + right_max\n        max_sum[0] = max(max_sum[0], path_through)\n        \n        # Return max path that can extend upward\n        return node.val + max(left_max, right_max)\n    \n    dfs(root)\n    return max_sum[0]\n\n# ======== TEST CASES ========\nprint(\"=== Binary Tree Maximum Path Sum ===\")\n\n# Test 1: [1, 2, 3]\nroot1 = TreeNode(1, TreeNode(2), TreeNode(3))\nprint(f\"  [1, 2, 3]: {maxPathSum(root1)}\")  # 6 (2 + 1 + 3)\n\n# Test 2: [-10, 9, 20, null, null, 15, 7]\nroot2 = TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))\nprint(f\"  [-10, 9, 20, null, null, 15, 7]: {maxPathSum(root2)}\")  # 42 (15 + 20 + 7)\n\n# Test 3: Single negative\nroot3 = TreeNode(-3)\nprint(f\"  [-3]: {maxPathSum(root3)}\")  # -3",
+          "expectedOutput": "=== Binary Tree Maximum Path Sum ===\n  [1, 2, 3]: 6\n  [-10, 9, 20, null, null, 15, 7]: 42\n  [-3]: -3"
+        }
+      ]
+    },
+    {
+      "id": 128,
+      "title": "Longest Consecutive Sequence",
+      "difficulty": "Medium",
+      "description": "Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence. Must run in O(n) time.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Hash Set", "Union Find"],
+      "leetcodeUrl": "https://leetcode.com/problems/longest-consecutive-sequence/",
+      "solutions": [
+        {
+          "approach": "Sorting",
+          "timeComplexity": "O(n log n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def longestConsecutive(nums):\n    \"\"\"\n    Sorting: Sort and count consecutive\n    Time: O(n log n) - sorting\n    Space: O(1) or O(n) depending on sort\n    \n    Note: Does not meet O(n) requirement\n    \"\"\"\n    if not nums:\n        return 0\n    \n    nums.sort()\n    longest = 1\n    current = 1\n    \n    for i in range(1, len(nums)):\n        if nums[i] == nums[i-1]:\n            continue  # Skip duplicates\n        elif nums[i] == nums[i-1] + 1:\n            current += 1\n        else:\n            longest = max(longest, current)\n            current = 1\n    \n    return max(longest, current)\n\nprint(f\"Sorting: {longestConsecutive([100,4,200,1,3,2])}\")  # 4",
+          "expectedOutput": "Sorting: 4"
+        },
+        {
+          "approach": "Hash Set",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def longestConsecutive(nums):\n    \"\"\"\n    Hash Set: Only start counting from sequence start\n    Time: O(n) - each number visited at most twice\n    Space: O(n) - hash set\n    \n    Key insight: Only start counting if num-1 doesn't exist\n    (meaning num is the start of a sequence)\n    \"\"\"\n    num_set = set(nums)\n    longest = 0\n    \n    for num in num_set:\n        # Only process if this is start of sequence\n        if num - 1 not in num_set:\n            current_num = num\n            current_length = 1\n            \n            # Count consecutive numbers\n            while current_num + 1 in num_set:\n                current_num += 1\n                current_length += 1\n            \n            longest = max(longest, current_length)\n    \n    return longest\n\n# ======== TEST CASES ========\nprint(\"=== Longest Consecutive Sequence ===\")\n\ntest_cases = [\n    ([100, 4, 200, 1, 3, 2], 4),      # [1,2,3,4]\n    ([0, 3, 7, 2, 5, 8, 4, 6, 0, 1], 9),  # [0-8]\n    ([], 0),\n    ([1, 2, 0, 1], 3),  # [0,1,2] with duplicate\n]\n\nfor nums, expected in test_cases:\n    result = longestConsecutive(nums)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== Longest Consecutive Sequence ===\n  Y [100, 4, 200, 1, 3, 2] -> 4\n  Y [0, 3, 7, 2, 5, 8, 4, 6, 0, 1] -> 9\n  Y [] -> 0\n  Y [1, 2, 0, 1] -> 3"
+        }
+      ]
+    },
+    {
+      "id": 133,
+      "title": "Clone Graph",
+      "difficulty": "Medium",
+      "description": "Given a reference of a node in a connected undirected graph, return a deep copy (clone) of the graph.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Graph", "BFS", "DFS", "Hash Map"],
+      "leetcodeUrl": "https://leetcode.com/problems/clone-graph/",
+      "solutions": [
+        {
+          "approach": "DFS with HashMap",
+          "timeComplexity": "O(V + E)",
+          "spaceComplexity": "O(V)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class Node:\n    def __init__(self, val=0, neighbors=None):\n        self.val = val\n        self.neighbors = neighbors if neighbors is not None else []\n\ndef cloneGraph(node):\n    \"\"\"\n    DFS: Clone nodes recursively with hash map\n    Time: O(V + E) - visit each node and edge once\n    Space: O(V) - hash map and recursion stack\n    \n    Key insight: Use hash map to track cloned nodes\n    \"\"\"\n    if not node:\n        return None\n    \n    cloned = {}  # old node -> new node\n    \n    def dfs(node):\n        if node in cloned:\n            return cloned[node]\n        \n        # Create clone\n        clone = Node(node.val)\n        cloned[node] = clone\n        \n        # Clone neighbors\n        for neighbor in node.neighbors:\n            clone.neighbors.append(dfs(neighbor))\n        \n        return clone\n    \n    return dfs(node)\n\n# ======== TEST CASES ========\nprint(\"=== Clone Graph ===\")\n\n# Create graph: 1 -- 2\n#               |    |\n#               4 -- 3\nnode1 = Node(1)\nnode2 = Node(2)\nnode3 = Node(3)\nnode4 = Node(4)\nnode1.neighbors = [node2, node4]\nnode2.neighbors = [node1, node3]\nnode3.neighbors = [node2, node4]\nnode4.neighbors = [node1, node3]\n\nclone = cloneGraph(node1)\nprint(f\"  Original node 1 val: {node1.val}\")\nprint(f\"  Cloned node 1 val: {clone.val}\")\nprint(f\"  Are they same object? {clone is node1}\")\nprint(f\"  Clone neighbor vals: {[n.val for n in clone.neighbors]}\")",
+          "expectedOutput": "=== Clone Graph ===\n  Original node 1 val: 1\n  Cloned node 1 val: 1\n  Are they same object? False\n  Clone neighbor vals: [2, 4]"
+        },
+        {
+          "approach": "BFS with HashMap",
+          "timeComplexity": "O(V + E)",
+          "spaceComplexity": "O(V)",
+          "bestFor": "Iterative approach",
+          "isOptimal": true,
+          "code": "from collections import deque\n\ndef cloneGraph(node):\n    \"\"\"\n    BFS: Clone nodes iteratively\n    Time: O(V + E)\n    Space: O(V)\n    \"\"\"\n    if not node:\n        return None\n    \n    cloned = {node: Node(node.val)}\n    queue = deque([node])\n    \n    while queue:\n        curr = queue.popleft()\n        \n        for neighbor in curr.neighbors:\n            if neighbor not in cloned:\n                cloned[neighbor] = Node(neighbor.val)\n                queue.append(neighbor)\n            cloned[curr].neighbors.append(cloned[neighbor])\n    \n    return cloned[node]\n\nprint(\"BFS approach also works\")",
+          "expectedOutput": "BFS approach also works"
+        }
+      ]
+    },
+    {
+      "id": 139,
+      "title": "Word Break",
+      "difficulty": "Medium",
+      "description": "Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of dictionary words.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Dynamic Programming", "Trie"],
+      "leetcodeUrl": "https://leetcode.com/problems/word-break/",
+      "solutions": [
+        {
+          "approach": "Recursion with Memoization",
+          "timeComplexity": "O(n^3)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def wordBreak(s, wordDict):\n    \"\"\"\n    Memoization: Try each word at each position\n    Time: O(n^3) - n positions, n substrings, O(n) comparison\n    Space: O(n) - memo and recursion\n    \"\"\"\n    word_set = set(wordDict)\n    memo = {}\n    \n    def dfs(start):\n        if start == len(s):\n            return True\n        if start in memo:\n            return memo[start]\n        \n        for end in range(start + 1, len(s) + 1):\n            if s[start:end] in word_set and dfs(end):\n                memo[start] = True\n                return True\n        \n        memo[start] = False\n        return False\n    \n    return dfs(0)\n\nprint(f\"Memoization: {wordBreak('leetcode', ['leet', 'code'])}\")  # True",
+          "expectedOutput": "Memoization: True"
+        },
+        {
+          "approach": "Dynamic Programming",
+          "timeComplexity": "O(n^3)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def wordBreak(s, wordDict):\n    \"\"\"\n    DP: dp[i] = can s[:i] be segmented?\n    Time: O(n^3) - n positions, check all substrings\n    Space: O(n) - dp array\n    \n    Key insight: dp[i] = True if dp[j] and s[j:i] in dict\n    \"\"\"\n    word_set = set(wordDict)\n    n = len(s)\n    dp = [False] * (n + 1)\n    dp[0] = True  # Empty string\n    \n    for i in range(1, n + 1):\n        for j in range(i):\n            if dp[j] and s[j:i] in word_set:\n                dp[i] = True\n                break\n    \n    return dp[n]\n\n# ======== TEST CASES ========\nprint(\"=== Word Break ===\")\n\ntest_cases = [\n    (\"leetcode\", [\"leet\", \"code\"], True),\n    (\"applepenapple\", [\"apple\", \"pen\"], True),\n    (\"catsandog\", [\"cats\", \"dog\", \"sand\", \"and\", \"cat\"], False),\n]\n\nfor s, wordDict, expected in test_cases:\n    result = wordBreak(s, wordDict)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} '{s}' with {wordDict} -> {result}\")",
+          "expectedOutput": "=== Word Break ===\n  Y 'leetcode' with ['leet', 'code'] -> True\n  Y 'applepenapple' with ['apple', 'pen'] -> True\n  Y 'catsandog' with ['cats', 'dog', 'sand', 'and', 'cat'] -> False"
+        }
+      ]
+    },
+    {
+      "id": 141,
+      "title": "Linked List Cycle",
+      "difficulty": "Easy",
+      "description": "Given head, the head of a linked list, determine if the linked list has a cycle in it.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Linked List", "Two Pointers", "Floyd's Algorithm"],
+      "leetcodeUrl": "https://leetcode.com/problems/linked-list-cycle/",
+      "solutions": [
+        {
+          "approach": "Hash Set",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef hasCycle(head):\n    \"\"\"\n    Hash Set: Track visited nodes\n    Time: O(n)\n    Space: O(n) - store all nodes\n    \"\"\"\n    seen = set()\n    curr = head\n    while curr:\n        if curr in seen:\n            return True\n        seen.add(curr)\n        curr = curr.next\n    return False\n\nprint(\"Hash set approach: O(n) space\")",
+          "expectedOutput": "Hash set approach: O(n) space"
+        },
+        {
+          "approach": "Floyd's Cycle Detection (Tortoise and Hare)",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef hasCycle(head):\n    \"\"\"\n    Floyd's Algorithm: Slow and fast pointers\n    Time: O(n) - fast catches slow in cycle\n    Space: O(1) - only two pointers\n    \n    Key insight: If cycle exists, fast will eventually meet slow\n    \"\"\"\n    if not head or not head.next:\n        return False\n    \n    slow = head\n    fast = head\n    \n    while fast and fast.next:\n        slow = slow.next       # Move 1 step\n        fast = fast.next.next  # Move 2 steps\n        \n        if slow == fast:\n            return True\n    \n    return False\n\n# ======== TEST CASES ========\nprint(\"=== Linked List Cycle ===\")\n\n# Test 1: Cycle exists [3,2,0,-4] with cycle at index 1\nnode1 = ListNode(3)\nnode2 = ListNode(2)\nnode3 = ListNode(0)\nnode4 = ListNode(-4)\nnode1.next = node2\nnode2.next = node3\nnode3.next = node4\nnode4.next = node2  # Cycle\nprint(f\"  Cycle at index 1: {hasCycle(node1)}\")  # True\n\n# Test 2: No cycle [1, 2]\nnode1 = ListNode(1)\nnode2 = ListNode(2)\nnode1.next = node2\nprint(f\"  No cycle [1,2]: {hasCycle(node1)}\")  # False\n\n# Test 3: Single node, no cycle\nnode1 = ListNode(1)\nprint(f\"  Single node: {hasCycle(node1)}\")  # False",
+          "expectedOutput": "=== Linked List Cycle ===\n  Cycle at index 1: True\n  No cycle [1,2]: False\n  Single node: False"
+        }
+      ]
+    },
+    {
+      "id": 146,
+      "title": "LRU Cache",
+      "difficulty": "Medium",
+      "description": "Design a data structure that follows the constraints of a Least Recently Used (LRU) cache. Implement the LRUCache class with get and put operations in O(1) time.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Design", "Hash Map", "Doubly Linked List"],
+      "leetcodeUrl": "https://leetcode.com/problems/lru-cache/",
+      "solutions": [
+        {
+          "approach": "OrderedDict",
+          "timeComplexity": "O(1)",
+          "spaceComplexity": "O(capacity)",
+          "bestFor": "Python interviews",
+          "isOptimal": true,
+          "code": "from collections import OrderedDict\n\nclass LRUCache:\n    \"\"\"\n    OrderedDict: Maintains insertion order\n    Time: O(1) for get and put\n    Space: O(capacity)\n    \n    Key insight: move_to_end() maintains LRU order\n    \"\"\"\n    def __init__(self, capacity: int):\n        self.cache = OrderedDict()\n        self.capacity = capacity\n    \n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        # Move to end (most recently used)\n        self.cache.move_to_end(key)\n        return self.cache[key]\n    \n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            self.cache.move_to_end(key)\n        self.cache[key] = value\n        if len(self.cache) > self.capacity:\n            # Remove least recently used (first item)\n            self.cache.popitem(last=False)\n\n# ======== TEST CASES ========\nprint(\"=== LRU Cache ===\")\n\ncache = LRUCache(2)\ncache.put(1, 1)\ncache.put(2, 2)\nprint(f\"  get(1): {cache.get(1)}\")     # 1\ncache.put(3, 3)                         # Evicts key 2\nprint(f\"  get(2): {cache.get(2)}\")     # -1 (evicted)\ncache.put(4, 4)                         # Evicts key 1\nprint(f\"  get(1): {cache.get(1)}\")     # -1 (evicted)\nprint(f\"  get(3): {cache.get(3)}\")     # 3\nprint(f\"  get(4): {cache.get(4)}\")     # 4",
+          "expectedOutput": "=== LRU Cache ===\n  get(1): 1\n  get(2): -1\n  get(1): -1\n  get(3): 3\n  get(4): 4"
+        },
+        {
+          "approach": "Hash Map + Doubly Linked List",
+          "timeComplexity": "O(1)",
+          "spaceComplexity": "O(capacity)",
+          "bestFor": "Understanding internals",
+          "isOptimal": true,
+          "code": "class DLinkedNode:\n    def __init__(self, key=0, val=0):\n        self.key = key\n        self.val = val\n        self.prev = None\n        self.next = None\n\nclass LRUCache:\n    \"\"\"\n    Hash Map + Doubly Linked List\n    HashMap: O(1) lookup\n    DLL: O(1) add/remove at any position\n    \n    Key insight: Head = most recent, Tail = least recent\n    \"\"\"\n    def __init__(self, capacity: int):\n        self.capacity = capacity\n        self.cache = {}  # key -> node\n        # Dummy head and tail\n        self.head = DLinkedNode()\n        self.tail = DLinkedNode()\n        self.head.next = self.tail\n        self.tail.prev = self.head\n    \n    def _add_node(self, node):\n        \"\"\"Add right after head (most recent)\"\"\"\n        node.prev = self.head\n        node.next = self.head.next\n        self.head.next.prev = node\n        self.head.next = node\n    \n    def _remove_node(self, node):\n        \"\"\"Remove node from list\"\"\"\n        prev = node.prev\n        new = node.next\n        prev.next = new\n        new.prev = prev\n    \n    def _move_to_head(self, node):\n        \"\"\"Move existing node to head\"\"\"\n        self._remove_node(node)\n        self._add_node(node)\n    \n    def get(self, key: int) -> int:\n        if key not in self.cache:\n            return -1\n        node = self.cache[key]\n        self._move_to_head(node)\n        return node.val\n    \n    def put(self, key: int, value: int) -> None:\n        if key in self.cache:\n            node = self.cache[key]\n            node.val = value\n            self._move_to_head(node)\n        else:\n            node = DLinkedNode(key, value)\n            self.cache[key] = node\n            self._add_node(node)\n            if len(self.cache) > self.capacity:\n                # Remove LRU (before tail)\n                lru = self.tail.prev\n                self._remove_node(lru)\n                del self.cache[lru.key]\n\nprint(\"Hash Map + DLL implementation\")",
+          "expectedOutput": "Hash Map + DLL implementation"
+        }
+      ]
+    },
+    {
+      "id": 152,
+      "title": "Maximum Product Subarray",
+      "difficulty": "Medium",
+      "description": "Given an integer array nums, find a contiguous non-empty subarray that has the largest product, and return the product.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Dynamic Programming", "Array"],
+      "leetcodeUrl": "https://leetcode.com/problems/maximum-product-subarray/",
+      "solutions": [
+        {
+          "approach": "Track Min and Max",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def maxProduct(nums):\n    \"\"\"\n    Track both min and max at each position\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: Negative * negative = positive\n    So we need to track minimum too (might become max)\n    \"\"\"\n    if not nums:\n        return 0\n    \n    result = nums[0]\n    curr_max = nums[0]\n    curr_min = nums[0]\n    \n    for i in range(1, len(nums)):\n        num = nums[i]\n        \n        # When multiplying by negative, min and max swap\n        if num < 0:\n            curr_max, curr_min = curr_min, curr_max\n        \n        # Either extend subarray or start new\n        curr_max = max(num, curr_max * num)\n        curr_min = min(num, curr_min * num)\n        \n        result = max(result, curr_max)\n    \n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Maximum Product Subarray ===\")\n\ntest_cases = [\n    ([2, 3, -2, 4], 6),      # [2,3]\n    ([-2, 0, -1], 0),         # [0]\n    ([-2, 3, -4], 24),        # [-2,3,-4]\n    ([2, -5, -2, -4, 3], 24), # [-5,-2,-4,3] or [-2,-4,3]\n]\n\nfor nums, expected in test_cases:\n    result = maxProduct(nums)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== Maximum Product Subarray ===\n  Y [2, 3, -2, 4] -> 6\n  Y [-2, 0, -1] -> 0\n  Y [-2, 3, -4] -> 24\n  Y [2, -5, -2, -4, 3] -> 24"
+        }
+      ]
+    },
+    {
+      "id": 153,
+      "title": "Find Minimum in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "description": "Given the sorted rotated array nums of unique elements, return the minimum element of this array. Must run in O(log n) time.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Binary Search", "Array"],
+      "leetcodeUrl": "https://leetcode.com/problems/find-minimum-in-rotated-sorted-array/",
+      "solutions": [
+        {
+          "approach": "Binary Search",
+          "timeComplexity": "O(log n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def findMin(nums):\n    \"\"\"\n    Binary Search: Find the rotation point\n    Time: O(log n)\n    Space: O(1)\n    \n    Key insight: Minimum is where the rotation happens\n    Compare with rightmost element to determine direction\n    \"\"\"\n    left, right = 0, len(nums) - 1\n    \n    # Array is not rotated\n    if nums[left] <= nums[right]:\n        return nums[left]\n    \n    while left < right:\n        mid = (left + right) // 2\n        \n        # If mid > right, minimum is in right half\n        if nums[mid] > nums[right]:\n            left = mid + 1\n        # Otherwise minimum is in left half (including mid)\n        else:\n            right = mid\n    \n    return nums[left]\n\n# ======== TEST CASES ========\nprint(\"=== Find Minimum in Rotated Sorted Array ===\")\n\ntest_cases = [\n    ([3, 4, 5, 1, 2], 1),\n    ([4, 5, 6, 7, 0, 1, 2], 0),\n    ([11, 13, 15, 17], 11),  # Not rotated\n    ([2, 1], 1),\n    ([1], 1),\n]\n\nfor nums, expected in test_cases:\n    result = findMin(nums)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== Find Minimum in Rotated Sorted Array ===\n  Y [3, 4, 5, 1, 2] -> 1\n  Y [4, 5, 6, 7, 0, 1, 2] -> 0\n  Y [11, 13, 15, 17] -> 11\n  Y [2, 1] -> 1\n  Y [1] -> 1"
+        }
+      ]
+    },
+    {
+      "id": 155,
+      "title": "Min Stack",
+      "difficulty": "Medium",
+      "description": "Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Design", "Stack"],
+      "leetcodeUrl": "https://leetcode.com/problems/min-stack/",
+      "solutions": [
+        {
+          "approach": "Two Stacks",
+          "timeComplexity": "O(1)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class MinStack:\n    \"\"\"\n    Two Stacks: Main stack + min stack\n    Time: O(1) for all operations\n    Space: O(n)\n    \n    Key insight: Track minimum at each state\n    \"\"\"\n    def __init__(self):\n        self.stack = []\n        self.min_stack = []  # Track min at each level\n    \n    def push(self, val: int) -> None:\n        self.stack.append(val)\n        # Push to min_stack if empty or val <= current min\n        if not self.min_stack or val <= self.min_stack[-1]:\n            self.min_stack.append(val)\n    \n    def pop(self) -> None:\n        val = self.stack.pop()\n        # Pop from min_stack if popped value was the min\n        if val == self.min_stack[-1]:\n            self.min_stack.pop()\n    \n    def top(self) -> int:\n        return self.stack[-1]\n    \n    def getMin(self) -> int:\n        return self.min_stack[-1]\n\n# ======== TEST CASES ========\nprint(\"=== Min Stack ===\")\n\nminStack = MinStack()\nminStack.push(-2)\nminStack.push(0)\nminStack.push(-3)\nprint(f\"  getMin(): {minStack.getMin()}\")  # -3\nminStack.pop()\nprint(f\"  top(): {minStack.top()}\")        # 0\nprint(f\"  getMin(): {minStack.getMin()}\")  # -2",
+          "expectedOutput": "=== Min Stack ===\n  getMin(): -3\n  top(): 0\n  getMin(): -2"
+        },
+        {
+          "approach": "Single Stack with Pairs",
+          "timeComplexity": "O(1)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Alternative",
+          "isOptimal": true,
+          "code": "class MinStack:\n    \"\"\"\n    Single Stack: Store (value, min_so_far) pairs\n    Time: O(1)\n    Space: O(n)\n    \"\"\"\n    def __init__(self):\n        self.stack = []  # [(value, min_so_far), ...]\n    \n    def push(self, val: int) -> None:\n        current_min = min(val, self.stack[-1][1]) if self.stack else val\n        self.stack.append((val, current_min))\n    \n    def pop(self) -> None:\n        self.stack.pop()\n    \n    def top(self) -> int:\n        return self.stack[-1][0]\n    \n    def getMin(self) -> int:\n        return self.stack[-1][1]\n\nprint(\"Single stack with pairs also works\")",
+          "expectedOutput": "Single stack with pairs also works"
+        }
+      ]
+    },
+    {
+      "id": 169,
+      "title": "Majority Element",
+      "difficulty": "Easy",
+      "description": "Given an array nums of size n, return the majority element. The majority element is the element that appears more than n/2 times.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Array", "Hash Map", "Boyer-Moore Voting"],
+      "leetcodeUrl": "https://leetcode.com/problems/majority-element/",
+      "solutions": [
+        {
+          "approach": "Hash Map",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "from collections import Counter\n\ndef majorityElement(nums):\n    \"\"\"\n    Hash Map: Count occurrences\n    Time: O(n)\n    Space: O(n)\n    \"\"\"\n    counts = Counter(nums)\n    return max(counts.keys(), key=counts.get)\n\nprint(f\"Hash Map: {majorityElement([3,2,3])}\")  # 3",
+          "expectedOutput": "Hash Map: 3"
+        },
+        {
+          "approach": "Boyer-Moore Voting Algorithm",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def majorityElement(nums):\n    \"\"\"\n    Boyer-Moore Voting: Cancel out different elements\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: Majority element survives cancellation\n    Because it appears > n/2 times\n    \"\"\"\n    candidate = None\n    count = 0\n    \n    for num in nums:\n        if count == 0:\n            candidate = num\n        count += 1 if num == candidate else -1\n    \n    return candidate\n\n# ======== TEST CASES ========\nprint(\"=== Majority Element ===\")\n\ntest_cases = [\n    ([3, 2, 3], 3),\n    ([2, 2, 1, 1, 1, 2, 2], 2),\n    ([1], 1),\n    ([1, 1, 1, 2, 2], 1),\n]\n\nfor nums, expected in test_cases:\n    result = majorityElement(nums)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== Majority Element ===\n  Y [3, 2, 3] -> 3\n  Y [2, 2, 1, 1, 1, 2, 2] -> 2\n  Y [1] -> 1\n  Y [1, 1, 1, 2, 2] -> 1"
+        }
+      ]
+    },
+    {
+      "id": 198,
+      "title": "House Robber",
+      "difficulty": "Medium",
+      "description": "Given an array representing the amount of money of each house, return the maximum amount you can rob without alerting the police (no two adjacent houses).",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Dynamic Programming"],
+      "leetcodeUrl": "https://leetcode.com/problems/house-robber/",
+      "solutions": [
+        {
+          "approach": "DP with Array",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def rob(nums):\n    \"\"\"\n    DP Array: dp[i] = max money robbing houses 0..i\n    Time: O(n)\n    Space: O(n)\n    \n    Recurrence: dp[i] = max(dp[i-1], dp[i-2] + nums[i])\n    \"\"\"\n    if not nums:\n        return 0\n    if len(nums) == 1:\n        return nums[0]\n    \n    dp = [0] * len(nums)\n    dp[0] = nums[0]\n    dp[1] = max(nums[0], nums[1])\n    \n    for i in range(2, len(nums)):\n        dp[i] = max(dp[i-1], dp[i-2] + nums[i])\n    \n    return dp[-1]\n\nprint(f\"DP Array: {rob([1,2,3,1])}\")  # 4",
+          "expectedOutput": "DP Array: 4"
+        },
+        {
+          "approach": "DP Optimized Space",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def rob(nums):\n    \"\"\"\n    DP Optimized: Only track last two values\n    Time: O(n)\n    Space: O(1)\n    \n    Key insight: Only need dp[i-1] and dp[i-2] to compute dp[i]\n    \"\"\"\n    if not nums:\n        return 0\n    \n    prev2 = 0  # dp[i-2]\n    prev1 = 0  # dp[i-1]\n    \n    for num in nums:\n        current = max(prev1, prev2 + num)\n        prev2 = prev1\n        prev1 = current\n    \n    return prev1\n\n# ======== TEST CASES ========\nprint(\"=== House Robber ===\")\n\ntest_cases = [\n    ([1, 2, 3, 1], 4),       # Rob house 0 and 2\n    ([2, 7, 9, 3, 1], 12),   # Rob house 0, 2, 4\n    ([2, 1, 1, 2], 4),       # Rob house 0 and 3\n    ([], 0),\n    ([5], 5),\n]\n\nfor nums, expected in test_cases:\n    result = rob(nums)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== House Robber ===\n  Y [1, 2, 3, 1] -> 4\n  Y [2, 7, 9, 3, 1] -> 12\n  Y [2, 1, 1, 2] -> 4\n  Y [] -> 0\n  Y [5] -> 5"
+        }
+      ]
+    },
+    {
+      "id": 200,
+      "title": "Number of Islands",
+      "difficulty": "Medium",
+      "description": "Given an m x n 2D binary grid which represents a map of '1's (land) and '0's (water), return the number of islands.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["DFS", "BFS", "Union Find"],
+      "leetcodeUrl": "https://leetcode.com/problems/number-of-islands/",
+      "solutions": [
+        {
+          "approach": "DFS",
+          "timeComplexity": "O(m * n)",
+          "spaceComplexity": "O(m * n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def numIslands(grid):\n    \"\"\"\n    DFS: Flood fill to mark visited land\n    Time: O(m * n) - visit each cell once\n    Space: O(m * n) - recursion stack in worst case\n    \n    Key insight: Each DFS from unvisited land discovers one island\n    \"\"\"\n    if not grid:\n        return 0\n    \n    rows, cols = len(grid), len(grid[0])\n    islands = 0\n    \n    def dfs(r, c):\n        # Boundary and water check\n        if r < 0 or r >= rows or c < 0 or c >= cols or grid[r][c] == '0':\n            return\n        \n        # Mark as visited\n        grid[r][c] = '0'\n        \n        # Visit all 4 directions\n        dfs(r + 1, c)\n        dfs(r - 1, c)\n        dfs(r, c + 1)\n        dfs(r, c - 1)\n    \n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                islands += 1\n                dfs(r, c)\n    \n    return islands\n\n# ======== TEST CASES ========\nprint(\"=== Number of Islands ===\")\n\ngrid1 = [\n    [\"1\",\"1\",\"1\",\"1\",\"0\"],\n    [\"1\",\"1\",\"0\",\"1\",\"0\"],\n    [\"1\",\"1\",\"0\",\"0\",\"0\"],\n    [\"0\",\"0\",\"0\",\"0\",\"0\"]\n]\nprint(f\"  Grid 1: {numIslands([row[:] for row in grid1])}\")  # 1\n\ngrid2 = [\n    [\"1\",\"1\",\"0\",\"0\",\"0\"],\n    [\"1\",\"1\",\"0\",\"0\",\"0\"],\n    [\"0\",\"0\",\"1\",\"0\",\"0\"],\n    [\"0\",\"0\",\"0\",\"1\",\"1\"]\n]\nprint(f\"  Grid 2: {numIslands([row[:] for row in grid2])}\")  # 3",
+          "expectedOutput": "=== Number of Islands ===\n  Grid 1: 1\n  Grid 2: 3"
+        },
+        {
+          "approach": "BFS",
+          "timeComplexity": "O(m * n)",
+          "spaceComplexity": "O(min(m, n))",
+          "bestFor": "Avoid stack overflow",
+          "isOptimal": true,
+          "code": "from collections import deque\n\ndef numIslands(grid):\n    \"\"\"\n    BFS: Level-by-level exploration\n    Time: O(m * n)\n    Space: O(min(m, n)) - queue size\n    \"\"\"\n    if not grid:\n        return 0\n    \n    rows, cols = len(grid), len(grid[0])\n    islands = 0\n    \n    def bfs(start_r, start_c):\n        queue = deque([(start_r, start_c)])\n        grid[start_r][start_c] = '0'\n        \n        while queue:\n            r, c = queue.popleft()\n            for dr, dc in [(1, 0), (-1, 0), (0, 1), (0, -1)]:\n                nr, nc = r + dr, c + dc\n                if 0 <= nr < rows and 0 <= nc < cols and grid[nr][nc] == '1':\n                    grid[nr][nc] = '0'\n                    queue.append((nr, nc))\n    \n    for r in range(rows):\n        for c in range(cols):\n            if grid[r][c] == '1':\n                islands += 1\n                bfs(r, c)\n    \n    return islands\n\nprint(\"BFS approach also works\")",
+          "expectedOutput": "BFS approach also works"
+        }
+      ]
+    },
+    {
+      "id": 206,
+      "title": "Reverse Linked List",
+      "difficulty": "Easy",
+      "description": "Given the head of a singly linked list, reverse the list, and return the reversed list.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Linked List", "Recursion"],
+      "leetcodeUrl": "https://leetcode.com/problems/reverse-linked-list/",
+      "solutions": [
+        {
+          "approach": "Iterative",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef reverseList(head):\n    \"\"\"\n    Iterative: Reverse pointers one by one\n    Time: O(n) - single pass\n    Space: O(1) - only pointers\n    \n    Key insight: Track prev, curr, next pointers\n    \"\"\"\n    prev = None\n    curr = head\n    \n    while curr:\n        next_temp = curr.next  # Save next\n        curr.next = prev       # Reverse pointer\n        prev = curr            # Move prev forward\n        curr = next_temp       # Move curr forward\n    \n    return prev\n\n# Helper functions\ndef create_list(arr):\n    dummy = ListNode(0)\n    curr = dummy\n    for val in arr:\n        curr.next = ListNode(val)\n        curr = curr.next\n    return dummy.next\n\ndef list_to_arr(node):\n    arr = []\n    while node:\n        arr.append(node.val)\n        node = node.next\n    return arr\n\n# ======== TEST CASES ========\nprint(\"=== Reverse Linked List ===\")\n\ntest_cases = [\n    [1, 2, 3, 4, 5],\n    [1, 2],\n    [],\n]\n\nfor arr in test_cases:\n    head = create_list(arr)\n    result = reverseList(head)\n    result_arr = list_to_arr(result)\n    print(f\"  {arr} -> {result_arr}\")",
+          "expectedOutput": "=== Reverse Linked List ===\n  [1, 2, 3, 4, 5] -> [5, 4, 3, 2, 1]\n  [1, 2] -> [2, 1]\n  [] -> []"
+        },
+        {
+          "approach": "Recursive",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding recursion",
+          "isOptimal": false,
+          "code": "def reverseList(head):\n    \"\"\"\n    Recursive: Reverse from end to beginning\n    Time: O(n)\n    Space: O(n) - recursion stack\n    \n    Key insight: Recursively reverse rest, then fix current\n    \"\"\"\n    # Base case: empty or single node\n    if not head or not head.next:\n        return head\n    \n    # Recursively reverse the rest\n    new_head = reverseList(head.next)\n    \n    # Fix current node\n    head.next.next = head\n    head.next = None\n    \n    return new_head\n\nprint(\"Recursive approach uses O(n) space\")",
+          "expectedOutput": "Recursive approach uses O(n) space"
+        }
+      ]
+    },
+    {
+      "id": 207,
+      "title": "Course Schedule",
+      "difficulty": "Medium",
+      "description": "Given numCourses and prerequisites array, return true if you can finish all courses. Detect if there's a cycle in the course dependency graph.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Graph", "Topological Sort", "DFS", "BFS"],
+      "leetcodeUrl": "https://leetcode.com/problems/course-schedule/",
+      "solutions": [
+        {
+          "approach": "DFS Cycle Detection",
+          "timeComplexity": "O(V + E)",
+          "spaceComplexity": "O(V + E)",
+          "bestFor": "Understanding",
+          "isOptimal": true,
+          "code": "def canFinish(numCourses, prerequisites):\n    \"\"\"\n    DFS: Detect cycle in directed graph\n    Time: O(V + E) - visit each node and edge once\n    Space: O(V + E) - adjacency list and recursion\n    \n    Key insight: Use 3 states: unvisited, visiting, visited\n    Cycle exists if we visit a node that's currently being visited\n    \"\"\"\n    # Build adjacency list\n    graph = [[] for _ in range(numCourses)]\n    for course, prereq in prerequisites:\n        graph[prereq].append(course)\n    \n    # 0: unvisited, 1: visiting, 2: visited\n    state = [0] * numCourses\n    \n    def has_cycle(course):\n        if state[course] == 1:  # Currently visiting - cycle!\n            return True\n        if state[course] == 2:  # Already processed\n            return False\n        \n        state[course] = 1  # Mark as visiting\n        \n        for next_course in graph[course]:\n            if has_cycle(next_course):\n                return True\n        \n        state[course] = 2  # Mark as visited\n        return False\n    \n    for course in range(numCourses):\n        if has_cycle(course):\n            return False\n    \n    return True\n\n# ======== TEST CASES ========\nprint(\"=== Course Schedule ===\")\n\ntest_cases = [\n    (2, [[1, 0]], True),           # 0 -> 1, no cycle\n    (2, [[1, 0], [0, 1]], False),  # 0 -> 1 -> 0, cycle\n    (3, [[1, 0], [2, 1]], True),   # 0 -> 1 -> 2, no cycle\n    (1, [], True),                  # Single course\n]\n\nfor n, prereqs, expected in test_cases:\n    result = canFinish(n, prereqs)\n    status = \"Y\" if result == expected else \"X\"\n    print(f\"  {status} courses={n}, prereqs={prereqs} -> {result}\")",
+          "expectedOutput": "=== Course Schedule ===\n  Y courses=2, prereqs=[[1, 0]] -> True\n  Y courses=2, prereqs=[[1, 0], [0, 1]] -> False\n  Y courses=3, prereqs=[[1, 0], [2, 1]] -> True\n  Y courses=1, prereqs=[] -> True"
+        },
+        {
+          "approach": "BFS (Kahn's Algorithm)",
+          "timeComplexity": "O(V + E)",
+          "spaceComplexity": "O(V + E)",
+          "bestFor": "Interviews - Topological Sort",
+          "isOptimal": true,
+          "code": "from collections import deque\n\ndef canFinish(numCourses, prerequisites):\n    \"\"\"\n    Kahn's Algorithm: BFS-based topological sort\n    Time: O(V + E)\n    Space: O(V + E)\n    \n    Key insight: Start from nodes with no incoming edges\n    If we can process all nodes, no cycle exists\n    \"\"\"\n    # Build graph and count incoming edges\n    graph = [[] for _ in range(numCourses)]\n    in_degree = [0] * numCourses\n    \n    for course, prereq in prerequisites:\n        graph[prereq].append(course)\n        in_degree[course] += 1\n    \n    # Start with courses that have no prerequisites\n    queue = deque([i for i in range(numCourses) if in_degree[i] == 0])\n    completed = 0\n    \n    while queue:\n        course = queue.popleft()\n        completed += 1\n        \n        for next_course in graph[course]:\n            in_degree[next_course] -= 1\n            if in_degree[next_course] == 0:\n                queue.append(next_course)\n    \n    return completed == numCourses\n\nprint(\"Kahn's algorithm (BFS) also works\")",
+          "expectedOutput": "Kahn's algorithm (BFS) also works"
+        }
+      ]
+    },
+    {
+      "id": 208,
+      "title": "Implement Trie (Prefix Tree)",
+      "difficulty": "Medium",
+      "description": "Implement a trie with insert, search, and startsWith methods.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Design", "Trie"],
+      "leetcodeUrl": "https://leetcode.com/problems/implement-trie-prefix-tree/",
+      "solutions": [
+        {
+          "approach": "Hash Map Children",
+          "timeComplexity": "O(m)",
+          "spaceComplexity": "O(m)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class TrieNode:\n    def __init__(self):\n        self.children = {}  # char -> TrieNode\n        self.is_end = False\n\nclass Trie:\n    \"\"\"\n    Trie: Prefix tree for efficient string operations\n    Time: O(m) for all operations (m = word length)\n    Space: O(m) per word in worst case\n    \n    Key insight: Each node represents a character,\n    path from root to node represents a prefix\n    \"\"\"\n    def __init__(self):\n        self.root = TrieNode()\n    \n    def insert(self, word: str) -> None:\n        \"\"\"Insert word into trie\"\"\"\n        node = self.root\n        for char in word:\n            if char not in node.children:\n                node.children[char] = TrieNode()\n            node = node.children[char]\n        node.is_end = True\n    \n    def search(self, word: str) -> bool:\n        \"\"\"Returns True if word is in trie\"\"\"\n        node = self._find_prefix(word)\n        return node is not None and node.is_end\n    \n    def startsWith(self, prefix: str) -> bool:\n        \"\"\"Returns True if any word starts with prefix\"\"\"\n        return self._find_prefix(prefix) is not None\n    \n    def _find_prefix(self, prefix: str):\n        \"\"\"Helper to find node at end of prefix\"\"\"\n        node = self.root\n        for char in prefix:\n            if char not in node.children:\n                return None\n            node = node.children[char]\n        return node\n\n# ======== TEST CASES ========\nprint(\"=== Implement Trie ===\")\n\ntrie = Trie()\ntrie.insert(\"apple\")\nprint(f\"  search('apple'): {trie.search('apple')}\")     # True\nprint(f\"  search('app'): {trie.search('app')}\")         # False\nprint(f\"  startsWith('app'): {trie.startsWith('app')}\") # True\ntrie.insert(\"app\")\nprint(f\"  search('app') after insert: {trie.search('app')}\")  # True",
+          "expectedOutput": "=== Implement Trie ===\n  search('apple'): True\n  search('app'): False\n  startsWith('app'): True\n  search('app') after insert: True"
+        },
+        {
+          "approach": "Array Children (26 letters)",
+          "timeComplexity": "O(m)",
+          "spaceComplexity": "O(m * 26)",
+          "bestFor": "Fixed alphabet",
+          "isOptimal": false,
+          "code": "class TrieNode:\n    def __init__(self):\n        self.children = [None] * 26  # a-z\n        self.is_end = False\n\nclass Trie:\n    \"\"\"\n    Array-based Trie: Fixed size children array\n    Time: O(m)\n    Space: O(m * 26) - more space but O(1) child lookup\n    \n    Better when alphabet is small and fixed\n    \"\"\"\n    def __init__(self):\n        self.root = TrieNode()\n    \n    def insert(self, word: str) -> None:\n        node = self.root\n        for char in word:\n            index = ord(char) - ord('a')\n            if not node.children[index]:\n                node.children[index] = TrieNode()\n            node = node.children[index]\n        node.is_end = True\n    \n    def search(self, word: str) -> bool:\n        node = self._find_prefix(word)\n        return node is not None and node.is_end\n    \n    def startsWith(self, prefix: str) -> bool:\n        return self._find_prefix(prefix) is not None\n    \n    def _find_prefix(self, prefix: str):\n        node = self.root\n        for char in prefix:\n            index = ord(char) - ord('a')\n            if not node.children[index]:\n                return None\n            node = node.children[index]\n        return node\n\nprint(\"Array-based trie for lowercase letters\")",
+          "expectedOutput": "Array-based trie for lowercase letters"
         }
       ]
     }
