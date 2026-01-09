@@ -38,9 +38,24 @@
     <style>
         .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .case-card:hover { transform: translateY(-3px); }
-        .premium-blur { filter: blur(4px); pointer-events: none; }
         .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
         .collapsible-content.open { max-height: 5000px; }
+
+        /* Progress dropdown styles */
+        .progress-dropdown {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            padding-right: 28px;
+            cursor: pointer;
+        }
+        .progress-not-started { background-color: #f3f4f6; border-color: #d1d5db; color: #6b7280; }
+        .progress-working { background-color: #dbeafe; border-color: #3b82f6; color: #1d4ed8; }
+        .progress-need-help { background-color: #ffedd5; border-color: #f97316; color: #c2410c; }
+        .progress-solved { background-color: #dcfce7; border-color: #22c55e; color: #15803d; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -59,11 +74,12 @@
                     <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
                     <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
                     <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+                    <a href="progress.html" class="text-gray-700 hover:text-purple-600 font-medium"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
                 <div class="flex items-center gap-2">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
                     </a>
                     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
@@ -80,6 +96,7 @@
                 <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
                 <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
                 <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+                <a href="progress.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium"><i class="fas fa-chart-line mr-2"></i>Progress</a>
             </div>
         </div>
     </nav>
@@ -119,6 +136,19 @@
         </div>
     </section>
 
+    <!-- Login Prompt Banner -->
+    <section class="py-4 bg-gradient-to-r from-purple-100 to-pink-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-center gap-3">
+                <i class="fas fa-user-circle text-purple-600 text-xl"></i>
+                <span class="text-purple-800 font-medium">Login to track your progress</span>
+                <a href="#" class="bg-purple-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold hover:bg-purple-700 transition">
+                    Login
+                </a>
+            </div>
+        </div>
+    </section>
+
     <!-- Topics Overview -->
     <section class="py-8 bg-white shadow">
         <div class="max-w-7xl mx-auto px-4">
@@ -143,302 +173,1339 @@
         </div>
     </section>
 
-    <!-- Free Case - YouTube Only -->
+    <!-- All Cases Section -->
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-unlock text-green-500 mr-3"></i>Free Example - Full System Design Interview
+                <i class="fas fa-project-diagram text-purple-500 mr-3"></i>All ML System Design Cases
             </h2>
 
-            <!-- Case 1: YouTube Video Recommendation (FULL) -->
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500">
-                <div class="p-6">
-                    <div class="flex items-start justify-between mb-4">
-                        <div>
-                            <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
-                            <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Free Full Example</span>
-                            <h3 class="text-2xl font-bold mt-2">YouTube Video Recommendation System</h3>
-                            <p class="text-gray-600">Design a recommendation system for YouTube's homepage feed</p>
-                        </div>
-                        <span class="text-sm text-gray-500">YouTube/Google</span>
-                    </div>
-
-                    <button onclick="toggleContent('yt-rec')" class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
-                        <i class="fas fa-eye mr-2"></i>View Full Interview Solution
-                    </button>
-
-                    <div id="yt-rec" class="collapsible-content">
-                        <!-- Clarifying Questions -->
-                        <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
-                            <ul class="text-sm text-gray-700 space-y-2">
-                                <li><strong>Catalog size?</strong> 1B videos</li>
-                                <li><strong>Multi-lingual?</strong> Yes, global audience</li>
-                                <li><strong>Context?</strong> Homepage feed (not video page)</li>
-                                <li><strong>Latency budget?</strong> 200ms</li>
-                                <li><strong>QPS?</strong> 50k QPS</li>
-                                <li><strong>KPI?</strong> Video completion rate, guardrail on churn rate</li>
-                                <li><strong>User interactions available?</strong> Like, comment, watch time, click, share</li>
-                            </ul>
+            <div class="space-y-6">
+                <!-- Case 1: YouTube Video Recommendation -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="youtube-rec">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('youtube-rec', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-2xl font-bold mt-2">YouTube Video Recommendation System</h3>
+                                <p class="text-gray-600">Design a recommendation system for YouTube's homepage feed</p>
+                            </div>
+                            <span class="text-sm text-gray-500">YouTube/Google</span>
                         </div>
 
-                        <!-- High Level Design -->
-                        <div class="bg-purple-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
-                            <ul class="text-sm text-gray-700 space-y-2">
-                                <li><strong>Objective:</strong> Maximize user engagement on video catalog</li>
-                                <li><strong>KPI:</strong> Watch time (dwell time), weighted sum of engagement signals</li>
-                                <li><strong>Architecture:</strong> Candidate Generator + Heavy Ranker + Reranker</li>
-                                <li><strong>Guardrails:</strong> Churn rate, report rate, negative feedback</li>
-                            </ul>
-                        </div>
+                        <button onclick="toggleContent('yt-rec')" class="w-full bg-gradient-to-r from-green-500 to-teal-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Full Interview Solution
+                        </button>
 
-                        <!-- Data Engineering -->
-                        <div class="bg-green-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-database mr-2"></i>Data Engineering & Labels</h4>
-                            <div class="text-sm text-gray-700">
-                                <p class="mb-2"><strong>Label Construction:</strong></p>
-                                <ul class="list-disc ml-4 space-y-1">
-                                    <li>Weighted sum: w1 x like + w2 x comment sentiment + w3 x share + w4 x watch time + w5 x dwell time</li>
-                                    <li>Negative samples: In-session impressed but not engaged (per task)</li>
+                        <div id="yt-rec" class="collapsible-content">
+                            <!-- Clarifying Questions -->
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Catalog size?</strong> 1B videos</li>
+                                    <li><strong>Multi-lingual?</strong> Yes, global audience</li>
+                                    <li><strong>Context?</strong> Homepage feed (not video page)</li>
+                                    <li><strong>Latency budget?</strong> 200ms</li>
+                                    <li><strong>QPS?</strong> 50k QPS</li>
+                                    <li><strong>KPI?</strong> Video completion rate, guardrail on churn rate</li>
+                                    <li><strong>User interactions available?</strong> Like, comment, watch time, click, share</li>
                                 </ul>
                             </div>
-                        </div>
 
-                        <!-- Feature Engineering -->
-                        <div class="bg-orange-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
-                            <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <p class="font-semibold mb-2">User Features:</p>
+                            <!-- High Level Design -->
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Objective:</strong> Maximize user engagement on video catalog</li>
+                                    <li><strong>KPI:</strong> Watch time (dwell time), weighted sum of engagement signals</li>
+                                    <li><strong>Architecture:</strong> Candidate Generator + Heavy Ranker + Reranker</li>
+                                    <li><strong>Guardrails:</strong> Churn rate, report rate, negative feedback</li>
+                                </ul>
+                            </div>
+
+                            <!-- Data Engineering -->
+                            <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-database mr-2"></i>Data Engineering & Labels</h4>
+                                <div class="text-sm text-gray-700">
+                                    <p class="mb-2"><strong>Label Construction:</strong></p>
                                     <ul class="list-disc ml-4 space-y-1">
-                                        <li>User age, demographics</li>
-                                        <li>User embeddings (sequence model)</li>
-                                        <li>Search history embeddings (aggregated)</li>
-                                        <li>Video genre clusters</li>
-                                        <li>Historical engagement patterns</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-semibold mb-2">Video Features:</p>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <li>Video ID embedding</li>
-                                        <li>Content: Frame extraction, 3D transformers</li>
-                                        <li>Transcription: BERT embeddings</li>
-                                        <li>Genre (one-hot)</li>
-                                        <li>Likes/impressions (bucketized, log-transformed)</li>
-                                        <li>Channel ID embedding, subscriber count</li>
-                                        <li>Video age (freshness)</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-semibold mb-2">Context Features:</p>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <li>Time of day, day of week</li>
-                                        <li>Device type, network type</li>
-                                        <li>Session context</li>
+                                        <li>Weighted sum: w1 x like + w2 x comment sentiment + w3 x share + w4 x watch time + w5 x dwell time</li>
+                                        <li>Negative samples: In-session impressed but not engaged (per task)</li>
                                     </ul>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Modeling Architecture -->
-                        <div class="bg-pink-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Architecture</h4>
-                            <div class="text-sm text-gray-700 space-y-3">
-                                <div>
-                                    <p class="font-semibold">Candidate Generator:</p>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <li>Collaborative filtering (fast, simple, WALS for continual training)</li>
-                                        <li>Two-tower model (handles cold start, requires ANN serving)</li>
-                                        <li>Content-based filtering for cold start items</li>
-                                        <li>Goal: Improve recall within latency budget</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-semibold">Heavy Ranker (Single Tower):</p>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <li>Learning to rank (pointwise for simplicity, pairwise/listwise for NDCG)</li>
-                                        <li>Feature crosses: DCN V2 for efficient deep crosses</li>
-                                        <li>MMOE for multi-task learning (avoid task competition)</li>
-                                        <li>Goal: Improve precision</li>
-                                    </ul>
-                                </div>
-                                <div>
-                                    <p class="font-semibold">Reranker:</p>
-                                    <ul class="list-disc ml-4 space-y-1">
-                                        <li>Business logic enforcement</li>
-                                        <li>Freshness boost for new content</li>
-                                        <li>Diversity constraints (near-duplicate removal)</li>
-                                    </ul>
+                            <!-- Feature Engineering -->
+                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Feature Engineering</h4>
+                                <div class="grid md:grid-cols-3 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold mb-2">User Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>User age, demographics</li>
+                                            <li>User embeddings (sequence model)</li>
+                                            <li>Search history embeddings (aggregated)</li>
+                                            <li>Video genre clusters</li>
+                                            <li>Historical engagement patterns</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Video Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Video ID embedding</li>
+                                            <li>Content: Frame extraction, 3D transformers</li>
+                                            <li>Transcription: BERT embeddings</li>
+                                            <li>Genre (one-hot)</li>
+                                            <li>Likes/impressions (bucketized, log-transformed)</li>
+                                            <li>Channel ID embedding, subscriber count</li>
+                                            <li>Video age (freshness)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold mb-2">Context Features:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Time of day, day of week</li>
+                                            <li>Device type, network type</li>
+                                            <li>Session context</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Training -->
-                        <div class="bg-yellow-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-yellow-800 mb-3"><i class="fas fa-graduation-cap mr-2"></i>Model Training</h4>
-                            <ul class="text-sm text-gray-700 space-y-1">
-                                <li><strong>Class Imbalance:</strong> Downsample majority class</li>
-                                <li><strong>Focal Loss:</strong> Avoid loss domination by easy examples</li>
-                                <li><strong>Gradient Blending:</strong> Balance multi-task learning</li>
-                                <li><strong>Calibration:</strong> Not strictly needed for ranking</li>
-                            </ul>
-                        </div>
+                            <!-- Modeling Architecture -->
+                            <div class="bg-pink-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-pink-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Architecture</h4>
+                                <div class="text-sm text-gray-700 space-y-3">
+                                    <div>
+                                        <p class="font-semibold">Candidate Generator:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Collaborative filtering (fast, simple, WALS for continual training)</li>
+                                            <li>Two-tower model (handles cold start, requires ANN serving)</li>
+                                            <li>Content-based filtering for cold start items</li>
+                                            <li>Goal: Improve recall within latency budget</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Heavy Ranker (Single Tower):</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Learning to rank (pointwise for simplicity, pairwise/listwise for NDCG)</li>
+                                            <li>Feature crosses: DCN V2 for efficient deep crosses</li>
+                                            <li>MMOE for multi-task learning (avoid task competition)</li>
+                                            <li>Goal: Improve precision</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Reranker:</p>
+                                        <ul class="list-disc ml-4 space-y-1">
+                                            <li>Business logic enforcement</li>
+                                            <li>Freshness boost for new content</li>
+                                            <li>Diversity constraints (near-duplicate removal)</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
 
-                        <!-- Evaluation -->
-                        <div class="bg-indigo-50 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-indigo-800 mb-3"><i class="fas fa-chart-line mr-2"></i>Evaluation Metrics</h4>
-                            <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
-                                <div>
-                                    <p class="font-semibold">Offline:</p>
+                            <!-- Training -->
+                            <div class="bg-yellow-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-yellow-800 mb-3"><i class="fas fa-graduation-cap mr-2"></i>Model Training</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li><strong>Class Imbalance:</strong> Downsample majority class</li>
+                                    <li><strong>Focal Loss:</strong> Avoid loss domination by easy examples</li>
+                                    <li><strong>Gradient Blending:</strong> Balance multi-task learning</li>
+                                    <li><strong>Calibration:</strong> Not strictly needed for ranking</li>
+                                </ul>
+                            </div>
+
+                            <!-- Evaluation -->
+                            <div class="bg-indigo-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-indigo-800 mb-3"><i class="fas fa-chart-line mr-2"></i>Evaluation Metrics</h4>
+                                <div class="grid md:grid-cols-2 gap-4 text-sm text-gray-700">
+                                    <div>
+                                        <p class="font-semibold">Offline:</p>
+                                        <ul class="list-disc ml-4">
+                                            <li>Per-head AUC, weighted loss</li>
+                                            <li>MAP (rank of results)</li>
+                                            <li>Diversity (aggregated cosine similarity)</li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <p class="font-semibold">Online:</p>
+                                        <ul class="list-disc ml-4">
+                                            <li>Weighted engagement score</li>
+                                            <li>CTR, dwell time, LTV</li>
+                                            <li>Guardrails: reports, dislike rate</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Serving & Deployment -->
+                            <div class="bg-gray-100 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-server mr-2"></i>Serving & Deployment</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Efficiency:</strong> Distill heavy ranker to light ranker, embedding quantization, ANN, caching</p>
+                                    <p><strong>Freshness:</strong> Continual learning with learning rate decay (avoid catastrophic forgetting)</p>
+                                    <p><strong>Deployment:</strong> Shadow testing, canary, A/B testing, holdback, multi-arm bandit</p>
+                                </div>
+                            </div>
+
+                            <!-- Advanced Topics -->
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h4 class="font-bold text-red-800 mb-3"><i class="fas fa-rocket mr-2"></i>Advanced Topics</h4>
+                                <div class="text-sm text-gray-700 space-y-2">
+                                    <p><strong>Bias Handling:</strong></p>
                                     <ul class="list-disc ml-4">
-                                        <li>Per-head AUC, weighted loss</li>
-                                        <li>MAP (rank of results)</li>
-                                        <li>Diversity (aggregated cosine similarity)</li>
+                                        <li>Popularity bias: Apply penalty in reranker</li>
+                                        <li>Position bias: Add position as feature, serve same position at inference</li>
+                                        <li>Serving bias: Epsilon-greedy exploration</li>
                                     </ul>
-                                </div>
-                                <div>
-                                    <p class="font-semibold">Online:</p>
+                                    <p class="mt-2"><strong>Cold Start:</strong></p>
                                     <ul class="list-disc ml-4">
-                                        <li>Weighted engagement score</li>
-                                        <li>CTR, dwell time, LTV</li>
-                                        <li>Guardrails: reports, dislike rate</li>
+                                        <li>Two-tower and ranker use context features</li>
+                                        <li>Dropout ID features during training</li>
+                                        <li>Fallback model for new users (trendy, popular)</li>
+                                        <li>Content-based filtering for new items</li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Serving & Deployment -->
-                        <div class="bg-gray-100 rounded-lg p-4 mb-4">
-                            <h4 class="font-bold text-gray-800 mb-3"><i class="fas fa-server mr-2"></i>Serving & Deployment</h4>
-                            <div class="text-sm text-gray-700 space-y-2">
-                                <p><strong>Efficiency:</strong> Distill heavy ranker to light ranker, embedding quantization, ANN, caching</p>
-                                <p><strong>Freshness:</strong> Continual learning with learning rate decay (avoid catastrophic forgetting)</p>
-                                <p><strong>Deployment:</strong> Shadow testing, canary, A/B testing, holdback, multi-arm bandit</p>
+                <!-- Case 2: People You May Know (PYMK) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="pymk">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('pymk', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">People You May Know (PYMK)</h3>
+                                <p class="text-gray-600 text-sm">GNN edge prediction, LightGCN, friend-of-friend heuristics</p>
+                            </div>
+                            <span class="text-sm text-gray-500">LinkedIn/Meta</span>
+                        </div>
+                        <button onclick="toggleContent('pymk-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="pymk-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Network size?</strong> 1B+ users, 100B+ connections</li>
+                                    <li><strong>Real-time updates?</strong> Near real-time connection graph updates</li>
+                                    <li><strong>Recommendation count?</strong> Top 50 suggestions per user</li>
+                                    <li><strong>Privacy constraints?</strong> Respect user privacy settings</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Objective:</strong> Predict probability of connection acceptance</li>
+                                    <li><strong>Architecture:</strong> Graph-based candidate generation + Neural ranker</li>
+                                    <li><strong>Key Signals:</strong> Common connections, profile similarity, interaction history</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Approach</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Candidate Generation:</strong> Friend-of-friend (FoF), 2-hop graph traversal</li>
+                                    <li><strong>Graph Neural Networks:</strong> LightGCN, GraphSAGE for node embeddings</li>
+                                    <li><strong>Edge Prediction:</strong> Link prediction with node feature concatenation</li>
+                                    <li><strong>Ranking:</strong> Gradient boosted trees or neural ranker with social features</li>
+                                </ul>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-4">
+                                <h4 class="font-bold text-orange-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Common connections count (Jaccard similarity)</li>
+                                    <li>Profile similarity (industry, company, school)</li>
+                                    <li>Geographic proximity</li>
+                                    <li>Mutual group memberships</li>
+                                    <li>Engagement patterns (profile views, message responses)</li>
+                                </ul>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Advanced Topics -->
-                        <div class="bg-red-50 rounded-lg p-4">
-                            <h4 class="font-bold text-red-800 mb-3"><i class="fas fa-rocket mr-2"></i>Advanced Topics</h4>
-                            <div class="text-sm text-gray-700 space-y-2">
-                                <p><strong>Bias Handling:</strong></p>
-                                <ul class="list-disc ml-4">
-                                    <li>Popularity bias: Apply penalty in reranker</li>
-                                    <li>Position bias: Add position as feature, serve same position at inference</li>
-                                    <li>Serving bias: Epsilon-greedy exploration</li>
+                <!-- Case 3: Pinterest Feed Ranking -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="pinterest-feed">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('pinterest-feed', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Pinterest Feed Ranking</h3>
+                                <p class="text-gray-600 text-sm">MMOE, DCN V2, multi-task learning for visual discovery</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Pinterest</span>
+                        </div>
+                        <button onclick="toggleContent('pinterest-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="pinterest-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Content type?</strong> Visual pins (images/videos) with metadata</li>
+                                    <li><strong>Feed context?</strong> Home feed vs search vs related pins</li>
+                                    <li><strong>Engagement signals?</strong> Save, click, close-up, hide</li>
                                 </ul>
-                                <p class="mt-2"><strong>Cold Start:</strong></p>
-                                <ul class="list-disc ml-4">
-                                    <li>Two-tower and ranker use context features</li>
-                                    <li>Dropout ID features during training</li>
-                                    <li>Fallback model for new users (trendy, popular)</li>
-                                    <li>Content-based filtering for new items</li>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Multi-task Objectives:</strong> Save, click-through, long-click, hide</li>
+                                    <li><strong>Architecture:</strong> MMOE with task-specific towers</li>
+                                    <li><strong>Visual Understanding:</strong> CNN embeddings + PinSage graph embeddings</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Key Components</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Visual Embeddings:</strong> ResNet/ViT for image understanding</li>
+                                    <li><strong>PinSage:</strong> Graph neural network on pin-board graph</li>
+                                    <li><strong>DCN V2:</strong> Deep cross network for feature interactions</li>
+                                    <li><strong>Real-time Features:</strong> Session context, recent actions</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Premium Cases Section - ALL LOCKED -->
-    <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium Cases (21 more with full solutions)
-            </h2>
-
-            <div class="relative">
-                <div class="grid md:grid-cols-3 gap-4 premium-blur">
-                    <!-- RecSys -->
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">People You May Know (PYMK)</h3>
-                        <p class="text-sm text-gray-600">GNN edge prediction, LightGCN, friend-of-friend...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">Pinterest Feed Ranking</h3>
-                        <p class="text-sm text-gray-600">MMOE, DCN V2, multi-task learning...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">LinkedIn Job Recommendation</h3>
-                        <p class="text-sm text-gray-600">Skill matching, graph neural networks...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">Event Recommendation</h3>
-                        <p class="text-sm text-gray-600">Location-based, time-sensitive features...</p>
-                    </div>
-                    <!-- Search -->
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Search</span>
-                        <h3 class="font-bold mt-2">Airbnb Search Ranking</h3>
-                        <p class="text-sm text-gray-600">Location-aware, LTR with NDCG optimization...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Search</span>
-                        <h3 class="font-bold mt-2">YouTube Video Search</h3>
-                        <p class="text-sm text-gray-600">Two-tower, query understanding, BERT...</p>
-                    </div>
-                    <!-- Pricing -->
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Pricing</span>
-                        <h3 class="font-bold mt-2">Airbnb Dynamic Pricing</h3>
-                        <p class="text-sm text-gray-600">Wide & Deep, demand estimation, elasticity...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Ads</span>
-                        <h3 class="font-bold mt-2">Ads pCTR Prediction</h3>
-                        <p class="text-sm text-gray-600">Deep Factorization Machines, calibration...</p>
-                    </div>
-                    <!-- Trust & Safety -->
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Trust</span>
-                        <h3 class="font-bold mt-2">Bot Detection</h3>
-                        <p class="text-sm text-gray-600">Behavioral features, GNN, calibrated actions...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Trust</span>
-                        <h3 class="font-bold mt-2">Scam Content Detection</h3>
-                        <p class="text-sm text-gray-600">Multi-modal, MMOE, focal loss...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Trust</span>
-                        <h3 class="font-bold mt-2">Harmful Content Detection</h3>
-                        <p class="text-sm text-gray-600">Multi-modal classifier, active learning...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">RecSys</span>
-                        <h3 class="font-bold mt-2">LinkedIn Feed Ranking</h3>
-                        <p class="text-sm text-gray-600">3-stage pipeline, MMOE heads...</p>
-                    </div>
-                </div>
-
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-lg">
-                        <i class="fas fa-crown text-5xl text-yellow-500 mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Unlock All 22 ML System Design Cases</h3>
-                        <p class="text-gray-600 mb-4">Get full step-by-step solutions for interviews at Google, Meta, Airbnb, Pinterest, LinkedIn & more</p>
-                        <div class="grid grid-cols-2 gap-2 text-sm text-gray-600 mb-6">
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>PYMK (GNN)</div>
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>Dynamic Pricing</div>
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>Bot Detection</div>
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>Feed Ranking</div>
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>Search Ranking</div>
-                            <div><i class="fas fa-check text-green-500 mr-1"></i>+16 more...</div>
+                <!-- Case 4: LinkedIn Job Recommendation -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="linkedin-jobs">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('linkedin-jobs', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">LinkedIn Job Recommendation</h3>
+                                <p class="text-gray-600 text-sm">Skill matching, graph neural networks, two-sided marketplace</p>
+                            </div>
+                            <span class="text-sm text-gray-500">LinkedIn</span>
                         </div>
-                        <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                           class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold hover:shadow-lg transition inline-block text-lg">
-                            <i class="fas fa-user-tie mr-2"></i>Book Mentorship to Unlock
-                        </a>
-                        <p class="text-sm text-gray-500 mt-4">1:1 coaching includes mock interviews + all premium content</p>
+                        <button onclick="toggleContent('linkedin-jobs-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="linkedin-jobs-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Clarifying Questions</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Marketplace type?</strong> Two-sided: job seekers and recruiters</li>
+                                    <li><strong>Success metric?</strong> Application rate, hire rate, response rate</li>
+                                    <li><strong>Cold start?</strong> New users with minimal profile</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>High-Level Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Dual Optimization:</strong> Maximize both apply rate AND recruiter response</li>
+                                    <li><strong>Skill Graph:</strong> Standardized skill taxonomy with embeddings</li>
+                                    <li><strong>Career Trajectory:</strong> Sequential modeling of career progression</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Approach</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Skill Matching:</strong> Learned skill embeddings, skill gap analysis</li>
+                                    <li><strong>Experience Similarity:</strong> BERT embeddings for job descriptions</li>
+                                    <li><strong>Career Progression:</strong> Transformer for sequential job history</li>
+                                    <li><strong>Market Signals:</strong> Demand/supply balance per skill/location</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Case 5: Event Recommendation -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="event-rec">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('event-rec', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Event Recommendation System</h3>
+                                <p class="text-gray-600 text-sm">Location-based, time-sensitive features, social influence</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Eventbrite/Meta</span>
+                        </div>
+                        <button onclick="toggleContent('event-rec-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="event-rec-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Time Sensitivity:</strong> Events expire, timing matters</li>
+                                    <li><strong>Location Constraints:</strong> Physical attendance required</li>
+                                    <li><strong>Social Factor:</strong> Friend attendance influences decisions</li>
+                                    <li><strong>Cold Start:</strong> New events with no engagement history</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Geospatial Filtering:</strong> K-d tree or geohash for location</li>
+                                    <li><strong>Temporal Modeling:</strong> Time-aware embeddings</li>
+                                    <li><strong>Social Graph:</strong> Friend attendance signals</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>User location history and preferences</li>
+                                    <li>Event category embeddings</li>
+                                    <li>Time slot preferences (weekday vs weekend)</li>
+                                    <li>Friends attending count</li>
+                                    <li>Price sensitivity modeling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 6: LinkedIn Feed Ranking -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="linkedin-feed">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('linkedin-feed', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">LinkedIn Feed Ranking</h3>
+                                <p class="text-gray-600 text-sm">3-stage pipeline, MMOE heads, professional content</p>
+                            </div>
+                            <span class="text-sm text-gray-500">LinkedIn</span>
+                        </div>
+                        <button onclick="toggleContent('linkedin-feed-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="linkedin-feed-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Considerations</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Professional Context:</strong> Career-focused engagement</li>
+                                    <li><strong>Content Types:</strong> Posts, articles, job updates, ads</li>
+                                    <li><strong>Engagement Types:</strong> Like, comment, share, dwell time</li>
+                                    <li><strong>Creator Economy:</strong> Balance between consumers and creators</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>3-Stage Pipeline</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Stage 1:</strong> Candidate generation (1000s of candidates)</li>
+                                    <li><strong>Stage 2:</strong> First-pass ranking (narrow to 100s)</li>
+                                    <li><strong>Stage 3:</strong> Final ranking with full features</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>MMOE Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Shared Experts:</strong> Common feature representations</li>
+                                    <li><strong>Task-Specific Towers:</strong> Like, comment, share, dwell</li>
+                                    <li><strong>Gating Network:</strong> Dynamic expert weighting per task</li>
+                                    <li><strong>Creator Value:</strong> Additional head for creator satisfaction</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 7: Spotify Playlist Recommendation -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="spotify-playlist">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('spotify-playlist', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Spotify Playlist Recommendation</h3>
+                                <p class="text-gray-600 text-sm">Audio features, collaborative filtering, session-based</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Spotify</span>
+                        </div>
+                        <button onclick="toggleContent('spotify-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="spotify-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Context Matters:</strong> Time of day, activity, mood</li>
+                                    <li><strong>Sequential Nature:</strong> Song order matters for playlists</li>
+                                    <li><strong>Audio Features:</strong> Tempo, energy, danceability</li>
+                                    <li><strong>Cold Start:</strong> New tracks with no listening history</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Audio Embeddings:</strong> CNN on spectrograms</li>
+                                    <li><strong>Collaborative Filtering:</strong> User-track matrix factorization</li>
+                                    <li><strong>Session Modeling:</strong> Transformer for sequential listening</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Audio features (tempo, key, energy, valence)</li>
+                                    <li>User listening history embeddings</li>
+                                    <li>Playlist co-occurrence statistics</li>
+                                    <li>Artist/genre embeddings</li>
+                                    <li>Context signals (time, device, location)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 8: Netflix Content Recommendation -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-green-500" data-problem-id="netflix-rec">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium">RecSys</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('netflix-rec', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Netflix Content Recommendation</h3>
+                                <p class="text-gray-600 text-sm">Personalized rows, artwork selection, multi-armed bandit</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Netflix</span>
+                        </div>
+                        <button onclick="toggleContent('netflix-content')" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="netflix-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Unique Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Row-based Layout:</strong> Both within-row and row ordering</li>
+                                    <li><strong>Artwork Personalization:</strong> Different thumbnails per user</li>
+                                    <li><strong>Watch Completion:</strong> Focus on completion, not just clicks</li>
+                                    <li><strong>Profile Handling:</strong> Multiple profiles per account</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Two-Level Ranking</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Item Ranking:</strong> Score each title for user</li>
+                                    <li><strong>Row Generation:</strong> Create thematic rows (genre, trending)</li>
+                                    <li><strong>Page Composition:</strong> Optimize row ordering</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Artwork Selection</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Contextual Bandits:</strong> Explore artwork variants</li>
+                                    <li><strong>User Preferences:</strong> Genre, actor, visual style</li>
+                                    <li><strong>Thompson Sampling:</strong> Balance exploration/exploitation</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 9: Airbnb Search Ranking -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="airbnb-search">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('airbnb-search', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Airbnb Search Ranking</h3>
+                                <p class="text-gray-600 text-sm">Location-aware, LTR with NDCG optimization, two-sided</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Airbnb</span>
+                        </div>
+                        <button onclick="toggleContent('airbnb-search-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="airbnb-search-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Two-Sided Marketplace:</strong> Guest satisfaction AND host acceptance</li>
+                                    <li><strong>Location Sensitivity:</strong> Geospatial relevance critical</li>
+                                    <li><strong>Availability:</strong> Real-time calendar constraints</li>
+                                    <li><strong>Trust Signals:</strong> Reviews, verification, response rate</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Learning to Rank</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Objective:</strong> Booking probability + host acceptance</li>
+                                    <li><strong>NDCG Optimization:</strong> Pairwise or listwise loss</li>
+                                    <li><strong>Position Bias:</strong> Inverse propensity weighting</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Location embedding (geohash, neighborhood)</li>
+                                    <li>Price relative to market average</li>
+                                    <li>Review scores and count</li>
+                                    <li>Host response rate and acceptance rate</li>
+                                    <li>Listing quality score (photos, description)</li>
+                                    <li>Guest-host compatibility signals</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 10: YouTube Video Search -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="youtube-search">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('youtube-search', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">YouTube Video Search</h3>
+                                <p class="text-gray-600 text-sm">Two-tower, query understanding, BERT, personalization</p>
+                            </div>
+                            <span class="text-sm text-gray-500">YouTube/Google</span>
+                        </div>
+                        <button onclick="toggleContent('youtube-search-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="youtube-search-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Query Understanding</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Intent Classification:</strong> Navigational, informational, entertainment</li>
+                                    <li><strong>Query Expansion:</strong> Synonyms, related terms</li>
+                                    <li><strong>Spell Correction:</strong> Edit distance, learned corrections</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Two-Tower Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Query Tower:</strong> BERT encoding + user context</li>
+                                    <li><strong>Document Tower:</strong> Title, description, transcript embeddings</li>
+                                    <li><strong>Retrieval:</strong> ANN search in embedding space</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Personalization</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>User History:</strong> Watch history embeddings</li>
+                                    <li><strong>Preference Signals:</strong> Liked channels, subscriptions</li>
+                                    <li><strong>Context:</strong> Device, time, location</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 11: Google Maps ETA Prediction -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="maps-eta">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('maps-eta', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Google Maps ETA Prediction</h3>
+                                <p class="text-gray-600 text-sm">Graph neural networks, real-time traffic, uncertainty</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Google</span>
+                        </div>
+                        <button onclick="toggleContent('maps-eta-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="maps-eta-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Real-time Traffic:</strong> Constantly changing conditions</li>
+                                    <li><strong>Road Network:</strong> Graph structure with complex topology</li>
+                                    <li><strong>Uncertainty:</strong> Need confidence intervals</li>
+                                    <li><strong>Events:</strong> Accidents, weather, special events</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Graph Representation:</strong> Road segments as nodes, intersections as edges</li>
+                                    <li><strong>GNN Message Passing:</strong> Propagate traffic information</li>
+                                    <li><strong>Temporal Modeling:</strong> LSTM/Transformer for time series</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Historical speed patterns by time/day</li>
+                                    <li>Real-time probe data from devices</li>
+                                    <li>Road attributes (lanes, speed limit, type)</li>
+                                    <li>Weather conditions</li>
+                                    <li>Special events calendar</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 12: E-commerce Product Search -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="ecommerce-search">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('ecommerce-search', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">E-commerce Product Search</h3>
+                                <p class="text-gray-600 text-sm">Semantic search, faceted navigation, relevance + revenue</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Amazon/eBay</span>
+                        </div>
+                        <button onclick="toggleContent('ecommerce-search-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="ecommerce-search-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Multi-Objective Ranking</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Relevance:</strong> Query-product match</li>
+                                    <li><strong>Revenue:</strong> Expected GMV contribution</li>
+                                    <li><strong>User Satisfaction:</strong> Conversion, returns rate</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Query Understanding:</strong> Category prediction, attribute extraction</li>
+                                    <li><strong>Retrieval:</strong> Inverted index + semantic embedding search</li>
+                                    <li><strong>Ranking:</strong> GBDT or neural ranker with business constraints</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Text match scores (BM25, semantic similarity)</li>
+                                    <li>Product quality signals (reviews, rating)</li>
+                                    <li>Seller quality (fulfillment, returns)</li>
+                                    <li>Price competitiveness</li>
+                                    <li>Personalization (purchase history)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 13: Typeahead / Query Autocomplete -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="typeahead">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('typeahead', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Typeahead / Query Autocomplete</h3>
+                                <p class="text-gray-600 text-sm">Trie structures, personalization, latency constraints</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Google/Meta</span>
+                        </div>
+                        <button onclick="toggleContent('typeahead-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="typeahead-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Requirements</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Latency:</strong> < 100ms response time</li>
+                                    <li><strong>Personalization:</strong> User history, context</li>
+                                    <li><strong>Freshness:</strong> Trending queries, news events</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Data Structures</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Trie:</strong> Prefix-based retrieval</li>
+                                    <li><strong>Priority Queue:</strong> Top-K by popularity</li>
+                                    <li><strong>Caching:</strong> Frequent prefix results</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Ranking Signals</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Global query frequency</li>
+                                    <li>Recency-weighted popularity</li>
+                                    <li>User's past queries</li>
+                                    <li>Geographic relevance</li>
+                                    <li>Context (time, device, location)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 14: Document Understanding -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-blue-500" data-problem-id="doc-understanding">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Search</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('doc-understanding', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Document Understanding & Extraction</h3>
+                                <p class="text-gray-600 text-sm">Layout analysis, OCR, named entity recognition</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Google/Microsoft</span>
+                        </div>
+                        <button onclick="toggleContent('doc-understanding-content')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="doc-understanding-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Pipeline Stages</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>OCR:</strong> Text extraction from images</li>
+                                    <li><strong>Layout Analysis:</strong> Detect tables, headers, paragraphs</li>
+                                    <li><strong>Entity Extraction:</strong> Key-value pairs, named entities</li>
+                                    <li><strong>Classification:</strong> Document type identification</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Model Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>LayoutLM:</strong> Combine text and layout embeddings</li>
+                                    <li><strong>Vision Transformer:</strong> Visual document understanding</li>
+                                    <li><strong>Graph Networks:</strong> Model document structure</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Applications</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Invoice processing</li>
+                                    <li>Form understanding</li>
+                                    <li>Receipt extraction</li>
+                                    <li>Contract analysis</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 15: Airbnb Dynamic Pricing -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-yellow-500" data-problem-id="airbnb-pricing">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Pricing</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('airbnb-pricing', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Airbnb Dynamic Pricing</h3>
+                                <p class="text-gray-600 text-sm">Wide & Deep, demand estimation, price elasticity</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Airbnb</span>
+                        </div>
+                        <button onclick="toggleContent('airbnb-pricing-content')" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="airbnb-pricing-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Pricing Objectives</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Host Goal:</strong> Maximize revenue</li>
+                                    <li><strong>Platform Goal:</strong> Maximize bookings and GMV</li>
+                                    <li><strong>Guest Goal:</strong> Fair pricing, value for money</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Demand Estimation</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Booking Probability:</strong> P(book | price, features)</li>
+                                    <li><strong>Price Elasticity:</strong> How demand changes with price</li>
+                                    <li><strong>Counterfactual:</strong> What if we changed the price?</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Seasonality (holidays, events)</li>
+                                    <li>Day of week patterns</li>
+                                    <li>Local market demand/supply</li>
+                                    <li>Listing attributes (bedrooms, amenities)</li>
+                                    <li>Competitor pricing</li>
+                                    <li>Lead time (days until check-in)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 16: Ads pCTR Prediction -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-yellow-500" data-problem-id="ads-pctr">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Ads</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('ads-pctr', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Ads pCTR Prediction</h3>
+                                <p class="text-gray-600 text-sm">Deep Factorization Machines, calibration, real-time serving</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Meta/Google</span>
+                        </div>
+                        <button onclick="toggleContent('ads-pctr-content')" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="ads-pctr-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Why Calibration Matters</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Auction Dynamics:</strong> pCTR directly affects bid ranking</li>
+                                    <li><strong>Revenue:</strong> eCPM = bid * pCTR, miscalibration = lost revenue</li>
+                                    <li><strong>Advertiser Trust:</strong> Accurate predictions build confidence</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Model Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>DeepFM:</strong> Factorization machine + deep neural network</li>
+                                    <li><strong>Feature Crosses:</strong> DCN or explicit cross features</li>
+                                    <li><strong>Embedding Tables:</strong> Sparse features with hash trick</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Calibration Techniques</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Platt scaling (logistic regression on logits)</li>
+                                    <li>Isotonic regression</li>
+                                    <li>Temperature scaling</li>
+                                    <li>Histogram binning</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 17: Uber Surge Pricing -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-yellow-500" data-problem-id="uber-surge">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Pricing</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('uber-surge', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Uber Surge Pricing</h3>
+                                <p class="text-gray-600 text-sm">Supply-demand matching, geospatial modeling, real-time optimization</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Uber/Lyft</span>
+                        </div>
+                        <button onclick="toggleContent('uber-surge-content')" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="uber-surge-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Objectives</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Balance:</strong> Match supply with demand in real-time</li>
+                                    <li><strong>Driver Incentives:</strong> Attract drivers to high-demand areas</li>
+                                    <li><strong>Rider Experience:</strong> Ensure availability while being fair</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Prediction Components</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Demand Forecast:</strong> Expected ride requests per zone</li>
+                                    <li><strong>Supply Forecast:</strong> Available drivers per zone</li>
+                                    <li><strong>Price Elasticity:</strong> How demand responds to surge</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Historical demand patterns</li>
+                                    <li>Events (concerts, sports, conferences)</li>
+                                    <li>Weather conditions</li>
+                                    <li>Time of day, day of week</li>
+                                    <li>Real-time supply/demand ratio</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 18: Conversion Rate Prediction -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-yellow-500" data-problem-id="cvr-prediction">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-medium">Ads</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('cvr-prediction', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Conversion Rate (pCVR) Prediction</h3>
+                                <p class="text-gray-600 text-sm">ESMM, delayed feedback, sample selection bias</p>
+                            </div>
+                            <span class="text-sm text-gray-500">E-commerce/Ads</span>
+                        </div>
+                        <button onclick="toggleContent('cvr-content')" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="cvr-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Key Challenges</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Sample Selection Bias:</strong> Only see conversions for clicked items</li>
+                                    <li><strong>Delayed Feedback:</strong> Conversion happens hours/days later</li>
+                                    <li><strong>Sparsity:</strong> Conversion is much rarer than clicks</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>ESMM Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Key Insight:</strong> pCTCVR = pCTR * pCVR</li>
+                                    <li><strong>Training:</strong> Train on impressions, not just clicks</li>
+                                    <li><strong>Multi-Task:</strong> Joint learning of CTR and CTCVR</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Delayed Feedback Solutions</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Attribution windows (7-day, 28-day)</li>
+                                    <li>Importance weighting for recent samples</li>
+                                    <li>Elapsed-time modeling</li>
+                                    <li>Survival analysis approach</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 19: Bot Detection -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-red-500" data-problem-id="bot-detection">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Trust & Safety</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('bot-detection', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Bot Detection System</h3>
+                                <p class="text-gray-600 text-sm">Behavioral features, GNN, calibrated actions, adversarial robustness</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Twitter/Meta</span>
+                        </div>
+                        <button onclick="toggleContent('bot-detection-content')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="bot-detection-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Bot Types</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Spam Bots:</strong> Mass-posting promotional content</li>
+                                    <li><strong>Scraping Bots:</strong> Data harvesting</li>
+                                    <li><strong>Engagement Bots:</strong> Fake likes, follows, comments</li>
+                                    <li><strong>Coordinated Inauthentic:</strong> Influence operations</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Detection Signals</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Behavioral:</strong> Action timing patterns, velocity</li>
+                                    <li><strong>Content:</strong> Repetitive posts, templated messages</li>
+                                    <li><strong>Network:</strong> Graph anomalies, coordinated behavior</li>
+                                    <li><strong>Device:</strong> Fingerprinting, IP analysis</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Modeling Approach</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Sequence models for action patterns</li>
+                                    <li>GNN for network-level detection</li>
+                                    <li>Ensemble with rule-based heuristics</li>
+                                    <li>Active learning for evolving threats</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 20: Scam Content Detection -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-red-500" data-problem-id="scam-detection">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Trust & Safety</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('scam-detection', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Scam Content Detection</h3>
+                                <p class="text-gray-600 text-sm">Multi-modal, MMOE, focal loss, adversarial training</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Meta/eBay</span>
+                        </div>
+                        <button onclick="toggleContent('scam-detection-content')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="scam-detection-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Scam Categories</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Phishing:</strong> Fake login pages, credential theft</li>
+                                    <li><strong>Financial:</strong> Crypto scams, fake investments</li>
+                                    <li><strong>Romance:</strong> Catfishing, money requests</li>
+                                    <li><strong>Marketplace:</strong> Fake listings, counterfeit goods</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Multi-Modal Architecture</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Text:</strong> BERT for message content</li>
+                                    <li><strong>Images:</strong> CNN for visual scam indicators</li>
+                                    <li><strong>User:</strong> Account features, history</li>
+                                    <li><strong>Fusion:</strong> Late fusion or cross-attention</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Training Considerations</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Focal loss for class imbalance</li>
+                                    <li>Hard negative mining</li>
+                                    <li>Adversarial training for robustness</li>
+                                    <li>Active learning for emerging scam types</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 21: Harmful Content Detection -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-red-500" data-problem-id="harmful-content">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Trust & Safety</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('harmful-content', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Harmful Content Detection</h3>
+                                <p class="text-gray-600 text-sm">Multi-modal classifier, active learning, human review integration</p>
+                            </div>
+                            <span class="text-sm text-gray-500">Meta/YouTube</span>
+                        </div>
+                        <button onclick="toggleContent('harmful-content-content')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="harmful-content-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Content Categories</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Violence:</strong> Graphic content, threats</li>
+                                    <li><strong>Hate Speech:</strong> Discrimination, slurs</li>
+                                    <li><strong>Misinformation:</strong> False claims, conspiracy</li>
+                                    <li><strong>Self-Harm:</strong> Suicide, eating disorders</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>System Design</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Real-time:</strong> Lightweight model for upload blocking</li>
+                                    <li><strong>Batch:</strong> Heavy model for thorough analysis</li>
+                                    <li><strong>Human Review:</strong> Borderline cases queue</li>
+                                    <li><strong>Appeals:</strong> Re-review workflow</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-brain mr-2"></i>Active Learning</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Uncertainty sampling for labeling</li>
+                                    <li>Emerging harm detection</li>
+                                    <li>Policy change adaptation</li>
+                                    <li>Cross-cultural context handling</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case 22: Fraud Detection -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-l-4 border-red-500" data-problem-id="fraud-detection">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap mb-2">
+                                    <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Trust & Safety</span>
+                                    <select class="progress-dropdown progress-not-started text-xs font-medium px-2 py-1 rounded-full border" onchange="updateProgress('fraud-detection', this.value)">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
+                                </div>
+                                <h3 class="text-xl font-bold">Payment Fraud Detection</h3>
+                                <p class="text-gray-600 text-sm">Real-time scoring, graph features, cost-sensitive learning</p>
+                            </div>
+                            <span class="text-sm text-gray-500">PayPal/Stripe</span>
+                        </div>
+                        <button onclick="toggleContent('fraud-detection-content')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                            <i class="fas fa-eye mr-2"></i>View Full Solution
+                        </button>
+                        <div id="fraud-detection-content" class="collapsible-content mt-4">
+                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-blue-800 mb-3"><i class="fas fa-question-circle mr-2"></i>Fraud Types</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Card Fraud:</strong> Stolen card numbers</li>
+                                    <li><strong>Account Takeover:</strong> Compromised credentials</li>
+                                    <li><strong>Friendly Fraud:</strong> False chargebacks</li>
+                                    <li><strong>Synthetic Identity:</strong> Fabricated identities</li>
+                                </ul>
+                            </div>
+                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
+                                <h4 class="font-bold text-purple-800 mb-3"><i class="fas fa-sitemap mr-2"></i>Real-Time Requirements</h4>
+                                <ul class="text-sm text-gray-700 space-y-2">
+                                    <li><strong>Latency:</strong> < 100ms decision time</li>
+                                    <li><strong>Scale:</strong> 1000s of transactions/second</li>
+                                    <li><strong>Accuracy:</strong> Minimize false positives (customer friction)</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 rounded-lg p-4">
+                                <h4 class="font-bold text-green-800 mb-3"><i class="fas fa-cogs mr-2"></i>Key Features</h4>
+                                <ul class="text-sm text-gray-700 space-y-1">
+                                    <li>Transaction velocity (amount, count)</li>
+                                    <li>Device fingerprinting</li>
+                                    <li>IP geolocation anomalies</li>
+                                    <li>Behavioral biometrics</li>
+                                    <li>Graph features (device-account links)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
@@ -456,6 +1523,67 @@
             const content = document.getElementById(id);
             content.classList.toggle('open');
         }
+
+        function updateProgress(problemId, status) {
+            // Save to localStorage
+            localStorage.setItem(`progress_mlsd_${problemId}`, status);
+
+            // Update dropdown styling
+            const card = document.querySelector(`[data-problem-id="${problemId}"]`);
+            if (card) {
+                const dropdown = card.querySelector('.progress-dropdown');
+                if (dropdown) {
+                    // Remove all progress classes
+                    dropdown.classList.remove('progress-not-started', 'progress-working', 'progress-need-help', 'progress-solved');
+
+                    // Add the appropriate class
+                    switch(status) {
+                        case 'not-started':
+                            dropdown.classList.add('progress-not-started');
+                            break;
+                        case 'working':
+                            dropdown.classList.add('progress-working');
+                            break;
+                        case 'need-help':
+                            dropdown.classList.add('progress-need-help');
+                            break;
+                        case 'solved':
+                            dropdown.classList.add('progress-solved');
+                            break;
+                    }
+                }
+            }
+        }
+
+        function loadProgress() {
+            // Find all problem cards and load their saved progress
+            const cards = document.querySelectorAll('[data-problem-id]');
+            cards.forEach(card => {
+                const problemId = card.getAttribute('data-problem-id');
+                const savedStatus = localStorage.getItem(`progress_mlsd_${problemId}`);
+
+                if (savedStatus) {
+                    const dropdown = card.querySelector('.progress-dropdown');
+                    if (dropdown) {
+                        dropdown.value = savedStatus;
+                        updateProgress(problemId, savedStatus);
+                    }
+                }
+            });
+        }
+
+        // Load saved progress on page load
+        document.addEventListener('DOMContentLoaded', loadProgress);
     </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

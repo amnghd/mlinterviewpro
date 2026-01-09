@@ -43,7 +43,6 @@
         .difficulty-easy { background: #dcfce7; color: #166534; }
         .difficulty-medium { background: #fef3c7; color: #92400e; }
         .difficulty-hard { background: #fee2e2; color: #991b1b; }
-        .premium-blur { filter: blur(4px); pointer-events: none; }
         .solution-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
         .solution-content.open { max-height: 20000px; transition: max-height 1s ease-in; }
         .approach-tab.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
@@ -56,6 +55,24 @@
         .comparison-table th { background: #f3f4f6; }
         .best-approach { background: #dcfce7 !important; }
         .copy-btn:active { transform: scale(0.95); }
+        /* Progress dropdown styles */
+        .progress-dropdown {
+            appearance: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 0.75rem;
+            padding: 0.375rem 1.5rem 0.375rem 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #e5e7eb;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.25rem center;
+            background-repeat: no-repeat;
+            background-size: 1.25em 1.25em;
+        }
+        .progress-not-started { background-color: #f3f4f6; color: #374151; border-color: #d1d5db; }
+        .progress-working { background-color: #dbeafe; color: #1e40af; border-color: #93c5fd; }
+        .progress-need-help { background-color: #ffedd5; color: #9a3412; border-color: #fdba74; }
+        .progress-solved { background-color: #dcfce7; color: #166534; border-color: #86efac; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -74,11 +91,12 @@
                     <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
                     <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
                     <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+                    <a href="progress.html" class="text-gray-700 hover:text-purple-600 font-medium"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
                 <div class="flex items-center gap-2">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
                     </a>
                     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
@@ -95,6 +113,7 @@
                 <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
                 <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
                 <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+                <a href="progress.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium"><i class="fas fa-chart-line mr-2"></i>Progress</a>
             </div>
         </div>
     </nav>
@@ -157,13 +176,19 @@
             <div class="grid gap-6">
 
                 <!-- Problem 1: Two Sum -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden" id="problem-1">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" id="problem-1" data-problem-id="1">
                     <div class="p-6">
                         <div class="flex items-center justify-between flex-wrap gap-4">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
                                     <h3 class="text-xl font-bold">1. Two Sum</h3>
                                     <span class="difficulty-easy px-3 py-1 rounded text-sm font-medium">Easy</span>
+                                    <select class="progress-dropdown progress-not-started" onchange="updateProgress(1, this.value)" data-problem="1">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
                                 </div>
                                 <p class="text-gray-600 mb-3">Given an array of integers nums and an integer target, return indices of the two numbers that add up to target.</p>
                                 <div class="flex flex-wrap gap-2">
@@ -433,13 +458,19 @@ Output: [1, 3]</pre>
                 </div>
 
                 <!-- Problem 2: Longest Substring -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="3">
                     <div class="p-6">
                         <div class="flex items-center justify-between flex-wrap gap-4">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
                                     <h3 class="text-xl font-bold">3. Longest Substring Without Repeating Characters</h3>
                                     <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                    <select class="progress-dropdown progress-not-started" onchange="updateProgress(3, this.value)" data-problem="3">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
                                 </div>
                                 <p class="text-gray-600 mb-3">Find the length of the longest substring without repeating characters.</p>
                                 <div class="flex flex-wrap gap-2">
@@ -566,13 +597,19 @@ With Set:
                 </div>
 
                 <!-- Problem 3: 3Sum -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="15">
                     <div class="p-6">
                         <div class="flex items-center justify-between flex-wrap gap-4">
                             <div class="flex-1">
                                 <div class="flex items-center gap-3 mb-2">
                                     <h3 class="text-xl font-bold">15. 3Sum</h3>
                                     <span class="difficulty-medium px-3 py-1 rounded text-sm font-medium">Medium</span>
+                                    <select class="progress-dropdown progress-not-started" onchange="updateProgress(15, this.value)" data-problem="15">
+                                        <option value="not-started">Not Started</option>
+                                        <option value="working">Working</option>
+                                        <option value="need-help">Need Help</option>
+                                        <option value="solved">Solved</option>
+                                    </select>
                                 </div>
                                 <p class="text-gray-600 mb-3">Find all unique triplets that sum to zero.</p>
                                 <div class="flex flex-wrap gap-2">
@@ -693,14 +730,22 @@ for nums, expected in test_cases:
                 <!-- Problem 4-10: Quick cards -->
                 <div class="grid md:grid-cols-2 gap-4">
                     <!-- Merge Intervals -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="56">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                                <h3 class="font-bold">56. Merge Intervals</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
+                                    <h3 class="font-bold">56. Merge Intervals</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(56, this.value)" data-problem="56">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">Sort by start, merge overlapping. O(n log n)</p>
-                            <button onclick="toggleSolution('sol4')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol4')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol4" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -737,14 +782,22 @@ for intervals, expected in tests:
                     </div>
 
                     <!-- LRU Cache -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="146">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                                <h3 class="font-bold">146. LRU Cache</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
+                                    <h3 class="font-bold">146. LRU Cache</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(146, this.value)" data-problem="146">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">HashMap + DoublyLinkedList. O(1) ops</p>
-                            <button onclick="toggleSolution('sol5')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol5')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol5" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -788,14 +841,22 @@ print(f"get(4) = {cache.get(4)}")  # 4</textarea>
                     </div>
 
                     <!-- Number of Islands -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="200">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                                <h3 class="font-bold">200. Number of Islands</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
+                                    <h3 class="font-bold">200. Number of Islands</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(200, this.value)" data-problem="200">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
-                            <p class="text-gray-600 text-sm mb-2">DFS flood fill. O(M×N)</p>
-                            <button onclick="toggleSolution('sol6')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <p class="text-gray-600 text-sm mb-2">DFS flood fill. O(M*N)</p>
+                            <button onclick="toggleSolution('sol6')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol6" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -838,14 +899,22 @@ print(f"Islands: {numIslands([row[:] for row in grid2])}")  # 1</textarea>
                     </div>
 
                     <!-- Course Schedule -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="207">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
-                                <h3 class="font-bold">207. Course Schedule</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
+                                    <h3 class="font-bold">207. Course Schedule</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(207, this.value)" data-problem="207">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">Topological Sort / Cycle Detection. O(V+E)</p>
-                            <button onclick="toggleSolution('sol7')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol7')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol7" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -884,14 +953,22 @@ print(f"canFinish(2, [[1,0],[0,1]]) = {canFinish(2, [[1,0],[0,1]])}")  # False (
                     </div>
 
                     <!-- Median of Two Sorted Arrays -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="4">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                                <h3 class="font-bold">4. Median of Two Sorted Arrays</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                                    <h3 class="font-bold">4. Median of Two Sorted Arrays</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(4, this.value)" data-problem="4">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">Binary search. O(log(min(m,n)))</p>
-                            <button onclick="toggleSolution('sol8')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol8')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol8" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -933,14 +1010,22 @@ print(f"[1,2] & [3,4] -> {findMedianSortedArrays([1,2], [3,4])}")  # 2.5</textar
                     </div>
 
                     <!-- Word Search II -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="212">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                                <h3 class="font-bold">212. Word Search II</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                                    <h3 class="font-bold">212. Word Search II</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(212, this.value)" data-problem="212">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">Trie + DFS with pruning</p>
-                            <button onclick="toggleSolution('sol9')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol9')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol9" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -997,14 +1082,22 @@ print(f"Found: {findWords(board, words)}")  # ["oath", "eat"]</textarea>
                     </div>
 
                     <!-- Serialize/Deserialize -->
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="297">
                         <div class="p-4">
-                            <div class="flex items-center gap-2 mb-2">
-                                <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
-                                <h3 class="font-bold">297. Serialize/Deserialize Tree</h3>
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-2">
+                                    <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                                    <h3 class="font-bold">297. Serialize/Deserialize Tree</h3>
+                                </div>
+                                <select class="progress-dropdown progress-not-started" onchange="updateProgress(297, this.value)" data-problem="297">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                             <p class="text-gray-600 text-sm mb-2">Preorder with null markers. O(n)</p>
-                            <button onclick="toggleSolution('sol10')" class="text-purple-600 text-sm font-medium hover:underline">View Solution →</button>
+                            <button onclick="toggleSolution('sol10')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
                         </div>
                         <div id="sol10" class="solution-content bg-gray-50 border-t">
                             <div class="p-4">
@@ -1060,28 +1153,494 @@ print(f"Re-serialized: {codec.serialize(deserialized)}")</textarea>
         </div>
     </section>
 
-    <!-- Premium Section -->
+    <!-- Additional Problems Section -->
     <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium: 304+ More Problems
+                <i class="fas fa-code text-purple-500 mr-3"></i>304+ More Problems
             </h2>
-            <div class="relative">
-                <div class="grid md:grid-cols-4 gap-4 premium-blur">
-                    <div class="bg-white rounded-xl shadow p-4"><span class="difficulty-hard px-2 py-1 rounded text-xs">Hard</span><h3 class="font-bold mt-2">Trapping Rain Water</h3></div>
-                    <div class="bg-white rounded-xl shadow p-4"><span class="difficulty-hard px-2 py-1 rounded text-xs">Hard</span><h3 class="font-bold mt-2">Alien Dictionary</h3></div>
-                    <div class="bg-white rounded-xl shadow p-4"><span class="difficulty-medium px-2 py-1 rounded text-xs">Medium</span><h3 class="font-bold mt-2">Clone Graph</h3></div>
-                    <div class="bg-white rounded-xl shadow p-4"><span class="difficulty-hard px-2 py-1 rounded text-xs">Hard</span><h3 class="font-bold mt-2">Longest Valid Parentheses</h3></div>
+            <!-- Login prompt banner -->
+            <div class="bg-white rounded-xl shadow-lg p-6 mb-6 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-user-circle text-3xl text-purple-500"></i>
+                    <div>
+                        <h3 class="font-bold text-lg">Login to track your progress</h3>
+                        <p class="text-gray-600 text-sm">Track solved problems and sync across devices</p>
+                    </div>
                 </div>
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-md">
-                        <i class="fas fa-crown text-5xl text-yellow-500 mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Unlock All 314+ Problems</h3>
-                        <p class="text-gray-600 mb-6">Complete runnable solutions with test cases</p>
-                        <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                           class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block">
-                            <i class="fas fa-user-tie mr-2"></i>Book Mentorship
-                        </a>
+                <button onclick="showLoginPrompt()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-6 py-2 rounded-full font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <!-- Problem 42: Trapping Rain Water -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="42">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(42, this.value)" data-problem="42">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">42. Trapping Rain Water</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Two pointers or stack. O(n)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol42')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/trapping-rain-water/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol42" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">def trap(height):
+    """Two Pointers: O(n) time, O(1) space"""
+    if not height:
+        return 0
+
+    left, right = 0, len(height) - 1
+    left_max, right_max = height[left], height[right]
+    water = 0
+
+    while left < right:
+        if left_max < right_max:
+            left += 1
+            left_max = max(left_max, height[left])
+            water += left_max - height[left]
+        else:
+            right -= 1
+            right_max = max(right_max, height[right])
+            water += right_max - height[right]
+
+    return water
+
+# Test
+print(f"trap([0,1,0,2,1,0,1,3,2,1,2,1]) = {trap([0,1,0,2,1,0,1,3,2,1,2,1])}")  # 6
+print(f"trap([4,2,0,3,2,5]) = {trap([4,2,0,3,2,5])}")  # 9</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 269: Alien Dictionary -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="269">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(269, this.value)" data-problem="269">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">269. Alien Dictionary</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Topological sort. O(C)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol269')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/alien-dictionary/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol269" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">from collections import defaultdict, deque
+
+def alienOrder(words):
+    """Topological Sort: O(C) where C is total chars"""
+    graph = defaultdict(set)
+    in_degree = {c: 0 for word in words for c in word}
+
+    for i in range(len(words) - 1):
+        w1, w2 = words[i], words[i + 1]
+        min_len = min(len(w1), len(w2))
+        if len(w1) > len(w2) and w1[:min_len] == w2[:min_len]:
+            return ""  # Invalid
+        for j in range(min_len):
+            if w1[j] != w2[j]:
+                if w2[j] not in graph[w1[j]]:
+                    graph[w1[j]].add(w2[j])
+                    in_degree[w2[j]] += 1
+                break
+
+    queue = deque([c for c in in_degree if in_degree[c] == 0])
+    result = []
+
+    while queue:
+        c = queue.popleft()
+        result.append(c)
+        for neighbor in graph[c]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+
+    return "".join(result) if len(result) == len(in_degree) else ""
+
+# Test
+print(f"alienOrder(['wrt','wrf','er','ett','rftt']) = {alienOrder(['wrt','wrf','er','ett','rftt'])}")  # "wertf"</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 133: Clone Graph -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="133">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-medium px-2 py-1 rounded text-xs font-medium">Medium</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(133, this.value)" data-problem="133">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">133. Clone Graph</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">BFS/DFS with hash map. O(V+E)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol133')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/clone-graph/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol133" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors else []
+
+def cloneGraph(node):
+    """DFS with HashMap: O(V+E) time and space"""
+    if not node:
+        return None
+
+    cloned = {}
+
+    def dfs(n):
+        if n in cloned:
+            return cloned[n]
+
+        copy = Node(n.val)
+        cloned[n] = copy
+
+        for neighbor in n.neighbors:
+            copy.neighbors.append(dfs(neighbor))
+
+        return copy
+
+    return dfs(node)
+
+# Test example
+n1 = Node(1)
+n2 = Node(2)
+n3 = Node(3)
+n4 = Node(4)
+n1.neighbors = [n2, n4]
+n2.neighbors = [n1, n3]
+n3.neighbors = [n2, n4]
+n4.neighbors = [n1, n3]
+
+clone = cloneGraph(n1)
+print(f"Original node val: {n1.val}, Clone val: {clone.val}")
+print(f"Clone is different object: {clone is not n1}")</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 32: Longest Valid Parentheses -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="32">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(32, this.value)" data-problem="32">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">32. Longest Valid Parentheses</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Stack or DP. O(n)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol32')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/longest-valid-parentheses/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol32" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">def longestValidParentheses(s):
+    """Stack: O(n) time, O(n) space"""
+    stack = [-1]  # Base for valid substring
+    max_len = 0
+
+    for i, c in enumerate(s):
+        if c == '(':
+            stack.append(i)
+        else:
+            stack.pop()
+            if not stack:
+                stack.append(i)  # New base
+            else:
+                max_len = max(max_len, i - stack[-1])
+
+    return max_len
+
+# Test
+print(f"longestValidParentheses('(()') = {longestValidParentheses('(()')}")  # 2
+print(f"longestValidParentheses(')()())') = {longestValidParentheses(')()())')}")  # 4
+print(f"longestValidParentheses('()(()') = {longestValidParentheses('()(())')}")  # 6</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 23: Merge k Sorted Lists -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="23">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(23, this.value)" data-problem="23">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">23. Merge k Sorted Lists</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Min heap or divide & conquer. O(N log k)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol23')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/merge-k-sorted-lists/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol23" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">import heapq
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+def mergeKLists(lists):
+    """Min Heap: O(N log k) time, O(k) space"""
+    heap = []
+    for i, node in enumerate(lists):
+        if node:
+            heapq.heappush(heap, (node.val, i, node))
+
+    dummy = ListNode()
+    current = dummy
+
+    while heap:
+        val, i, node = heapq.heappop(heap)
+        current.next = node
+        current = current.next
+        if node.next:
+            heapq.heappush(heap, (node.next.val, i, node.next))
+
+    return dummy.next
+
+# Test
+l1 = ListNode(1, ListNode(4, ListNode(5)))
+l2 = ListNode(1, ListNode(3, ListNode(4)))
+l3 = ListNode(2, ListNode(6))
+result = mergeKLists([l1, l2, l3])
+output = []
+while result:
+    output.append(result.val)
+    result = result.next
+print(f"Merged: {output}")  # [1,1,2,3,4,4,5,6]</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 76: Minimum Window Substring -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="76">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(76, this.value)" data-problem="76">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">76. Minimum Window Substring</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Sliding window. O(m+n)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol76')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/minimum-window-substring/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol76" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">from collections import Counter
+
+def minWindow(s, t):
+    """Sliding Window: O(m+n) time, O(m+n) space"""
+    if not t or not s:
+        return ""
+
+    t_count = Counter(t)
+    required = len(t_count)
+    formed = 0
+    window_counts = {}
+
+    left = 0
+    ans = float("inf"), None, None
+
+    for right, c in enumerate(s):
+        window_counts[c] = window_counts.get(c, 0) + 1
+
+        if c in t_count and window_counts[c] == t_count[c]:
+            formed += 1
+
+        while left <= right and formed == required:
+            if right - left + 1 < ans[0]:
+                ans = (right - left + 1, left, right)
+
+            char = s[left]
+            window_counts[char] -= 1
+            if char in t_count and window_counts[char] < t_count[char]:
+                formed -= 1
+            left += 1
+
+    return "" if ans[0] == float("inf") else s[ans[1]:ans[2]+1]
+
+# Test
+print(f"minWindow('ADOBECODEBANC', 'ABC') = {minWindow('ADOBECODEBANC', 'ABC')}")  # "BANC"
+print(f"minWindow('a', 'a') = {minWindow('a', 'a')}")  # "a"</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 124: Binary Tree Maximum Path Sum -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="124">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(124, this.value)" data-problem="124">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">124. Binary Tree Max Path Sum</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">DFS with global max. O(n)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol124')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol124" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def maxPathSum(root):
+    """DFS: O(n) time, O(h) space"""
+    max_sum = float('-inf')
+
+    def dfs(node):
+        nonlocal max_sum
+        if not node:
+            return 0
+
+        left = max(dfs(node.left), 0)
+        right = max(dfs(node.right), 0)
+
+        # Path through this node
+        max_sum = max(max_sum, node.val + left + right)
+
+        # Return max path extending from this node
+        return node.val + max(left, right)
+
+    dfs(root)
+    return max_sum
+
+# Test
+root = TreeNode(-10, TreeNode(9), TreeNode(20, TreeNode(15), TreeNode(7)))
+print(f"maxPathSum: {maxPathSum(root)}")  # 42 (15 + 20 + 7)</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 239: Sliding Window Maximum -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden" data-problem-id="239">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="difficulty-hard px-2 py-1 rounded text-xs font-medium">Hard</span>
+                            <select class="progress-dropdown progress-not-started" onchange="updateProgress(239, this.value)" data-problem="239">
+                                <option value="not-started">Not Started</option>
+                                <option value="working">Working</option>
+                                <option value="need-help">Need Help</option>
+                                <option value="solved">Solved</option>
+                            </select>
+                        </div>
+                        <h3 class="font-bold">239. Sliding Window Maximum</h3>
+                        <p class="text-gray-600 text-sm mt-1 mb-2">Monotonic deque. O(n)</p>
+                        <div class="flex gap-2">
+                            <button onclick="toggleSolution('sol239')" class="text-purple-600 text-sm font-medium hover:underline">View Solution</button>
+                            <a href="https://leetcode.com/problems/sliding-window-maximum/" target="_blank" class="text-gray-500 text-sm hover:text-gray-700"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div id="sol239" class="solution-content bg-gray-50 border-t">
+                        <div class="p-4">
+                            <div class="relative">
+                                <button onclick="copyCode(this)" class="absolute top-2 right-2 z-10 bg-gray-700 text-white px-2 py-1 rounded text-xs hover:bg-gray-600 copy-btn">Copy</button>
+                                <textarea class="code-editor">from collections import deque
+
+def maxSlidingWindow(nums, k):
+    """Monotonic Deque: O(n) time, O(k) space"""
+    dq = deque()  # Store indices
+    result = []
+
+    for i, num in enumerate(nums):
+        # Remove indices outside window
+        while dq and dq[0] < i - k + 1:
+            dq.popleft()
+
+        # Remove smaller elements (maintain decreasing)
+        while dq and nums[dq[-1]] < num:
+            dq.pop()
+
+        dq.append(i)
+
+        # Add to result when window is complete
+        if i >= k - 1:
+            result.append(nums[dq[0]])
+
+    return result
+
+# Test
+print(f"maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3) = {maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3)}")
+# [3,3,5,5,6,7]</textarea>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1164,6 +1723,71 @@ print(f"Re-serialized: {codec.serialize(deserialized)}")</textarea>
                 }, 2000);
             });
         }
+
+        // Progress tracking functions
+        function updateProgress(problemId, status) {
+            const key = `progress_lc_${problemId}`;
+            localStorage.setItem(key, status);
+
+            // Update dropdown styling
+            const dropdown = document.querySelector(`select[data-problem="${problemId}"]`);
+            if (dropdown) {
+                updateDropdownStyle(dropdown, status);
+            }
+        }
+
+        function updateDropdownStyle(dropdown, status) {
+            // Remove all status classes
+            dropdown.classList.remove('progress-not-started', 'progress-working', 'progress-need-help', 'progress-solved');
+
+            // Add the appropriate status class
+            switch (status) {
+                case 'working':
+                    dropdown.classList.add('progress-working');
+                    break;
+                case 'need-help':
+                    dropdown.classList.add('progress-need-help');
+                    break;
+                case 'solved':
+                    dropdown.classList.add('progress-solved');
+                    break;
+                default:
+                    dropdown.classList.add('progress-not-started');
+            }
+        }
+
+        function loadAllProgress() {
+            // Find all progress dropdowns and load their saved status
+            document.querySelectorAll('select[data-problem]').forEach(dropdown => {
+                const problemId = dropdown.getAttribute('data-problem');
+                const key = `progress_lc_${problemId}`;
+                const savedStatus = localStorage.getItem(key);
+
+                if (savedStatus) {
+                    dropdown.value = savedStatus;
+                    updateDropdownStyle(dropdown, savedStatus);
+                }
+            });
+        }
+
+        function showLoginPrompt() {
+            alert('Login functionality coming soon! Your progress is currently saved locally in your browser.');
+        }
+
+        // Load saved progress on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadAllProgress();
+        });
     </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

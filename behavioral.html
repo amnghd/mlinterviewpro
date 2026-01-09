@@ -69,11 +69,12 @@
                     <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
                     <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
                     <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+                    <a href="progress.html" class="text-gray-700 hover:text-purple-600 font-medium"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
                 <div class="flex items-center gap-2">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
                     </a>
                     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
@@ -90,6 +91,7 @@
                 <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
                 <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
                 <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+                <a href="progress.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium"><i class="fas fa-chart-line mr-2"></i>Progress</a>
             </div>
         </div>
     </nav>
@@ -989,5 +991,15 @@
             }
         }
     </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

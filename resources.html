@@ -33,53 +33,262 @@
         gtag('js', new Date());
         gtag('config', 'G-6DKFJEHPWR');
     </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .book-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+        /* Animated Gradient Background */
+        .gradient-mesh {
+            background: linear-gradient(-45deg, #0f0f23, #1a1a3e, #2d1b4e, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        /* Glow Effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Card Hover Effects */
+        .card-premium {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-premium:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);
+        }
+
+        /* Button Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e1b4b; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: rgba(168, 85, 247, 0.3);
+            color: #fff;
+        }
+
+        /* Book Card */
+        .book-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.35);
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-950 text-white antialiased">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="text-xl sm:text-2xl font-bold text-purple-600">
-                    <i class="fas fa-brain mr-2"></i><span class="hidden sm:inline">MLInterviewPro</span><span class="sm:hidden">MLIP</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-brain text-white text-lg"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-slate-900 hidden sm:block">MLInterviewPro</span>
                 </a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
-                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
-                    <a href="ml-coding.html" class="text-gray-700 hover:text-purple-600 font-medium">ML Coding</a>
-                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
-                    <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
-                    <a href="resources.html" class="text-purple-600 font-bold">Resources</a>
-                    <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="leetcode.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">LeetCode</a>
+                    <a href="ml-system-design.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">System Design</a>
+                    <a href="ml-coding.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">ML Coding</a>
+                    <a href="behavioral.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Behavioral</a>
+                    <a href="cheatsheet.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Cheatsheet</a>
+                    <a href="resources.html" class="px-4 py-2 text-purple-600 font-bold rounded-lg bg-purple-50 transition-all">Resources</a>
+                    <a href="progress.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
-                <div class="flex items-center gap-2">
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-3">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
                     </a>
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                        <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                        <i class="fas fa-bars text-slate-700 text-xl" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
-            <div class="px-4 py-3 space-y-2">
-                <a href="leetcode.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">LeetCode</a>
-                <a href="ml-system-design.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML System Design</a>
-                <a href="ml-coding.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML Coding</a>
-                <a href="behavioral.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Behavioral</a>
-                <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
-                <a href="resources.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-lg font-medium">Resources</a>
-                <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-4 space-y-1">
+                <a href="leetcode.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Cheatsheet</a>
+                <a href="resources.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-xl font-medium transition">Resources</a>
+                <a href="progress.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition"><i class="fas fa-chart-line mr-2"></i>Progress</a>
+                <div class="pt-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="block text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-xl font-semibold" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
+
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -90,165 +299,195 @@
         }
     </script>
 
-    <!-- Header -->
-    <section class="gradient-bg text-white py-8 sm:py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4"><i class="fas fa-book-open mr-2 sm:mr-3"></i>Books & Learning Resources</h1>
-            <p class="text-base sm:text-lg md:text-xl opacity-90">Curated resources that helped me ace ML interviews at top companies</p>
+    <!-- Hero Section -->
+    <section class="relative gradient-mesh overflow-hidden pt-24 pb-16">
+        <!-- Floating Orbs -->
+        <div class="orb w-96 h-96 bg-purple-500 top-20 -left-48 animate-float"></div>
+        <div class="orb w-80 h-80 bg-pink-500 top-40 right-0 animate-float-slow"></div>
+
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12">
+            <div class="text-center">
+                <!-- Badge -->
+                <div data-aos="fade-down" data-aos-delay="100" class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
+                    <i class="fas fa-book-open text-purple-400"></i>
+                    <span class="text-sm text-purple-200">Curated Learning Resources</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 data-aos="fade-up" data-aos-delay="200" class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+                    <span class="text-white">Books &</span>
+                    <span class="gradient-text"> Resources</span>
+                </h1>
+
+                <!-- Subheading -->
+                <p data-aos="fade-up" data-aos-delay="300" class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                    The exact resources that helped me ace ML interviews at top companies
+                </p>
+            </div>
         </div>
     </section>
 
     <!-- ML & Deep Learning Books -->
-    <section class="py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 flex items-center">
-                <i class="fas fa-brain text-purple-500 mr-3"></i>Machine Learning & Deep Learning
-            </h2>
+    <section class="py-20 bg-slate-950 relative overflow-hidden">
+        <div class="orb w-64 h-64 bg-blue-500 bottom-0 right-0"></div>
 
-            <div class="grid md:grid-cols-3 gap-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-12">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-purple-500/10 text-purple-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-brain mr-2"></i>Essential Reading
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-3xl md:text-4xl font-bold text-white">
+                    Machine Learning & <span class="gradient-text">Deep Learning</span>
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- Deep Learning Book -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-blue-500 to-purple-500"></div>
+                <div data-aos="fade-up" data-aos-delay="100" class="book-card glass rounded-3xl overflow-hidden border border-blue-500/20 hover:border-blue-400/40">
+                    <div class="h-2 bg-gradient-to-r from-blue-500 to-purple-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-blue-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-book text-3xl text-blue-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-xl flex items-center justify-center mr-4 border border-blue-500/30">
+                                <i class="fas fa-book text-3xl text-blue-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">Deep Learning</h3>
-                                <p class="text-gray-500 text-sm">Ian Goodfellow, Yoshua Bengio, Aaron Courville</p>
+                                <h3 class="font-bold text-lg text-white">Deep Learning</h3>
+                                <p class="text-slate-400 text-sm">Ian Goodfellow, Yoshua Bengio, Aaron Courville</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">The "bible" of deep learning. Comprehensive coverage of neural networks, optimization, and modern architectures. Essential for understanding fundamentals.</p>
+                        <p class="text-slate-300 text-sm mb-4">The "bible" of deep learning. Comprehensive coverage of neural networks, optimization, and modern architectures. Essential for understanding fundamentals.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Fundamentals</span>
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Theory</span>
-                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Math Heavy</span>
+                            <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded-lg text-xs">Fundamentals</span>
+                            <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded-lg text-xs">Theory</span>
+                            <span class="bg-blue-500/20 text-blue-300 px-2 py-1 rounded-lg text-xs">Math Heavy</span>
                         </div>
-                        <a href="https://www.deeplearningbook.org/" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
-                            Read Free Online <i class="fas fa-external-link-alt ml-1"></i>
+                        <a href="https://www.deeplearningbook.org/" target="_blank" class="inline-flex items-center gap-2 text-blue-400 font-semibold hover:text-blue-300 transition text-sm">
+                            Read Free Online <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Jay Alammar's Illustrated Guides -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-green-500 to-teal-500"></div>
+                <div data-aos="fade-up" data-aos-delay="200" class="book-card glass rounded-3xl overflow-hidden border border-green-500/20 hover:border-green-400/40">
+                    <div class="h-2 bg-gradient-to-r from-green-500 to-teal-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-green-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-images text-3xl text-green-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-green-500/20 to-teal-500/20 rounded-xl flex items-center justify-center mr-4 border border-green-500/30">
+                                <i class="fas fa-images text-3xl text-green-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">Illustrated Transformer & BERT</h3>
-                                <p class="text-gray-500 text-sm">Jay Alammar</p>
+                                <h3 class="font-bold text-lg text-white">Illustrated Transformer & BERT</h3>
+                                <p class="text-slate-400 text-sm">Jay Alammar</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Beautiful visual explanations of Transformers, BERT, GPT, and attention mechanisms. The best way to understand modern NLP architectures.</p>
+                        <p class="text-slate-300 text-sm mb-4">Beautiful visual explanations of Transformers, BERT, GPT, and attention mechanisms. The best way to understand modern NLP architectures.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Visual</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">NLP</span>
-                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Transformers</span>
+                            <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs">Visual</span>
+                            <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs">NLP</span>
+                            <span class="bg-green-500/20 text-green-300 px-2 py-1 rounded-lg text-xs">Transformers</span>
                         </div>
-                        <a href="https://jalammar.github.io/" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
-                            Visit Blog <i class="fas fa-external-link-alt ml-1"></i>
+                        <a href="https://jalammar.github.io/" target="_blank" class="inline-flex items-center gap-2 text-green-400 font-semibold hover:text-green-300 transition text-sm">
+                            Visit Blog <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Hands-On ML -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-orange-500 to-red-500"></div>
+                <div data-aos="fade-up" data-aos-delay="300" class="book-card glass rounded-3xl overflow-hidden border border-orange-500/20 hover:border-orange-400/40">
+                    <div class="h-2 bg-gradient-to-r from-orange-500 to-red-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-orange-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-laptop-code text-3xl text-orange-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-xl flex items-center justify-center mr-4 border border-orange-500/30">
+                                <i class="fas fa-laptop-code text-3xl text-orange-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">Hands-On Machine Learning</h3>
-                                <p class="text-gray-500 text-sm">Aurélien Géron</p>
+                                <h3 class="font-bold text-lg text-white">Hands-On Machine Learning</h3>
+                                <p class="text-slate-400 text-sm">Aurelien Geron</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Practical ML with Scikit-Learn, Keras, and TensorFlow. Great balance of theory and implementation. Perfect for interview prep.</p>
+                        <p class="text-slate-300 text-sm mb-4">Practical ML with Scikit-Learn, Keras, and TensorFlow. Great balance of theory and implementation. Perfect for interview prep.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Practical</span>
-                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Code Examples</span>
-                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">TensorFlow</span>
+                            <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded-lg text-xs">Practical</span>
+                            <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded-lg text-xs">Code Examples</span>
+                            <span class="bg-orange-500/20 text-orange-300 px-2 py-1 rounded-lg text-xs">TensorFlow</span>
                         </div>
-                        <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781098125967/" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
-                            View on O'Reilly <i class="fas fa-external-link-alt ml-1"></i>
+                        <a href="https://www.oreilly.com/library/view/hands-on-machine-learning/9781098125967/" target="_blank" class="inline-flex items-center gap-2 text-orange-400 font-semibold hover:text-orange-300 transition text-sm">
+                            View on O'Reilly <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- Pattern Recognition -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
+                <div data-aos="fade-up" data-aos-delay="400" class="book-card glass rounded-3xl overflow-hidden border border-indigo-500/20 hover:border-indigo-400/40">
+                    <div class="h-2 bg-gradient-to-r from-indigo-500 to-blue-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-indigo-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-chart-line text-3xl text-indigo-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-indigo-500/20 to-blue-500/20 rounded-xl flex items-center justify-center mr-4 border border-indigo-500/30">
+                                <i class="fas fa-chart-line text-3xl text-indigo-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">Pattern Recognition & ML</h3>
-                                <p class="text-gray-500 text-sm">Christopher Bishop</p>
+                                <h3 class="font-bold text-lg text-white">Pattern Recognition & ML</h3>
+                                <p class="text-slate-400 text-sm">Christopher Bishop</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Rigorous mathematical treatment of ML. Excellent for understanding probabilistic models, Bayesian methods, and graphical models.</p>
+                        <p class="text-slate-300 text-sm mb-4">Rigorous mathematical treatment of ML. Excellent for understanding probabilistic models, Bayesian methods, and graphical models.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Mathematical</span>
-                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Bayesian</span>
-                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Classic</span>
+                            <span class="bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-lg text-xs">Mathematical</span>
+                            <span class="bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-lg text-xs">Bayesian</span>
+                            <span class="bg-indigo-500/20 text-indigo-300 px-2 py-1 rounded-lg text-xs">Classic</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Designing ML Systems -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-pink-500 to-rose-500"></div>
+                <div data-aos="fade-up" data-aos-delay="500" class="book-card glass rounded-3xl overflow-hidden border border-pink-500/20 hover:border-pink-400/40">
+                    <div class="h-2 bg-gradient-to-r from-pink-500 to-rose-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-pink-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-cogs text-3xl text-pink-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-pink-500/20 to-rose-500/20 rounded-xl flex items-center justify-center mr-4 border border-pink-500/30">
+                                <i class="fas fa-cogs text-3xl text-pink-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">Designing ML Systems</h3>
-                                <p class="text-gray-500 text-sm">Chip Huyen</p>
+                                <h3 class="font-bold text-lg text-white">Designing ML Systems</h3>
+                                <p class="text-slate-400 text-sm">Chip Huyen</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Production ML systems design. Covers data pipelines, model serving, monitoring, and MLOps. Essential for system design interviews.</p>
+                        <p class="text-slate-300 text-sm mb-4">Production ML systems design. Covers data pipelines, model serving, monitoring, and MLOps. Essential for system design interviews.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">System Design</span>
-                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">MLOps</span>
-                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">Production</span>
+                            <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded-lg text-xs">System Design</span>
+                            <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded-lg text-xs">MLOps</span>
+                            <span class="bg-pink-500/20 text-pink-300 px-2 py-1 rounded-lg text-xs">Production</span>
                         </div>
-                        <a href="https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
-                            View on O'Reilly <i class="fas fa-external-link-alt ml-1"></i>
+                        <a href="https://www.oreilly.com/library/view/designing-machine-learning/9781098107956/" target="_blank" class="inline-flex items-center gap-2 text-pink-400 font-semibold hover:text-pink-300 transition text-sm">
+                            View on O'Reilly <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
 
                 <!-- ML Interview Book -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300">
-                    <div class="h-3 bg-gradient-to-r from-yellow-500 to-amber-500"></div>
+                <div data-aos="fade-up" data-aos-delay="600" class="book-card glass rounded-3xl overflow-hidden border border-yellow-500/20 hover:border-yellow-400/40">
+                    <div class="h-2 bg-gradient-to-r from-yellow-500 to-amber-500"></div>
                     <div class="p-6">
                         <div class="flex items-center mb-4">
-                            <div class="w-16 h-20 bg-yellow-100 rounded flex items-center justify-center mr-4">
-                                <i class="fas fa-user-graduate text-3xl text-yellow-600"></i>
+                            <div class="w-16 h-20 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 rounded-xl flex items-center justify-center mr-4 border border-yellow-500/30">
+                                <i class="fas fa-user-graduate text-3xl text-yellow-400"></i>
                             </div>
                             <div>
-                                <h3 class="font-bold text-lg">ML Interviews Book</h3>
-                                <p class="text-gray-500 text-sm">Chip Huyen</p>
+                                <h3 class="font-bold text-lg text-white">ML Interviews Book</h3>
+                                <p class="text-slate-400 text-sm">Chip Huyen</p>
                             </div>
                         </div>
-                        <p class="text-gray-600 text-sm mb-4">Free online resource covering the entire ML interview process. Questions, answers, and strategies from a Stanford lecturer.</p>
+                        <p class="text-slate-300 text-sm mb-4">Free online resource covering the entire ML interview process. Questions, answers, and strategies from a Stanford lecturer.</p>
                         <div class="flex flex-wrap gap-2 mb-4">
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Free</span>
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Interview Prep</span>
-                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">Comprehensive</span>
+                            <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-lg text-xs">Free</span>
+                            <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-lg text-xs">Interview Prep</span>
+                            <span class="bg-yellow-500/20 text-yellow-300 px-2 py-1 rounded-lg text-xs">Comprehensive</span>
                         </div>
-                        <a href="https://huyenchip.com/ml-interviews-book/" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
-                            Read Free Online <i class="fas fa-external-link-alt ml-1"></i>
+                        <a href="https://huyenchip.com/ml-interviews-book/" target="_blank" class="inline-flex items-center gap-2 text-yellow-400 font-semibold hover:text-yellow-300 transition text-sm">
+                            Read Free Online <i class="fas fa-external-link-alt"></i>
                         </a>
                     </div>
                 </div>
@@ -257,102 +496,107 @@
     </section>
 
     <!-- Coding Platforms -->
-    <section class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 flex items-center">
-                <i class="fas fa-code text-green-500 mr-3"></i>Coding Practice Platforms
-            </h2>
+    <section class="py-20 bg-gradient-to-b from-slate-950 to-slate-900 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-12">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-green-500/10 text-green-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-code mr-2"></i>Practice Platforms
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-3xl md:text-4xl font-bold text-white">
+                    Coding Practice <span class="gradient-text-blue">Platforms</span>
+                </h2>
+            </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <!-- AlgoExpert -->
-                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border-2 border-blue-200">
-                    <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 bg-blue-600 rounded-xl flex items-center justify-center mr-4">
+                <div data-aos="fade-up" data-aos-delay="100" class="glass rounded-3xl p-8 border border-blue-500/20 hover:border-blue-400/40 transition-all card-premium">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center mr-4">
                             <i class="fas fa-terminal text-2xl text-white"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xl">AlgoExpert</h3>
-                            <p class="text-gray-600">160 curated coding interview questions</p>
+                            <h3 class="font-bold text-xl text-white">AlgoExpert</h3>
+                            <p class="text-slate-400">160 curated coding interview questions</p>
                         </div>
                     </div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Video explanations for every problem</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Curated by difficulty and topic</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Multiple languages supported</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Data structures crash course included</li>
+                    <ul class="text-sm text-slate-300 space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Video explanations for every problem</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Curated by difficulty and topic</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Multiple languages supported</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Data structures crash course included</li>
                     </ul>
                     <a href="https://www.algoexpert.io/" target="_blank"
-                       class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
-                        Visit AlgoExpert <i class="fas fa-external-link-alt ml-2"></i>
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all btn-glow">
+                        Visit AlgoExpert <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
 
                 <!-- Structy -->
-                <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200">
-                    <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 bg-purple-600 rounded-xl flex items-center justify-center mr-4">
+                <div data-aos="fade-up" data-aos-delay="200" class="glass rounded-3xl p-8 border border-purple-500/20 hover:border-purple-400/40 transition-all card-premium">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center mr-4">
                             <i class="fas fa-project-diagram text-2xl text-white"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xl">Structy</h3>
-                            <p class="text-gray-600">Learn data structures & algorithms visually</p>
+                            <h3 class="font-bold text-xl text-white">Structy</h3>
+                            <p class="text-slate-400">Learn data structures & algorithms visually</p>
                         </div>
                     </div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Visual explanations with animations</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Step-by-step guided approach</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Great for visual learners</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Python & JavaScript support</li>
+                    <ul class="text-sm text-slate-300 space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Visual explanations with animations</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Step-by-step guided approach</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Great for visual learners</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Python & JavaScript support</li>
                     </ul>
                     <a href="https://www.structy.net/" target="_blank"
-                       class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-purple-700 transition">
-                        Visit Structy <i class="fas fa-external-link-alt ml-2"></i>
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow">
+                        Visit Structy <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
 
                 <!-- LeetCode -->
-                <div class="bg-gradient-to-br from-yellow-50 to-orange-50 rounded-xl p-6 border-2 border-yellow-200">
-                    <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 bg-yellow-500 rounded-xl flex items-center justify-center mr-4">
+                <div data-aos="fade-up" data-aos-delay="300" class="glass rounded-3xl p-8 border border-yellow-500/20 hover:border-yellow-400/40 transition-all card-premium">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-2xl flex items-center justify-center mr-4">
                             <i class="fas fa-fire text-2xl text-white"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xl">LeetCode</h3>
-                            <p class="text-gray-600">The industry standard for coding prep</p>
+                            <h3 class="font-bold text-xl text-white">LeetCode</h3>
+                            <p class="text-slate-400">The industry standard for coding prep</p>
                         </div>
                     </div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>2000+ problems with company tags</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Discussion forums and solutions</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Weekly contests</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Premium has company-specific lists</li>
+                    <ul class="text-sm text-slate-300 space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>2000+ problems with company tags</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Discussion forums and solutions</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Weekly contests</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Premium has company-specific lists</li>
                     </ul>
                     <a href="https://leetcode.com/" target="_blank"
-                       class="inline-block bg-yellow-500 text-white px-6 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition">
-                        Visit LeetCode <i class="fas fa-external-link-alt ml-2"></i>
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-yellow-500 to-orange-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-yellow-500/25 transition-all btn-glow">
+                        Visit LeetCode <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
 
                 <!-- NeetCode -->
-                <div class="bg-gradient-to-br from-green-50 to-teal-50 rounded-xl p-6 border-2 border-green-200">
-                    <div class="flex items-center mb-4">
-                        <div class="w-16 h-16 bg-green-600 rounded-xl flex items-center justify-center mr-4">
+                <div data-aos="fade-up" data-aos-delay="400" class="glass rounded-3xl p-8 border border-green-500/20 hover:border-green-400/40 transition-all card-premium">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mr-4">
                             <i class="fas fa-road text-2xl text-white"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-xl">NeetCode</h3>
-                            <p class="text-gray-600">Structured roadmap with free videos</p>
+                            <h3 class="font-bold text-xl text-white">NeetCode</h3>
+                            <p class="text-slate-400">Structured roadmap with free videos</p>
                         </div>
                     </div>
-                    <ul class="text-sm text-gray-600 space-y-2 mb-4">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>150 curated problems with roadmap</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Free YouTube video solutions</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Pattern-based learning path</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Blind 75 + NeetCode 150</li>
+                    <ul class="text-sm text-slate-300 space-y-3 mb-6">
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>150 curated problems with roadmap</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Free YouTube video solutions</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Pattern-based learning path</li>
+                        <li class="flex items-center gap-2"><i class="fas fa-check text-green-400"></i>Blind 75 + NeetCode 150</li>
                     </ul>
                     <a href="https://neetcode.io/" target="_blank"
-                       class="inline-block bg-green-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-green-700 transition">
-                        Visit NeetCode <i class="fas fa-external-link-alt ml-2"></i>
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all btn-glow">
+                        Visit NeetCode <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
             </div>
@@ -360,13 +604,19 @@
     </section>
 
     <!-- Video Learning Path -->
-    <section class="py-12 bg-gradient-to-b from-gray-900 to-gray-800">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4">
-                    <i class="fab fa-youtube text-red-500 mr-3"></i>Free Video Learning Path
+    <section class="py-20 bg-slate-950 relative overflow-hidden">
+        <div class="orb w-80 h-80 bg-red-500 top-0 left-0"></div>
+        <div class="orb w-64 h-64 bg-purple-500 bottom-0 right-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-red-500/10 text-red-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fab fa-youtube mr-2"></i>Free Video Courses
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+                    Free Video <span class="gradient-text">Learning Path</span>
                 </h2>
-                <p class="text-gray-300 text-lg max-w-2xl mx-auto">Master ML engineering with world-class courses from top universities and industry legends. Follow this structured path from foundations to cutting-edge AI agents.</p>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-lg text-slate-400 max-w-2xl mx-auto">Master ML engineering with world-class courses from top universities and industry legends. Follow this structured path from foundations to cutting-edge AI agents.</p>
             </div>
 
             <!-- Learning Path Timeline -->
@@ -375,10 +625,10 @@
                 <div class="hidden lg:block absolute left-1/2 transform -translate-x-1/2 w-1 bg-gradient-to-b from-red-500 via-blue-500 to-purple-500 h-full rounded-full"></div>
 
                 <!-- Step 1: Karpathy Neural Networks Zero to Hero -->
-                <div class="relative mb-12 lg:mb-16">
+                <div class="relative mb-16" data-aos="fade-up" data-aos-delay="100">
                     <div class="lg:flex lg:items-center lg:gap-8">
                         <div class="lg:w-1/2 lg:text-right lg:pr-12">
-                            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="glass rounded-3xl overflow-hidden border border-red-500/20 hover:border-red-400/40 transition-all">
                                 <a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank" class="block relative group">
                                     <img src="https://img.youtube.com/vi/VMj-3S1tku0/maxresdefault.jpg" alt="Neural Networks: Zero to Hero" class="w-full h-48 object-cover group-hover:opacity-90 transition">
                                     <div class="absolute inset-0 flex items-center justify-center">
@@ -386,24 +636,24 @@
                                             <i class="fas fa-play text-white text-xl ml-1"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-3 py-1 rounded-lg text-xs">
                                         <i class="fas fa-list mr-1"></i>10 videos
                                     </div>
                                 </a>
                                 <div class="p-6">
                                     <div class="flex items-center justify-between mb-3">
-                                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-medium">Step 1 - Foundation</span>
-                                        <div class="flex items-center text-yellow-500">
+                                        <span class="bg-red-500/20 text-red-400 px-3 py-1 rounded-full text-sm font-medium">Step 1 - Foundation</span>
+                                        <div class="flex items-center text-yellow-400">
                                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                            <span class="text-gray-700 ml-2 font-bold">10/10</span>
+                                            <span class="text-slate-300 ml-2 font-bold">10/10</span>
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Neural Networks: Zero to Hero</h3>
-                                    <p class="text-gray-500 text-sm mb-3">Andrej Karpathy (Former Tesla AI Director, OpenAI)</p>
-                                    <p class="text-gray-600 text-sm mb-4">Build neural networks, backpropagation, and transformers completely from scratch. The gold standard for understanding deep learning internals.</p>
+                                    <h3 class="text-xl font-bold mb-2 text-white">Neural Networks: Zero to Hero</h3>
+                                    <p class="text-slate-400 text-sm mb-3">Andrej Karpathy (Former Tesla AI Director, OpenAI)</p>
+                                    <p class="text-slate-300 text-sm mb-4">Build neural networks, backpropagation, and transformers completely from scratch. The gold standard for understanding deep learning internals.</p>
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500"><i class="fas fa-clock mr-1"></i>~25 hours</span>
-                                        <a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank" class="text-red-600 font-semibold hover:underline">
+                                        <span class="text-slate-500"><i class="fas fa-clock mr-1"></i>~25 hours</span>
+                                        <a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank" class="text-red-400 font-semibold hover:text-red-300 transition">
                                             Watch Playlist <i class="fas fa-arrow-right ml-1"></i>
                                         </a>
                                     </div>
@@ -411,21 +661,21 @@
                             </div>
                         </div>
                         <div class="hidden lg:flex lg:w-0 lg:items-center lg:justify-center relative z-10">
-                            <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">1</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-red-500/50">1</div>
                         </div>
                         <div class="lg:w-1/2 lg:pl-12 mt-4 lg:mt-0">
-                            <div class="bg-gray-700/50 rounded-xl p-4 backdrop-blur">
-                                <p class="text-gray-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why start here:</strong> Interviewers love candidates who understand backprop and attention from first principles. This series builds intuition no textbook can match.</p>
+                            <div class="glass rounded-xl p-4">
+                                <p class="text-slate-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why start here:</strong> Interviewers love candidates who understand backprop and attention from first principles. This series builds intuition no textbook can match.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 2: Berkeley CS182 Deep Learning -->
-                <div class="relative mb-12 lg:mb-16">
+                <div class="relative mb-16" data-aos="fade-up" data-aos-delay="200">
                     <div class="lg:flex lg:items-center lg:gap-8 lg:flex-row-reverse">
                         <div class="lg:w-1/2 lg:text-left lg:pl-12">
-                            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="glass rounded-3xl overflow-hidden border border-blue-500/20 hover:border-blue-400/40 transition-all">
                                 <a href="https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A" target="_blank" class="block relative group">
                                     <img src="https://img.youtube.com/vi/rSY1pVGdZ4I/maxresdefault.jpg" alt="Berkeley CS182" class="w-full h-48 object-cover group-hover:opacity-90 transition">
                                     <div class="absolute inset-0 flex items-center justify-center">
@@ -433,24 +683,24 @@
                                             <i class="fas fa-play text-white text-xl ml-1"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-3 py-1 rounded-lg text-xs">
                                         <i class="fas fa-list mr-1"></i>25 lectures
                                     </div>
                                 </a>
                                 <div class="p-6">
                                     <div class="flex items-center justify-between mb-3">
-                                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Step 2 - Deep Learning</span>
-                                        <div class="flex items-center text-yellow-500">
+                                        <span class="bg-blue-500/20 text-blue-400 px-3 py-1 rounded-full text-sm font-medium">Step 2 - Deep Learning</span>
+                                        <div class="flex items-center text-yellow-400">
                                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                            <span class="text-gray-700 ml-2 font-bold">9/10</span>
+                                            <span class="text-slate-300 ml-2 font-bold">9/10</span>
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">CS182: Deep Learning</h3>
-                                    <p class="text-gray-500 text-sm mb-3">UC Berkeley</p>
-                                    <p class="text-gray-600 text-sm mb-4">Comprehensive coverage of CNNs, RNNs, transformers, generative models, and reinforcement learning. The perfect breadth course.</p>
+                                    <h3 class="text-xl font-bold mb-2 text-white">CS182: Deep Learning</h3>
+                                    <p class="text-slate-400 text-sm mb-3">UC Berkeley</p>
+                                    <p class="text-slate-300 text-sm mb-4">Comprehensive coverage of CNNs, RNNs, transformers, generative models, and reinforcement learning. The perfect breadth course.</p>
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500"><i class="fas fa-clock mr-1"></i>~40 hours</span>
-                                        <a href="https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A" target="_blank" class="text-blue-600 font-semibold hover:underline">
+                                        <span class="text-slate-500"><i class="fas fa-clock mr-1"></i>~40 hours</span>
+                                        <a href="https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A" target="_blank" class="text-blue-400 font-semibold hover:text-blue-300 transition">
                                             Watch Playlist <i class="fas fa-arrow-right ml-1"></i>
                                         </a>
                                     </div>
@@ -458,21 +708,21 @@
                             </div>
                         </div>
                         <div class="hidden lg:flex lg:w-0 lg:items-center lg:justify-center relative z-10">
-                            <div class="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">2</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-blue-500/50">2</div>
                         </div>
                         <div class="lg:w-1/2 lg:pr-12 lg:text-right mt-4 lg:mt-0">
-                            <div class="bg-gray-700/50 rounded-xl p-4 backdrop-blur">
-                                <p class="text-gray-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why this next:</strong> Covers the full spectrum of deep learning architectures. Essential for ML system design discussions and architecture questions.</p>
+                            <div class="glass rounded-xl p-4">
+                                <p class="text-slate-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why this next:</strong> Covers the full spectrum of deep learning architectures. Essential for ML system design discussions and architecture questions.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 3: Full Stack Deep Learning -->
-                <div class="relative mb-12 lg:mb-16">
+                <div class="relative mb-16" data-aos="fade-up" data-aos-delay="300">
                     <div class="lg:flex lg:items-center lg:gap-8">
                         <div class="lg:w-1/2 lg:text-right lg:pr-12">
-                            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden">
+                            <div class="glass rounded-3xl overflow-hidden border border-orange-500/20 hover:border-orange-400/40 transition-all">
                                 <a href="https://www.youtube.com/playlist?list=PL1T8fO7ArWleMMI8KPJ_5D5XSlovTW_Ur" target="_blank" class="block relative group">
                                     <img src="https://img.youtube.com/vi/-Iob-FW5jVM/maxresdefault.jpg" alt="Full Stack Deep Learning" class="w-full h-48 object-cover group-hover:opacity-90 transition">
                                     <div class="absolute inset-0 flex items-center justify-center">
@@ -480,24 +730,24 @@
                                             <i class="fas fa-play text-white text-xl ml-1"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-3 py-1 rounded-lg text-xs">
                                         <i class="fas fa-list mr-1"></i>Full Bootcamp
                                     </div>
                                 </a>
                                 <div class="p-6">
                                     <div class="flex items-center justify-between mb-3">
-                                        <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">Step 3 - Production</span>
-                                        <div class="flex items-center text-yellow-500">
+                                        <span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-sm font-medium">Step 3 - Production</span>
+                                        <div class="flex items-center text-yellow-400">
                                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                            <span class="text-gray-700 ml-2 font-bold">9/10</span>
+                                            <span class="text-slate-300 ml-2 font-bold">9/10</span>
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">Full Stack Deep Learning</h3>
-                                    <p class="text-gray-500 text-sm mb-3">FSDL Team (Berkeley Alumni)</p>
-                                    <p class="text-gray-600 text-sm mb-4">Production ML bootcamp covering MLOps, deployment, monitoring, and LLMOps. Updated annually with latest industry practices.</p>
+                                    <h3 class="text-xl font-bold mb-2 text-white">Full Stack Deep Learning</h3>
+                                    <p class="text-slate-400 text-sm mb-3">FSDL Team (Berkeley Alumni)</p>
+                                    <p class="text-slate-300 text-sm mb-4">Production ML bootcamp covering MLOps, deployment, monitoring, and LLMOps. Updated annually with latest industry practices.</p>
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500"><i class="fas fa-clock mr-1"></i>~20 hours</span>
-                                        <a href="https://www.youtube.com/playlist?list=PL1T8fO7ArWleMMI8KPJ_5D5XSlovTW_Ur" target="_blank" class="text-orange-600 font-semibold hover:underline">
+                                        <span class="text-slate-500"><i class="fas fa-clock mr-1"></i>~20 hours</span>
+                                        <a href="https://www.youtube.com/playlist?list=PL1T8fO7ArWleMMI8KPJ_5D5XSlovTW_Ur" target="_blank" class="text-orange-400 font-semibold hover:text-orange-300 transition">
                                             Watch Playlist <i class="fas fa-arrow-right ml-1"></i>
                                         </a>
                                     </div>
@@ -505,21 +755,21 @@
                             </div>
                         </div>
                         <div class="hidden lg:flex lg:w-0 lg:items-center lg:justify-center relative z-10">
-                            <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">3</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-orange-500 to-amber-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-orange-500/50">3</div>
                         </div>
                         <div class="lg:w-1/2 lg:pl-12 mt-4 lg:mt-0">
-                            <div class="bg-gray-700/50 rounded-xl p-4 backdrop-blur">
-                                <p class="text-gray-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why this matters:</strong> ML system design interviews focus on production. This teaches deployment, monitoring, and MLOps - exactly what companies ask.</p>
+                            <div class="glass rounded-xl p-4">
+                                <p class="text-slate-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why this matters:</strong> ML system design interviews focus on production. This teaches deployment, monitoring, and MLOps - exactly what companies ask.</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Step 4: Berkeley Agentic AI -->
-                <div class="relative">
+                <div class="relative" data-aos="fade-up" data-aos-delay="400">
                     <div class="lg:flex lg:items-center lg:gap-8 lg:flex-row-reverse">
                         <div class="lg:w-1/2 lg:text-left lg:pl-12">
-                            <div class="bg-white rounded-2xl shadow-2xl overflow-hidden ring-4 ring-purple-400">
+                            <div class="glass rounded-3xl overflow-hidden border-2 border-purple-500/40 hover:border-purple-400/60 transition-all shadow-lg shadow-purple-500/20">
                                 <div class="bg-gradient-to-r from-purple-600 to-pink-600 text-white text-center py-2 text-sm font-bold">
                                     <i class="fas fa-fire mr-2"></i>HOTTEST TOPIC IN 2025
                                 </div>
@@ -530,24 +780,24 @@
                                             <i class="fas fa-play text-white text-xl ml-1"></i>
                                         </div>
                                     </div>
-                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-2 py-1 rounded text-xs">
+                                    <div class="absolute top-3 right-3 bg-black/80 text-white px-3 py-1 rounded-lg text-xs">
                                         <i class="fas fa-list mr-1"></i>Full Course
                                     </div>
                                 </a>
                                 <div class="p-6">
                                     <div class="flex items-center justify-between mb-3">
-                                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Step 4 - Agentic AI</span>
-                                        <div class="flex items-center text-yellow-500">
+                                        <span class="bg-purple-500/20 text-purple-400 px-3 py-1 rounded-full text-sm font-medium">Step 4 - Agentic AI</span>
+                                        <div class="flex items-center text-yellow-400">
                                             <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                                            <span class="text-gray-700 ml-2 font-bold">9/10</span>
+                                            <span class="text-slate-300 ml-2 font-bold">9/10</span>
                                         </div>
                                     </div>
-                                    <h3 class="text-xl font-bold mb-2">LLM Agents (CS 194/294-196)</h3>
-                                    <p class="text-gray-500 text-sm mb-3">UC Berkeley</p>
-                                    <p class="text-gray-600 text-sm mb-4">Build autonomous AI agents using LLMs, tool use, planning, and multi-agent systems. Covers the architectures powering ChatGPT, Claude, and Gemini agents.</p>
+                                    <h3 class="text-xl font-bold mb-2 text-white">LLM Agents (CS 194/294-196)</h3>
+                                    <p class="text-slate-400 text-sm mb-3">UC Berkeley</p>
+                                    <p class="text-slate-300 text-sm mb-4">Build autonomous AI agents using LLMs, tool use, planning, and multi-agent systems. Covers the architectures powering ChatGPT, Claude, and Gemini agents.</p>
                                     <div class="flex items-center justify-between text-sm">
-                                        <span class="text-gray-500"><i class="fas fa-clock mr-1"></i>~15 hours</span>
-                                        <a href="https://www.youtube.com/playlist?list=PLS01nW3RtgoqGkm4UeqNeZLccW-OGc1fJ" target="_blank" class="text-purple-600 font-semibold hover:underline">
+                                        <span class="text-slate-500"><i class="fas fa-clock mr-1"></i>~15 hours</span>
+                                        <a href="https://www.youtube.com/playlist?list=PLS01nW3RtgoqGkm4UeqNeZLccW-OGc1fJ" target="_blank" class="text-purple-400 font-semibold hover:text-purple-300 transition">
                                             Watch Playlist <i class="fas fa-arrow-right ml-1"></i>
                                         </a>
                                     </div>
@@ -555,11 +805,11 @@
                             </div>
                         </div>
                         <div class="hidden lg:flex lg:w-0 lg:items-center lg:justify-center relative z-10">
-                            <div class="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">4</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg shadow-purple-500/50 animate-pulse">4</div>
                         </div>
                         <div class="lg:w-1/2 lg:pr-12 lg:text-right mt-4 lg:mt-0">
-                            <div class="bg-gray-700/50 rounded-xl p-4 backdrop-blur">
-                                <p class="text-gray-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why essential:</strong> AI agents are the #1 hiring priority in 2025. OpenAI, Anthropic, Google - everyone is building agentic systems. This knowledge is invaluable.</p>
+                            <div class="glass rounded-xl p-4">
+                                <p class="text-slate-300 text-sm"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i><strong class="text-white">Why essential:</strong> AI agents are the #1 hiring priority in 2025. OpenAI, Anthropic, Google - everyone is building agentic systems. This knowledge is invaluable.</p>
                             </div>
                         </div>
                     </div>
@@ -567,46 +817,46 @@
             </div>
 
             <!-- Additional Resources -->
-            <div class="mt-16 grid md:grid-cols-3 gap-6">
-                <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" target="_blank" class="bg-gray-700/50 backdrop-blur rounded-xl p-6 hover:bg-gray-700 transition group">
+            <div class="mt-20 grid md:grid-cols-3 gap-6">
+                <a data-aos="fade-up" data-aos-delay="100" href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" target="_blank" class="glass rounded-2xl p-6 hover:bg-white/10 transition group border border-red-500/20 hover:border-red-400/40">
                     <div class="flex items-center gap-4 mb-3">
-                        <div class="w-12 h-12 bg-red-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-red-500 to-rose-600 rounded-lg flex items-center justify-center">
                             <i class="fas fa-university text-white"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold">CS229: Machine Learning</h4>
-                            <p class="text-gray-400 text-sm">Stanford (Andrew Ng)</p>
+                            <p class="text-slate-400 text-sm">Stanford (Andrew Ng)</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-sm">Classic ML foundations - SVMs, PCA, clustering. Still asked in interviews.</p>
+                    <p class="text-slate-300 text-sm">Classic ML foundations - SVMs, PCA, clustering. Still asked in interviews.</p>
                     <span class="text-red-400 text-sm mt-2 inline-block group-hover:underline">Watch Playlist <i class="fas fa-arrow-right ml-1"></i></span>
                 </a>
 
-                <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4" target="_blank" class="bg-gray-700/50 backdrop-blur rounded-xl p-6 hover:bg-gray-700 transition group">
+                <a data-aos="fade-up" data-aos-delay="200" href="https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4" target="_blank" class="glass rounded-2xl p-6 hover:bg-white/10 transition group border border-teal-500/20 hover:border-teal-400/40">
                     <div class="flex items-center gap-4 mb-3">
-                        <div class="w-12 h-12 bg-teal-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-teal-500 to-cyan-600 rounded-lg flex items-center justify-center">
                             <i class="fas fa-comment-alt text-white"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold">CS224N: NLP with Deep Learning</h4>
-                            <p class="text-gray-400 text-sm">Stanford (Chris Manning)</p>
+                            <p class="text-slate-400 text-sm">Stanford (Chris Manning)</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-sm">Transformers, BERT, GPT deep dive. Essential for LLM roles.</p>
+                    <p class="text-slate-300 text-sm">Transformers, BERT, GPT deep dive. Essential for LLM roles.</p>
                     <span class="text-teal-400 text-sm mt-2 inline-block group-hover:underline">Watch Playlist <i class="fas fa-arrow-right ml-1"></i></span>
                 </a>
 
-                <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM" target="_blank" class="bg-gray-700/50 backdrop-blur rounded-xl p-6 hover:bg-gray-700 transition group">
+                <a data-aos="fade-up" data-aos-delay="300" href="https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM" target="_blank" class="glass rounded-2xl p-6 hover:bg-white/10 transition group border border-indigo-500/20 hover:border-indigo-400/40">
                     <div class="flex items-center gap-4 mb-3">
-                        <div class="w-12 h-12 bg-indigo-600 rounded-lg flex items-center justify-center">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-violet-600 rounded-lg flex items-center justify-center">
                             <i class="fas fa-bolt text-white"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold">CS25: Transformers United</h4>
-                            <p class="text-gray-400 text-sm">Stanford</p>
+                            <p class="text-slate-400 text-sm">Stanford</p>
                         </div>
                     </div>
-                    <p class="text-gray-300 text-sm">Cutting-edge talks from OpenAI, Google, Anthropic researchers.</p>
+                    <p class="text-slate-300 text-sm">Cutting-edge talks from OpenAI, Google, Anthropic researchers.</p>
                     <span class="text-indigo-400 text-sm mt-2 inline-block group-hover:underline">Watch Playlist <i class="fas fa-arrow-right ml-1"></i></span>
                 </a>
             </div>
@@ -614,23 +864,125 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Not Sure Where to Start?</h2>
-            <p class="text-xl mb-8 opacity-90">Get a personalized study plan based on your background and target companies</p>
-            <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-               class="bg-white text-purple-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
-                <i class="fas fa-user-tie mr-2"></i>Get Personalized Guidance
-            </a>
+    <section class="py-24 relative overflow-hidden">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900"></div>
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div data-aos="zoom-in" class="glass rounded-3xl p-12 md:p-16">
+                <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-compass mr-2"></i>Need Direction?
+                </span>
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-6">
+                    Not Sure <span class="shimmer-text">Where to Start?</span>
+                </h2>
+                <p class="text-xl text-purple-200 mb-10 max-w-2xl mx-auto">
+                    Get a personalized study plan based on your background and target companies
+                </p>
+                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                   class="inline-flex items-center justify-center gap-3 bg-white text-purple-900 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-white/25 transition-all btn-glow">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Get Personalized Guidance</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="mb-4">Need a structured study plan? <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-pink-400 hover:underline">Book a mentorship session</a></p>
-            <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
+    <footer class="bg-slate-950 pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-lg"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">MLInterviewPro</span>
+                    </a>
+                    <p class="text-slate-400 text-sm">Master ML Engineering interviews with curated resources and expert guidance.</p>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="leetcode.html" class="text-slate-400 hover:text-purple-400 transition-colors">LeetCode Problems</a></li>
+                        <li><a href="ml-system-design.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML System Design</a></li>
+                        <li><a href="ml-coding.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Coding</a></li>
+                        <li><a href="behavioral.html" class="text-slate-400 hover:text-purple-400 transition-colors">Behavioral Prep</a></li>
+                    </ul>
+                </div>
+
+                <!-- More -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">More</h4>
+                    <ul class="space-y-3">
+                        <li><a href="cheatsheet.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Cheatsheet</a></li>
+                        <li><a href="resources.html" class="text-slate-400 hover:text-purple-400 transition-colors">Books & Resources</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-purple-400 transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get Help -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Get Help</h4>
+                    <ul class="space-y-3 mb-6">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Mock Interviews</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Resume Review</a></li>
+                    </ul>
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all text-sm">
+                        <i class="fas fa-rocket"></i>
+                        <span>Book Session</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-500 text-sm">Made with</span>
+                    <span class="text-red-500"><i class="fas fa-heart"></i></span>
+                    <span class="text-slate-500 text-sm">for ML Engineers</span>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

@@ -33,57 +33,295 @@
         gtag('js', new Date());
         gtag('config', 'G-6DKFJEHPWR');
     </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .concept-card { border-left: 4px solid; }
-        .concept-data { border-color: #3b82f6; }
-        .concept-model { border-color: #10b981; }
-        .concept-eval { border-color: #f59e0b; }
-        .concept-serve { border-color: #ef4444; }
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+        /* Animated Gradient Background */
+        .gradient-mesh {
+            background: linear-gradient(-45deg, #0f0f23, #1a1a3e, #2d1b4e, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        /* Glow Effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-green {
+            background: linear-gradient(135deg, #10b981 0%, #22d3ee 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-yellow {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-red {
+            background: linear-gradient(135deg, #ef4444 0%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Section Cards with Color Borders */
+        .concept-card-data {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .concept-card-model {
+            border-left: 4px solid #10b981;
+        }
+
+        .concept-card-eval {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .concept-card-serve {
+            border-left: 4px solid #ef4444;
+        }
+
+        /* Button Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Quick Links Sticky Bar */
+        .quick-links-bar {
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e1b4b; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: rgba(168, 85, 247, 0.3);
+            color: #fff;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-950 text-white antialiased">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="text-xl sm:text-2xl font-bold text-purple-600">
-                    <i class="fas fa-brain mr-2"></i><span class="hidden sm:inline">MLInterviewPro</span><span class="sm:hidden">MLIP</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-brain text-white text-lg"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-slate-900 hidden sm:block">MLInterviewPro</span>
                 </a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
-                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
-                    <a href="ml-coding.html" class="text-gray-700 hover:text-purple-600 font-medium">ML Coding</a>
-                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
-                    <a href="cheatsheet.html" class="text-purple-600 font-bold">Cheatsheet</a>
-                    <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
-                    <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="leetcode.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">LeetCode</a>
+                    <a href="ml-system-design.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">System Design</a>
+                    <a href="ml-coding.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">ML Coding</a>
+                    <a href="behavioral.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Behavioral</a>
+                    <a href="cheatsheet.html" class="px-4 py-2 text-purple-600 font-bold rounded-lg bg-purple-50 transition-all">Cheatsheet</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Resources</a>
+                    <a href="progress.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
-                <div class="flex items-center gap-2">
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-3">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
                     </a>
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                        <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                        <i class="fas fa-bars text-slate-700 text-xl" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
-            <div class="px-4 py-3 space-y-2">
-                <a href="leetcode.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">LeetCode</a>
-                <a href="ml-system-design.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML System Design</a>
-                <a href="ml-coding.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML Coding</a>
-                <a href="behavioral.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Behavioral</a>
-                <a href="cheatsheet.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-lg font-medium">Cheatsheet</a>
-                <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
-                <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-4 space-y-1">
+                <a href="leetcode.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-xl font-medium transition">Cheatsheet</a>
+                <a href="resources.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Resources</a>
+                <a href="progress.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition"><i class="fas fa-chart-line mr-2"></i>Progress</a>
+                <div class="pt-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="block text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-xl font-semibold" data-auth="login-button">
+                        <i class="fas fa-rocket mr-2"></i>Login
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
+
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -94,72 +332,120 @@
         }
     </script>
 
-    <!-- Header -->
-    <section class="gradient-bg text-white py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h1 class="text-4xl font-bold mb-4"><i class="fas fa-file-alt mr-3"></i>ML Interview Cheatsheet</h1>
-            <p class="text-xl opacity-90">Quick reference for key ML concepts, metrics, and frameworks</p>
+    <!-- Hero Header -->
+    <section class="relative gradient-mesh overflow-hidden pt-20">
+        <!-- Floating Orbs -->
+        <div class="orb w-72 h-72 bg-cyan-500 top-20 -left-36 animate-float"></div>
+        <div class="orb w-56 h-56 bg-purple-500 top-10 right-10 animate-float-slow"></div>
+
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+            <div class="text-center">
+                <!-- Badge -->
+                <div data-aos="fade-down" data-aos-delay="100" class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
+                    <i class="fas fa-clipboard-list text-cyan-400"></i>
+                    <span class="text-sm text-purple-200">Quick Reference Guide</span>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 data-aos="fade-up" data-aos-delay="200" class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-6 tracking-tight">
+                    <span class="text-white">ML Interview</span><br>
+                    <span class="gradient-text">Cheatsheet</span>
+                </h1>
+
+                <!-- Subheading -->
+                <p data-aos="fade-up" data-aos-delay="300" class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                    Quick reference for key ML concepts, metrics, and frameworks - everything you need at your fingertips
+                </p>
+            </div>
         </div>
     </section>
 
-    <!-- Quick Links -->
-    <section class="bg-white shadow py-4 sticky top-16 z-40">
+    <!-- Quick Links Bar -->
+    <section class="quick-links-bar py-4 sticky top-16 md:top-20 z-40">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-wrap gap-4 justify-center">
-                <a href="#data" class="text-blue-600 hover:underline font-medium">Data & Features</a>
-                <a href="#models" class="text-green-600 hover:underline font-medium">Models</a>
-                <a href="#evaluation" class="text-yellow-600 hover:underline font-medium">Evaluation</a>
-                <a href="#serving" class="text-red-600 hover:underline font-medium">Serving</a>
-                <a href="#frameworks" class="text-purple-600 hover:underline font-medium">Frameworks</a>
+            <div class="flex flex-wrap gap-2 md:gap-4 justify-center">
+                <a href="#data" class="px-4 py-2 text-blue-400 hover:bg-blue-500/10 rounded-lg font-medium transition-all text-sm md:text-base">
+                    <i class="fas fa-database mr-2"></i>Data & Features
+                </a>
+                <a href="#models" class="px-4 py-2 text-green-400 hover:bg-green-500/10 rounded-lg font-medium transition-all text-sm md:text-base">
+                    <i class="fas fa-project-diagram mr-2"></i>Models
+                </a>
+                <a href="#evaluation" class="px-4 py-2 text-yellow-400 hover:bg-yellow-500/10 rounded-lg font-medium transition-all text-sm md:text-base">
+                    <i class="fas fa-chart-line mr-2"></i>Evaluation
+                </a>
+                <a href="#serving" class="px-4 py-2 text-red-400 hover:bg-red-500/10 rounded-lg font-medium transition-all text-sm md:text-base">
+                    <i class="fas fa-server mr-2"></i>Serving
+                </a>
+                <a href="#frameworks" class="px-4 py-2 text-purple-400 hover:bg-purple-500/10 rounded-lg font-medium transition-all text-sm md:text-base">
+                    <i class="fas fa-clipboard-list mr-2"></i>Frameworks
+                </a>
             </div>
         </div>
     </section>
 
     <!-- Data & Features Section -->
-    <section id="data" class="py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center text-blue-600">
-                <i class="fas fa-database mr-3"></i>Data & Feature Engineering
-            </h2>
+    <section id="data" class="py-16 md:py-20 relative">
+        <div class="orb w-64 h-64 bg-blue-500 -top-32 -right-32"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-10">
+                <div data-aos="fade-up" class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-database text-xl text-white"></i>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold gradient-text-blue">Data & Feature Engineering</h2>
+                </div>
+            </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
-                    <h3 class="font-bold text-lg mb-3">Text Features</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Preprocessing:</strong> Lowercasing, tokenization, stopwords, stemming/lemma</li>
-                        <li><strong>Vectorization:</strong> BOW, TF-IDF (sparse), Word2Vec, BERT (dense)</li>
-                        <li><strong>Tokenization:</strong> BPE, WordPiece, SentencePiece</li>
-                        <li><strong>ID Encoding:</strong> Lookup table vs hashing (memory vs collision)</li>
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card rounded-2xl p-6 concept-card-data">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-font text-blue-400"></i>Text Features
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-blue-400 font-semibold">Preprocessing:</span> Lowercasing, tokenization, stopwords, stemming/lemma</li>
+                        <li><span class="text-blue-400 font-semibold">Vectorization:</span> BOW, TF-IDF (sparse), Word2Vec, BERT (dense)</li>
+                        <li><span class="text-blue-400 font-semibold">Tokenization:</span> BPE, WordPiece, SentencePiece</li>
+                        <li><span class="text-blue-400 font-semibold">ID Encoding:</span> Lookup table vs hashing (memory vs collision)</li>
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
-                    <h3 class="font-bold text-lg mb-3">Image/Video Features</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Preprocessing:</strong> Resize, normalize, decode frames</li>
-                        <li><strong>Embeddings:</strong> ResNet, CLIP, SimCLR, VideoMOCO</li>
-                        <li><strong>Augmentation:</strong> Crop, rotate, flip, color jitter</li>
-                        <li><strong>Video:</strong> Frame sampling, 3D convolutions, temporal pooling</li>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card rounded-2xl p-6 concept-card-data">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-image text-blue-400"></i>Image/Video Features
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-blue-400 font-semibold">Preprocessing:</span> Resize, normalize, decode frames</li>
+                        <li><span class="text-blue-400 font-semibold">Embeddings:</span> ResNet, CLIP, SimCLR, VideoMOCO</li>
+                        <li><span class="text-blue-400 font-semibold">Augmentation:</span> Crop, rotate, flip, color jitter</li>
+                        <li><span class="text-blue-400 font-semibold">Video:</span> Frame sampling, 3D convolutions, temporal pooling</li>
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
-                    <h3 class="font-bold text-lg mb-3">Numerical Features</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Scaling:</strong> StandardScaler, MinMax, RobustScaler</li>
-                        <li><strong>Bucketization:</strong> Equal-width, quantile-based, log transform</li>
-                        <li><strong>Missing values:</strong> Mean/median imputation, indicator column</li>
-                        <li><strong>Skewed data:</strong> Log transform, Box-Cox, Yeo-Johnson</li>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card rounded-2xl p-6 concept-card-data">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-calculator text-blue-400"></i>Numerical Features
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-blue-400 font-semibold">Scaling:</span> StandardScaler, MinMax, RobustScaler</li>
+                        <li><span class="text-blue-400 font-semibold">Bucketization:</span> Equal-width, quantile-based, log transform</li>
+                        <li><span class="text-blue-400 font-semibold">Missing values:</span> Mean/median imputation, indicator column</li>
+                        <li><span class="text-blue-400 font-semibold">Skewed data:</span> Log transform, Box-Cox, Yeo-Johnson</li>
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-data">
-                    <h3 class="font-bold text-lg mb-3">Categorical Features</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Low cardinality:</strong> One-hot encoding</li>
-                        <li><strong>High cardinality:</strong> Embedding layers, hashing</li>
-                        <li><strong>Feature crosses:</strong> Manual or DCN (Deep Cross Network)</li>
-                        <li><strong>Target encoding:</strong> Mean encoding with regularization</li>
+                <div data-aos="fade-up" data-aos-delay="400" class="glass-card rounded-2xl p-6 concept-card-data">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-tags text-blue-400"></i>Categorical Features
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-blue-400 font-semibold">Low cardinality:</span> One-hot encoding</li>
+                        <li><span class="text-blue-400 font-semibold">High cardinality:</span> Embedding layers, hashing</li>
+                        <li><span class="text-blue-400 font-semibold">Feature crosses:</span> Manual or DCN (Deep Cross Network)</li>
+                        <li><span class="text-blue-400 font-semibold">Target encoding:</span> Mean encoding with regularization</li>
                     </ul>
                 </div>
             </div>
@@ -167,52 +453,67 @@
     </section>
 
     <!-- Models Section -->
-    <section id="models" class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center text-green-600">
-                <i class="fas fa-project-diagram mr-3"></i>Model Architectures
-            </h2>
+    <section id="models" class="py-16 md:py-20 relative bg-slate-900/50">
+        <div class="orb w-72 h-72 bg-green-500 -top-36 -left-36"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-10">
+                <div data-aos="fade-up" class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-xl text-white"></i>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold gradient-text-green">Model Architectures</h2>
+                </div>
+            </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
-                    <h3 class="font-bold text-lg mb-3">Recommendation Systems</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Content-based:</strong> Item features → similarity → recommend</li>
-                        <li><strong>Collaborative Filtering:</strong> User-item matrix factorization</li>
-                        <li><strong>Two-tower:</strong> User encoder + Item encoder, ANN retrieval</li>
-                        <li><strong>Sequential:</strong> Transformers over interaction history</li>
-                        <li><strong>MMOE:</strong> Multi-task with shared experts, task-specific towers</li>
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card rounded-2xl p-6 concept-card-model">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-thumbs-up text-green-400"></i>Recommendation Systems
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-green-400 font-semibold">Content-based:</span> Item features - similarity - recommend</li>
+                        <li><span class="text-green-400 font-semibold">Collaborative Filtering:</span> User-item matrix factorization</li>
+                        <li><span class="text-green-400 font-semibold">Two-tower:</span> User encoder + Item encoder, ANN retrieval</li>
+                        <li><span class="text-green-400 font-semibold">Sequential:</span> Transformers over interaction history</li>
+                        <li><span class="text-green-400 font-semibold">MMOE:</span> Multi-task with shared experts, task-specific towers</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
-                    <h3 class="font-bold text-lg mb-3">Ranking & Search</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Pointwise:</strong> Score items independently (log loss)</li>
-                        <li><strong>Pairwise:</strong> Learn relative order (RankNet, LambdaRank)</li>
-                        <li><strong>Listwise:</strong> Optimize full ranking (LambdaMART, NDCG)</li>
-                        <li><strong>Retrieval → Ranking → Reranking:</strong> Multi-stage pipeline</li>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card rounded-2xl p-6 concept-card-model">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-search text-green-400"></i>Ranking & Search
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-green-400 font-semibold">Pointwise:</span> Score items independently (log loss)</li>
+                        <li><span class="text-green-400 font-semibold">Pairwise:</span> Learn relative order (RankNet, LambdaRank)</li>
+                        <li><span class="text-green-400 font-semibold">Listwise:</span> Optimize full ranking (LambdaMART, NDCG)</li>
+                        <li><span class="text-green-400 font-semibold">Retrieval - Ranking - Reranking:</span> Multi-stage pipeline</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
-                    <h3 class="font-bold text-lg mb-3">Classification Models</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Logistic Regression:</strong> Fast, interpretable, linear boundaries</li>
-                        <li><strong>XGBoost/LightGBM:</strong> Feature importance, no continual learning</li>
-                        <li><strong>DNN:</strong> Complex patterns, requires more data</li>
-                        <li><strong>Factorization Machines:</strong> Efficient feature crosses</li>
-                        <li><strong>DCN:</strong> Automatic cross features with DNN</li>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card rounded-2xl p-6 concept-card-model">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-sitemap text-green-400"></i>Classification Models
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-green-400 font-semibold">Logistic Regression:</span> Fast, interpretable, linear boundaries</li>
+                        <li><span class="text-green-400 font-semibold">XGBoost/LightGBM:</span> Feature importance, no continual learning</li>
+                        <li><span class="text-green-400 font-semibold">DNN:</span> Complex patterns, requires more data</li>
+                        <li><span class="text-green-400 font-semibold">Factorization Machines:</span> Efficient feature crosses</li>
+                        <li><span class="text-green-400 font-semibold">DCN:</span> Automatic cross features with DNN</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-model">
-                    <h3 class="font-bold text-lg mb-3">Embeddings & Similarity</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Contrastive Loss:</strong> Push similar together, dissimilar apart</li>
-                        <li><strong>Triplet Loss:</strong> Anchor, positive, negative</li>
-                        <li><strong>In-batch Negatives:</strong> Use other batch items as negatives</li>
-                        <li><strong>ANN Search:</strong> FAISS, ScaNN, HNSW, LSH</li>
+                <div data-aos="fade-up" data-aos-delay="400" class="glass-card rounded-2xl p-6 concept-card-model">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-vector-square text-green-400"></i>Embeddings & Similarity
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-green-400 font-semibold">Contrastive Loss:</span> Push similar together, dissimilar apart</li>
+                        <li><span class="text-green-400 font-semibold">Triplet Loss:</span> Anchor, positive, negative</li>
+                        <li><span class="text-green-400 font-semibold">In-batch Negatives:</span> Use other batch items as negatives</li>
+                        <li><span class="text-green-400 font-semibold">ANN Search:</span> FAISS, ScaNN, HNSW, LSH</li>
                     </ul>
                 </div>
             </div>
@@ -220,59 +521,75 @@
     </section>
 
     <!-- Evaluation Section -->
-    <section id="evaluation" class="py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center text-yellow-600">
-                <i class="fas fa-chart-line mr-3"></i>Evaluation Metrics
-            </h2>
+    <section id="evaluation" class="py-16 md:py-20 relative">
+        <div class="orb w-64 h-64 bg-yellow-500 -top-32 right-0"></div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
-                    <h3 class="font-bold text-lg mb-3">Classification</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Precision:</strong> TP / (TP + FP) - quality of positives</li>
-                        <li><strong>Recall:</strong> TP / (TP + FN) - coverage of positives</li>
-                        <li><strong>F1:</strong> Harmonic mean of P & R</li>
-                        <li><strong>AUC-ROC:</strong> Ranking quality across thresholds</li>
-                        <li><strong>PR-AUC:</strong> Better for imbalanced data</li>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-10">
+                <div data-aos="fade-up" class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-amber-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-chart-line text-xl text-white"></i>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold gradient-text-yellow">Evaluation Metrics</h2>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card rounded-2xl p-6 concept-card-eval">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-check-circle text-yellow-400"></i>Classification
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-yellow-400 font-semibold">Precision:</span> TP / (TP + FP) - quality of positives</li>
+                        <li><span class="text-yellow-400 font-semibold">Recall:</span> TP / (TP + FN) - coverage of positives</li>
+                        <li><span class="text-yellow-400 font-semibold">F1:</span> Harmonic mean of P & R</li>
+                        <li><span class="text-yellow-400 font-semibold">AUC-ROC:</span> Ranking quality across thresholds</li>
+                        <li><span class="text-yellow-400 font-semibold">PR-AUC:</span> Better for imbalanced data</li>
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
-                    <h3 class="font-bold text-lg mb-3">Ranking</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Precision@K:</strong> Relevant in top K</li>
-                        <li><strong>Recall@K:</strong> Coverage in top K</li>
-                        <li><strong>MRR:</strong> 1/rank of first relevant item</li>
-                        <li><strong>MAP:</strong> Mean AP across queries</li>
-                        <li><strong>NDCG:</strong> Graded relevance with position discount</li>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card rounded-2xl p-6 concept-card-eval">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-sort-amount-down text-yellow-400"></i>Ranking
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-yellow-400 font-semibold">Precision@K:</span> Relevant in top K</li>
+                        <li><span class="text-yellow-400 font-semibold">Recall@K:</span> Coverage in top K</li>
+                        <li><span class="text-yellow-400 font-semibold">MRR:</span> 1/rank of first relevant item</li>
+                        <li><span class="text-yellow-400 font-semibold">MAP:</span> Mean AP across queries</li>
+                        <li><span class="text-yellow-400 font-semibold">NDCG:</span> Graded relevance with position discount</li>
                     </ul>
                 </div>
 
-                <div class="bg-white rounded-xl shadow p-6 concept-card concept-eval">
-                    <h3 class="font-bold text-lg mb-3">Online Metrics</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>CTR:</strong> Clicks / Impressions</li>
-                        <li><strong>Conversion Rate:</strong> Purchases / Clicks</li>
-                        <li><strong>Dwell Time:</strong> Time spent on content</li>
-                        <li><strong>Session Time:</strong> Total engagement</li>
-                        <li><strong>Guardrails:</strong> Report rate, hide rate, churn</li>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card rounded-2xl p-6 concept-card-eval">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-broadcast-tower text-yellow-400"></i>Online Metrics
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-yellow-400 font-semibold">CTR:</span> Clicks / Impressions</li>
+                        <li><span class="text-yellow-400 font-semibold">Conversion Rate:</span> Purchases / Clicks</li>
+                        <li><span class="text-yellow-400 font-semibold">Dwell Time:</span> Time spent on content</li>
+                        <li><span class="text-yellow-400 font-semibold">Session Time:</span> Total engagement</li>
+                        <li><span class="text-yellow-400 font-semibold">Guardrails:</span> Report rate, hide rate, churn</li>
                     </ul>
                 </div>
             </div>
 
-            <div class="mt-6 bg-yellow-50 rounded-xl p-6">
-                <h3 class="font-bold text-lg mb-3"><i class="fas fa-exclamation-triangle text-yellow-600 mr-2"></i>When to Use What</h3>
-                <div class="grid md:grid-cols-2 gap-4 text-sm">
-                    <div>
-                        <p><strong>Binary relevance:</strong> Precision@K, Recall@K, MAP</p>
-                        <p><strong>Graded relevance:</strong> NDCG</p>
-                        <p><strong>Single relevant item:</strong> MRR</p>
+            <!-- When to Use What -->
+            <div data-aos="fade-up" data-aos-delay="400" class="glass rounded-2xl p-6 md:p-8 border border-yellow-500/20">
+                <h3 class="font-bold text-xl text-white mb-6 flex items-center gap-2">
+                    <i class="fas fa-exclamation-triangle text-yellow-400"></i>When to Use What
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6 text-sm">
+                    <div class="space-y-3">
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Binary relevance:</span> Precision@K, Recall@K, MAP</p>
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Graded relevance:</span> NDCG</p>
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Single relevant item:</span> MRR</p>
                     </div>
-                    <div>
-                        <p><strong>Imbalanced classes:</strong> PR-AUC over ROC-AUC</p>
-                        <p><strong>Calibration needed:</strong> Brier score, ECE</p>
-                        <p><strong>Diversity needed:</strong> Coverage, intra-list diversity</p>
+                    <div class="space-y-3">
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Imbalanced classes:</span> PR-AUC over ROC-AUC</p>
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Calibration needed:</span> Brier score, ECE</p>
+                        <p class="text-slate-300"><span class="text-yellow-400 font-semibold">Diversity needed:</span> Coverage, intra-list diversity</p>
                     </div>
                 </div>
             </div>
@@ -280,51 +597,66 @@
     </section>
 
     <!-- Serving Section -->
-    <section id="serving" class="py-12 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center text-red-600">
-                <i class="fas fa-server mr-3"></i>Serving & Production
-            </h2>
+    <section id="serving" class="py-16 md:py-20 relative bg-slate-900/50">
+        <div class="orb w-72 h-72 bg-red-500 -top-36 -left-36"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-10">
+                <div data-aos="fade-up" class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-red-400 to-rose-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-server text-xl text-white"></i>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold gradient-text-red">Serving & Production</h2>
+                </div>
+            </div>
 
             <div class="grid md:grid-cols-2 gap-6">
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
-                    <h3 class="font-bold text-lg mb-3">Latency Optimization</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Caching:</strong> Static features, precomputed embeddings</li>
-                        <li><strong>Batching:</strong> Combine requests for GPU efficiency</li>
-                        <li><strong>Distillation:</strong> Train smaller model from large teacher</li>
-                        <li><strong>Quantization:</strong> Reduce precision (FP16, INT8)</li>
-                        <li><strong>Pruning:</strong> Remove less important weights</li>
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-card rounded-2xl p-6 concept-card-serve">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-tachometer-alt text-red-400"></i>Latency Optimization
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-red-400 font-semibold">Caching:</span> Static features, precomputed embeddings</li>
+                        <li><span class="text-red-400 font-semibold">Batching:</span> Combine requests for GPU efficiency</li>
+                        <li><span class="text-red-400 font-semibold">Distillation:</span> Train smaller model from large teacher</li>
+                        <li><span class="text-red-400 font-semibold">Quantization:</span> Reduce precision (FP16, INT8)</li>
+                        <li><span class="text-red-400 font-semibold">Pruning:</span> Remove less important weights</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
-                    <h3 class="font-bold text-lg mb-3">Feature Store</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Offline features:</strong> Batch computed, daily refresh</li>
-                        <li><strong>Online features:</strong> Real-time, streaming updates</li>
-                        <li><strong>Train-serve consistency:</strong> Same logic for both</li>
-                        <li><strong>Point-in-time correctness:</strong> Avoid data leakage</li>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-card rounded-2xl p-6 concept-card-serve">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-warehouse text-red-400"></i>Feature Store
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-red-400 font-semibold">Offline features:</span> Batch computed, daily refresh</li>
+                        <li><span class="text-red-400 font-semibold">Online features:</span> Real-time, streaming updates</li>
+                        <li><span class="text-red-400 font-semibold">Train-serve consistency:</span> Same logic for both</li>
+                        <li><span class="text-red-400 font-semibold">Point-in-time correctness:</span> Avoid data leakage</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
-                    <h3 class="font-bold text-lg mb-3">Deployment Strategy</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Shadow mode:</strong> Run alongside, no user impact</li>
-                        <li><strong>Canary:</strong> Small % traffic, monitor metrics</li>
-                        <li><strong>A/B test:</strong> Statistical significance, holdout</li>
-                        <li><strong>Blue-green:</strong> Quick rollback capability</li>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-card rounded-2xl p-6 concept-card-serve">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-rocket text-red-400"></i>Deployment Strategy
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-red-400 font-semibold">Shadow mode:</span> Run alongside, no user impact</li>
+                        <li><span class="text-red-400 font-semibold">Canary:</span> Small % traffic, monitor metrics</li>
+                        <li><span class="text-red-400 font-semibold">A/B test:</span> Statistical significance, holdout</li>
+                        <li><span class="text-red-400 font-semibold">Blue-green:</span> Quick rollback capability</li>
                     </ul>
                 </div>
 
-                <div class="bg-gray-50 rounded-xl p-6 concept-card concept-serve">
-                    <h3 class="font-bold text-lg mb-3">Monitoring</h3>
-                    <ul class="text-sm text-gray-600 space-y-2">
-                        <li><strong>Data drift:</strong> PSI, KS test on feature distributions</li>
-                        <li><strong>Concept drift:</strong> Model performance degradation</li>
-                        <li><strong>Staleness:</strong> Feature freshness, update frequency</li>
-                        <li><strong>Latency:</strong> P50, P95, P99 percentiles</li>
+                <div data-aos="fade-up" data-aos-delay="400" class="glass-card rounded-2xl p-6 concept-card-serve">
+                    <h3 class="font-bold text-lg text-white mb-4 flex items-center gap-2">
+                        <i class="fas fa-eye text-red-400"></i>Monitoring
+                    </h3>
+                    <ul class="text-sm text-slate-300 space-y-3">
+                        <li><span class="text-red-400 font-semibold">Data drift:</span> PSI, KS test on feature distributions</li>
+                        <li><span class="text-red-400 font-semibold">Concept drift:</span> Model performance degradation</li>
+                        <li><span class="text-red-400 font-semibold">Staleness:</span> Feature freshness, update frequency</li>
+                        <li><span class="text-red-400 font-semibold">Latency:</span> P50, P95, P99 percentiles</li>
                     </ul>
                 </div>
             </div>
@@ -332,63 +664,95 @@
     </section>
 
     <!-- Frameworks Section -->
-    <section id="frameworks" class="py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center text-purple-600">
-                <i class="fas fa-clipboard-list mr-3"></i>Interview Frameworks
-            </h2>
+    <section id="frameworks" class="py-16 md:py-20 relative">
+        <div class="orb w-64 h-64 bg-purple-500 -top-32 right-10"></div>
 
-            <div class="bg-white rounded-xl shadow-lg p-8">
-                <h3 class="font-bold text-xl mb-4">ML System Design Template</h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">1. Clarifying Questions (5 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Business objective & success metrics</li>
-                            <li>• Scale: users, QPS, data size</li>
-                            <li>• Latency requirements</li>
-                            <li>• Available data & labels</li>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="mb-10">
+                <div data-aos="fade-up" class="flex items-center gap-3 mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-violet-600 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-clipboard-list text-xl text-white"></i>
+                    </div>
+                    <h2 class="font-display text-3xl md:text-4xl font-bold gradient-text">Interview Frameworks</h2>
+                </div>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="100" class="glass rounded-3xl p-6 md:p-10 border border-purple-500/20">
+                <h3 class="font-display font-bold text-2xl text-white mb-8 flex items-center gap-3">
+                    <i class="fas fa-sitemap text-purple-400"></i>ML System Design Template
+                </h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">1</div>
+                            <h4 class="font-semibold text-purple-400">Clarifying Questions (5 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>Business objective & success metrics</li>
+                            <li>Scale: users, QPS, data size</li>
+                            <li>Latency requirements</li>
+                            <li>Available data & labels</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">2. High-Level Design (5 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• System diagram</li>
-                            <li>• ML vs non-ML components</li>
-                            <li>• Online vs offline processing</li>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">2</div>
+                            <h4 class="font-semibold text-purple-400">High-Level Design (5 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>System diagram</li>
+                            <li>ML vs non-ML components</li>
+                            <li>Online vs offline processing</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">3. Data Pipeline (10 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Training data construction</li>
-                            <li>• Label generation</li>
-                            <li>• Feature engineering</li>
-                            <li>• Negative sampling strategy</li>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">3</div>
+                            <h4 class="font-semibold text-purple-400">Data Pipeline (10 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>Training data construction</li>
+                            <li>Label generation</li>
+                            <li>Feature engineering</li>
+                            <li>Negative sampling strategy</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">4. Model Architecture (10 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Model choice & justification</li>
-                            <li>• Loss function</li>
-                            <li>• Training strategy</li>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">4</div>
+                            <h4 class="font-semibold text-purple-400">Model Architecture (10 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>Model choice & justification</li>
+                            <li>Loss function</li>
+                            <li>Training strategy</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">5. Evaluation (5 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Offline metrics</li>
-                            <li>• Online metrics</li>
-                            <li>• A/B testing plan</li>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">5</div>
+                            <h4 class="font-semibold text-purple-400">Evaluation (5 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>Offline metrics</li>
+                            <li>Online metrics</li>
+                            <li>A/B testing plan</li>
                         </ul>
                     </div>
-                    <div>
-                        <h4 class="font-semibold text-purple-600 mb-2">6. Serving & Production (5 min)</h4>
-                        <ul class="text-sm text-gray-600 space-y-1">
-                            <li>• Inference pipeline</li>
-                            <li>• Cold start handling</li>
-                            <li>• Monitoring & retraining</li>
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 font-bold">6</div>
+                            <h4 class="font-semibold text-purple-400">Serving & Production (5 min)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-300 space-y-2 pl-11">
+                            <li>Inference pipeline</li>
+                            <li>Cold start handling</li>
+                            <li>Monitoring & retraining</li>
                         </ul>
                     </div>
                 </div>
@@ -397,23 +761,125 @@
     </section>
 
     <!-- CTA Section -->
-    <section class="py-12 bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Want Deep-Dive Practice?</h2>
-            <p class="text-xl mb-8 opacity-90">Get personalized feedback and mock interviews</p>
-            <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-               class="bg-white text-purple-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
-                <i class="fas fa-user-tie mr-2"></i>Book Mentorship Session
-            </a>
+    <section class="py-24 relative overflow-hidden">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900"></div>
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div data-aos="zoom-in" class="glass rounded-3xl p-12 md:p-16">
+                <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-lightbulb mr-2"></i>Want to Go Deeper?
+                </span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-6">
+                    Get <span class="shimmer-text">Personalized Feedback</span>
+                </h2>
+                <p class="text-xl text-purple-200 mb-10 max-w-2xl mx-auto">
+                    Practice with mock interviews and get expert guidance tailored to your target companies
+                </p>
+                <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                   class="inline-flex items-center gap-3 bg-white text-purple-900 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-white/25 transition-all btn-glow">
+                    <i class="fas fa-user-tie"></i>
+                    <span>Book Mentorship Session</span>
+                </a>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="mb-4">Questions? <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-pink-400 hover:underline">Get personalized help</a></p>
-            <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
+    <footer class="bg-slate-950 pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-lg"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">MLInterviewPro</span>
+                    </a>
+                    <p class="text-slate-400 text-sm">Master ML Engineering interviews with curated resources and expert guidance.</p>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="leetcode.html" class="text-slate-400 hover:text-purple-400 transition-colors">LeetCode Problems</a></li>
+                        <li><a href="ml-system-design.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML System Design</a></li>
+                        <li><a href="ml-coding.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Coding</a></li>
+                        <li><a href="behavioral.html" class="text-slate-400 hover:text-purple-400 transition-colors">Behavioral Prep</a></li>
+                    </ul>
+                </div>
+
+                <!-- More -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">More</h4>
+                    <ul class="space-y-3">
+                        <li><a href="cheatsheet.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Cheatsheet</a></li>
+                        <li><a href="resources.html" class="text-slate-400 hover:text-purple-400 transition-colors">Books & Resources</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-purple-400 transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get Help -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Get Help</h4>
+                    <ul class="space-y-3 mb-6">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Mock Interviews</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Resume Review</a></li>
+                    </ul>
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all text-sm">
+                        <i class="fas fa-rocket"></i>
+                        <span>Book Session</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-500 text-sm">Made with</span>
+                    <span class="text-red-500"><i class="fas fa-heart"></i></span>
+                    <span class="text-slate-500 text-sm">for ML Engineers</span>
+                </div>
+            </div>
         </div>
     </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

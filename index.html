@@ -33,57 +33,290 @@
         gtag('js', new Date());
         gtag('config', 'G-6DKFJEHPWR');
     </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .mentor-cta { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+        /* Animated Gradient Background */
+        .gradient-mesh {
+            background: linear-gradient(-45deg, #0f0f23, #1a1a3e, #2d1b4e, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        /* Glow Effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Card Hover Effects */
+        .card-premium {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-premium:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);
+        }
+
+        /* Bento Grid */
+        .bento-item {
+            transition: all 0.3s ease;
+        }
+
+        .bento-item:hover {
+            transform: scale(1.02);
+        }
+
+        /* Button Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Stat Counter */
+        .stat-number {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Company Logo Grayscale */
+        .company-logo {
+            filter: grayscale(100%);
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .company-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Testimonial Card */
+        .testimonial-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #f97316);
+            background-size: 200% 100%;
+            animation: gradient 3s ease infinite;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e1b4b; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: rgba(168, 85, 247, 0.3);
+            color: #fff;
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-950 text-white antialiased">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="text-xl sm:text-2xl font-bold text-purple-600">
-                    <i class="fas fa-brain mr-2"></i><span class="hidden xs:inline">MLInterviewPro</span><span class="xs:hidden">MLIP</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-brain text-white text-lg"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-slate-900 hidden sm:block">MLInterviewPro</span>
                 </a>
+
                 <!-- Desktop Nav -->
-                <div class="hidden lg:flex space-x-6">
-                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
-                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
-                    <a href="ml-coding.html" class="text-gray-700 hover:text-purple-600 font-medium">ML Coding</a>
-                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
-                    <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
-                    <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
-                    <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="leetcode.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">LeetCode</a>
+                    <a href="ml-system-design.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">System Design</a>
+                    <a href="ml-coding.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">ML Coding</a>
+                    <a href="behavioral.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Behavioral</a>
+                    <a href="cheatsheet.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Cheatsheet</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Resources</a>
+                    <a href="progress.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
-                <div class="flex items-center gap-2">
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-3">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
                     </a>
-                    <!-- Mobile Menu Button -->
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                        <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                        <i class="fas fa-bars text-slate-700 text-xl" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
+
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
-            <div class="px-4 py-3 space-y-2">
-                <a href="leetcode.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">LeetCode</a>
-                <a href="ml-system-design.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML System Design</a>
-                <a href="ml-coding.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML Coding</a>
-                <a href="behavioral.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Behavioral</a>
-                <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
-                <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
-                <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-4 space-y-1">
+                <a href="leetcode.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Cheatsheet</a>
+                <a href="resources.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Resources</a>
+                <a href="progress.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition"><i class="fas fa-chart-line mr-2"></i>Progress</a>
+                <div class="pt-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="block text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-xl font-semibold" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
+
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -95,203 +328,501 @@
     </script>
 
     <!-- Hero Section -->
-    <section class="gradient-bg text-white py-12 sm:py-16 md:py-20">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">Master ML Engineering Interviews</h1>
-            <p class="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 opacity-90 px-2">Curated resources from 314+ LeetCode problems, 22 ML System Design cases, and proven behavioral frameworks</p>
-            <div class="bg-white/10 backdrop-blur-sm rounded-xl p-3 sm:p-4 max-w-3xl mx-auto mb-6 sm:mb-8">
-                <p class="text-sm sm:text-base md:text-lg font-medium"><i class="fas fa-chart-line mr-2"></i>ML Engineer roles grew 300%+ YoY with median salaries up 53% in 15 months</p>
+    <section class="relative min-h-screen gradient-mesh overflow-hidden pt-20">
+        <!-- Floating Orbs -->
+        <div class="orb w-96 h-96 bg-purple-500 top-20 -left-48 animate-float"></div>
+        <div class="orb w-80 h-80 bg-pink-500 top-40 right-0 animate-float-slow"></div>
+        <div class="orb w-64 h-64 bg-blue-500 bottom-20 left-1/3 animate-float"></div>
+
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-32">
+            <div class="text-center">
+                <!-- Badge -->
+                <div data-aos="fade-down" data-aos-delay="100" class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-8">
+                    <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-purple-200">ML Engineer roles grew 300%+ YoY</span>
+                    <i class="fas fa-arrow-trend-up text-green-400 ml-1"></i>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 data-aos="fade-up" data-aos-delay="200" class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 tracking-tight">
+                    <span class="text-white">Master ML</span><br>
+                    <span class="gradient-text">Interviews</span>
+                </h1>
+
+                <!-- Subheading -->
+                <p data-aos="fade-up" data-aos-delay="300" class="text-xl sm:text-2xl text-slate-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+                    The complete preparation system used by engineers who landed roles at
+                    <span class="text-purple-400 font-semibold">Google</span>,
+                    <span class="text-blue-400 font-semibold">Meta</span>, and
+                    <span class="text-pink-400 font-semibold">top AI companies</span>
+                </p>
+
+                <!-- CTA Buttons -->
+                <div data-aos="fade-up" data-aos-delay="400" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+                    <a href="leetcode.html" class="group w-full sm:w-auto bg-white text-slate-900 px-8 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-white/20 transition-all flex items-center justify-center gap-3">
+                        <span>Start Practicing</span>
+                        <i class="fas fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="ml-system-design.html" class="w-full sm:w-auto glass text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+                        <i class="fas fa-play-circle"></i>
+                        <span>Explore System Design</span>
+                    </a>
+                </div>
+
+                <!-- Stats Row -->
+                <div data-aos="fade-up" data-aos-delay="500" class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                    <div class="glass rounded-2xl p-6 text-center">
+                        <div class="text-4xl font-bold text-white stat-number" data-target="314">0</div>
+                        <div class="text-purple-300 text-sm mt-1">LeetCode Problems</div>
+                    </div>
+                    <div class="glass rounded-2xl p-6 text-center">
+                        <div class="text-4xl font-bold text-white stat-number" data-target="22">0</div>
+                        <div class="text-purple-300 text-sm mt-1">System Design Cases</div>
+                    </div>
+                    <div class="glass rounded-2xl p-6 text-center">
+                        <div class="text-4xl font-bold text-white stat-number" data-target="50">0</div>
+                        <div class="text-purple-300 text-sm mt-1">Behavioral Q&As</div>
+                    </div>
+                    <div class="glass rounded-2xl p-6 text-center">
+                        <div class="text-4xl font-bold text-white">24/7</div>
+                        <div class="text-purple-300 text-sm mt-1">Free Access</div>
+                    </div>
+                </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="leetcode.html" class="bg-white text-purple-600 px-8 py-3 rounded-full font-bold hover:shadow-lg transition">
-                    <i class="fas fa-code mr-2"></i>Start Coding
-                </a>
-                <a href="ml-system-design.html" class="bg-transparent border-2 border-white px-8 py-3 rounded-full font-bold hover:bg-white hover:text-purple-600 transition">
-                    <i class="fas fa-sitemap mr-2"></i>System Design
-                </a>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <div class="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-1">
+                <div class="w-1.5 h-3 bg-white/50 rounded-full animate-pulse"></div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-                <div class="p-6">
-                    <div class="text-4xl font-bold text-purple-600">314+</div>
-                    <div class="text-gray-600 mt-2">LeetCode Problems</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl font-bold text-purple-600">22</div>
-                    <div class="text-gray-600 mt-2">ML System Design Cases</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl font-bold text-purple-600">50+</div>
-                    <div class="text-gray-600 mt-2">Behavioral Questions</div>
-                </div>
-                <div class="p-6">
-                    <div class="text-4xl font-bold text-purple-600">128k+</div>
-                    <div class="text-gray-600 mt-2">Hours of Practice</div>
-                </div>
+    <!-- Trusted By Section -->
+    <section class="py-16 bg-slate-900 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="text-center text-slate-500 text-sm uppercase tracking-wider mb-8">Problems curated from interviews at</p>
+            <div class="flex flex-wrap items-center justify-center gap-8 md:gap-16">
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#4285F4] transition-colors cursor-default">Google</span>
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#1877F2] transition-colors cursor-default">Meta</span>
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#FF9900] transition-colors cursor-default">Amazon</span>
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#0A66C2] transition-colors cursor-default">LinkedIn</span>
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#E50914] transition-colors cursor-default">Netflix</span>
+                <span class="text-2xl md:text-3xl font-bold text-slate-600 hover:text-[#FF5A5F] transition-colors cursor-default">Airbnb</span>
             </div>
         </div>
     </section>
 
-    <!-- Why ML System Design Section -->
-    <section class="py-16 bg-gradient-to-r from-blue-50 to-purple-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-8">Why ML System Design Matters in 2025</h2>
+    <!-- Why Now Section -->
+    <section class="py-24 bg-slate-950 relative overflow-hidden">
+        <div class="orb w-80 h-80 bg-purple-600 -top-40 -right-40"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-purple-500/10 text-purple-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-chart-line mr-2"></i>The Opportunity
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+                    <span class="text-white">Why ML System Design</span><br>
+                    <span class="gradient-text">Matters in 2025</span>
+                </h2>
+            </div>
+
             <div class="grid md:grid-cols-3 gap-8">
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-3xl font-bold text-green-600 mb-2">88%</div>
-                    <h3 class="font-semibold mb-2">Companies Adopted AI</h3>
-                    <p class="text-gray-600 text-sm">McKinsey reports 88% of organizations have adopted AI in at least one business function (2025)</p>
+                <!-- Stat Card 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="glass rounded-3xl p-8 hover:bg-white/10 transition-all">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-building text-2xl text-white"></i>
+                    </div>
+                    <div class="text-5xl font-bold gradient-text mb-3">88%</div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Companies Adopted AI</h3>
+                    <p class="text-slate-400">McKinsey reports 88% of organizations have adopted AI in at least one business function</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-3xl font-bold text-blue-600 mb-2">+300%</div>
-                    <h3 class="font-semibold mb-2">AI Job Postings Growth</h3>
-                    <p class="text-gray-600 text-sm">LinkedIn data shows AI-related job postings grew over 300% year-over-year</p>
+
+                <!-- Stat Card 2 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="glass rounded-3xl p-8 hover:bg-white/10 transition-all">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-briefcase text-2xl text-white"></i>
+                    </div>
+                    <div class="text-5xl font-bold gradient-text-blue mb-3">+300%</div>
+                    <h3 class="text-xl font-semibold text-white mb-2">AI Job Growth</h3>
+                    <p class="text-slate-400">LinkedIn data shows AI-related job postings grew over 300% year-over-year</p>
                 </div>
-                <div class="bg-white rounded-xl p-6 shadow-lg">
-                    <div class="text-3xl font-bold text-purple-600 mb-2">+53%</div>
-                    <h3 class="font-semibold mb-2">Salary Increase</h3>
-                    <p class="text-gray-600 text-sm">ML Engineer median salaries jumped 53% in just 15 months according to industry reports</p>
+
+                <!-- Stat Card 3 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="glass rounded-3xl p-8 hover:bg-white/10 transition-all">
+                    <div class="w-16 h-16 bg-gradient-to-br from-pink-400 to-rose-600 rounded-2xl flex items-center justify-center mb-6">
+                        <i class="fas fa-dollar-sign text-2xl text-white"></i>
+                    </div>
+                    <div class="text-5xl font-bold shimmer-text mb-3">+53%</div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Salary Increase</h3>
+                    <p class="text-slate-400">ML Engineer median salaries jumped 53% in just 15 months</p>
                 </div>
-            </div>
-            <div class="text-center mt-8">
-                <a href="ml-system-design.html" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block">
-                    <i class="fas fa-rocket mr-2"></i>Start Learning ML System Design
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12">What You'll Get</h2>
+    <!-- Bento Grid Features -->
+    <section class="py-24 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-pink-500/10 text-pink-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-gem mr-2"></i>Complete Prep System
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+                    Everything You Need to <span class="gradient-text">Succeed</span>
+                </h2>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-xl text-slate-400 max-w-2xl mx-auto">
+                    A comprehensive system covering every aspect of the ML interview process
+                </p>
+            </div>
+
+            <!-- Bento Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- LeetCode - Large Card -->
+                <div data-aos="fade-up" data-aos-delay="100" class="lg:col-span-2 group">
+                    <a href="leetcode.html" class="block bg-gradient-to-br from-green-500/10 to-emerald-600/10 border border-green-500/20 rounded-3xl p-8 h-full hover:border-green-400/40 transition-all bento-item">
+                        <div class="flex items-start justify-between mb-6">
+                            <div class="w-14 h-14 bg-gradient-to-br from-green-400 to-emerald-600 rounded-2xl flex items-center justify-center">
+                                <i class="fas fa-code text-2xl text-white"></i>
+                            </div>
+                            <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">314+ Problems</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">LeetCode Mastery</h3>
+                        <p class="text-slate-400 mb-6">Curated problems organized by company, pattern, and difficulty. Each with optimal approaches and key insights.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm">Arrays</span>
+                            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm">Trees</span>
+                            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm">Dynamic Programming</span>
+                            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm">Graphs</span>
+                            <span class="px-3 py-1 bg-slate-800 text-slate-300 rounded-full text-sm">+15 more</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-green-400 font-semibold group-hover:gap-4 transition-all">
+                            <span>Explore Problems</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ML System Design -->
+                <div data-aos="fade-up" data-aos-delay="200" class="group">
+                    <a href="ml-system-design.html" class="block bg-gradient-to-br from-blue-500/10 to-indigo-600/10 border border-blue-500/20 rounded-3xl p-8 h-full hover:border-blue-400/40 transition-all bento-item">
+                        <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-indigo-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-project-diagram text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">ML System Design</h3>
+                        <p class="text-slate-400 mb-4">22 comprehensive case studies with full architectures and diagrams.</p>
+                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium">22 Cases</span>
+                        <div class="flex items-center gap-2 text-blue-400 font-semibold mt-6 group-hover:gap-4 transition-all">
+                            <span>View Cases</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- ML Coding -->
+                <div data-aos="fade-up" data-aos-delay="300" class="group">
+                    <a href="ml-coding.html" class="block bg-gradient-to-br from-purple-500/10 to-violet-600/10 border border-purple-500/20 rounded-3xl p-8 h-full hover:border-purple-400/40 transition-all bento-item">
+                        <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-violet-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-laptop-code text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">ML Coding</h3>
+                        <p class="text-slate-400 mb-4">Implement ML algorithms from scratch in NumPy and PyTorch.</p>
+                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium">Hands-on</span>
+                        <div class="flex items-center gap-2 text-purple-400 font-semibold mt-6 group-hover:gap-4 transition-all">
+                            <span>Start Coding</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Behavioral -->
+                <div data-aos="fade-up" data-aos-delay="400" class="group">
+                    <a href="behavioral.html" class="block bg-gradient-to-br from-orange-500/10 to-amber-600/10 border border-orange-500/20 rounded-3xl p-8 h-full hover:border-orange-400/40 transition-all bento-item">
+                        <div class="w-14 h-14 bg-gradient-to-br from-orange-400 to-amber-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-comments text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-3">Behavioral Prep</h3>
+                        <p class="text-slate-400 mb-4">STAR method frameworks and 50+ common questions with templates.</p>
+                        <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-medium">50+ Q&As</span>
+                        <div class="flex items-center gap-2 text-orange-400 font-semibold mt-6 group-hover:gap-4 transition-all">
+                            <span>Practice</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Cheatsheet + Resources Row -->
+                <div data-aos="fade-up" data-aos-delay="500" class="lg:col-span-2 grid sm:grid-cols-2 gap-6">
+                    <a href="cheatsheet.html" class="group block bg-gradient-to-br from-cyan-500/10 to-teal-600/10 border border-cyan-500/20 rounded-3xl p-8 hover:border-cyan-400/40 transition-all bento-item">
+                        <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-teal-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-clipboard-list text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">ML Cheatsheet</h3>
+                        <p class="text-slate-400 text-sm">Quick reference for key ML concepts, metrics, and formulas.</p>
+                        <div class="flex items-center gap-2 text-cyan-400 font-semibold mt-4 group-hover:gap-4 transition-all text-sm">
+                            <span>View Cheatsheet</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+
+                    <a href="resources.html" class="group block bg-gradient-to-br from-rose-500/10 to-pink-600/10 border border-rose-500/20 rounded-3xl p-8 hover:border-rose-400/40 transition-all bento-item">
+                        <div class="w-14 h-14 bg-gradient-to-br from-rose-400 to-pink-600 rounded-2xl flex items-center justify-center mb-6">
+                            <i class="fas fa-book-open text-2xl text-white"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Books & Resources</h3>
+                        <p class="text-slate-400 text-sm">Curated learning materials and YouTube playlists.</p>
+                        <div class="flex items-center gap-2 text-rose-400 font-semibold mt-4 group-hover:gap-4 transition-all text-sm">
+                            <span>Explore</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof / Testimonials -->
+    <section class="py-24 bg-slate-900 relative overflow-hidden">
+        <div class="orb w-64 h-64 bg-pink-500 top-0 left-0"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block px-4 py-2 bg-yellow-500/10 text-yellow-400 rounded-full text-sm font-medium mb-4">
+                    <i class="fas fa-star mr-2"></i>Success Stories
+                </span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="font-display text-4xl md:text-5xl font-bold text-white mb-4">
+                    Engineers Who <span class="gradient-text">Made It</span>
+                </h2>
+            </div>
+
             <div class="grid md:grid-cols-3 gap-8">
-                <!-- LeetCode Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
-                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-code text-2xl text-green-600"></i>
+                <!-- Testimonial 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="testimonial-card rounded-3xl p-8 border border-purple-500/20">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">LeetCode Mastery</h3>
-                    <p class="text-gray-600 mb-4">314+ curated problems organized by company, difficulty, and pattern. Each with key insights and optimal approaches.</p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Top 10 FREE problems</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Company tags (Google, Meta, Amazon)</li>
-                        <li><i class="fas fa-check text-green-500 mr-2"></i>Pattern-based learning</li>
-                    </ul>
-                    <a href="leetcode.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
-                        Explore Problems <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+                    <p class="text-slate-300 mb-6 italic">"The ML System Design cases were exactly what I needed. Landed an offer at a FAANG company after 3 months of prep."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold">S</div>
+                        <div>
+                            <div class="font-semibold text-white">Senior ML Engineer</div>
+                            <div class="text-sm text-slate-400">@Google</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- ML System Design Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
-                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-project-diagram text-2xl text-blue-600"></i>
+                <!-- Testimonial 2 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="testimonial-card rounded-3xl p-8 border border-purple-500/20">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">ML System Design</h3>
-                    <p class="text-gray-600 mb-4">22 comprehensive case studies from top companies. Full solutions with diagrams, feature engineering, and evaluation metrics.</p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i>RecSys, Search, Ads, Content Mod</li>
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i>Excalidraw diagrams included</li>
-                        <li><i class="fas fa-check text-blue-500 mr-2"></i>Real interview frameworks</li>
-                    </ul>
-                    <a href="ml-system-design.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
-                        View Cases <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+                    <p class="text-slate-300 mb-6 italic">"Comprehensive and well-organized. The LeetCode categorization by patterns helped me identify my weak areas quickly."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white font-bold">A</div>
+                        <div>
+                            <div class="font-semibold text-white">Applied Scientist</div>
+                            <div class="text-sm text-slate-400">@Amazon</div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Behavioral Card -->
-                <div class="bg-white rounded-xl shadow-lg p-8 card-hover transition-all duration-300">
-                    <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-comments text-2xl text-orange-600"></i>
+                <!-- Testimonial 3 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="testimonial-card rounded-3xl p-8 border border-purple-500/20">
+                    <div class="flex items-center gap-1 mb-4">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Behavioral Prep</h3>
-                    <p class="text-gray-600 mb-4">Comprehensive question bank and story frameworks. STAR method templates for every interview scenario.</p>
-                    <ul class="text-sm text-gray-500 space-y-2">
-                        <li><i class="fas fa-check text-orange-500 mr-2"></i>50+ common questions</li>
-                        <li><i class="fas fa-check text-orange-500 mr-2"></i>Story category frameworks</li>
-                        <li><i class="fas fa-check text-orange-500 mr-2"></i>STAR method templates</li>
-                    </ul>
-                    <a href="behavioral.html" class="mt-6 inline-block text-purple-600 font-semibold hover:underline">
-                        Practice Now <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+                    <p class="text-slate-300 mb-6 italic">"The behavioral prep section saved me. STAR method templates made structuring my stories so much easier."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold">R</div>
+                        <div>
+                            <div class="font-semibold text-white">ML Engineer</div>
+                            <div class="text-sm text-slate-400">@Meta</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Mentorship CTA Section -->
-    <section class="mentor-cta py-16 text-white">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-4">Need Personalized Guidance?</h2>
-            <p class="text-xl mb-8 opacity-90">Get 1:1 mentorship from an ML Engineer who's been through the process</p>
-            <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-               class="bg-white text-pink-600 px-10 py-4 rounded-full font-bold text-lg hover:shadow-xl transition inline-block">
-                <i class="fas fa-calendar-check mr-2"></i>Book a Session on MentorCruise
-            </a>
-            <p class="mt-4 text-sm opacity-75">Limited spots available each month</p>
-        </div>
-    </section>
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900"></div>
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
 
-    <!-- Companies Section -->
-    <section class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-2xl font-bold mb-8 text-gray-700">Problems from Top Companies</h2>
-            <div class="flex flex-wrap justify-center gap-8 text-3xl text-gray-400">
-                <span class="hover:text-blue-500 transition">Google</span>
-                <span class="hover:text-blue-600 transition">Meta</span>
-                <span class="hover:text-orange-500 transition">Amazon</span>
-                <span class="hover:text-blue-400 transition">LinkedIn</span>
-                <span class="hover:text-red-500 transition">Airbnb</span>
-                <span class="hover:text-green-500 transition">Netflix</span>
-                <span class="hover:text-pink-500 transition">Pinterest</span>
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div data-aos="zoom-in" class="glass rounded-3xl p-12 md:p-16">
+                <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-rocket mr-2"></i>Limited Availability
+                </span>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white mb-6">
+                    Ready for <span class="shimmer-text">1:1 Mentorship?</span>
+                </h2>
+                <p class="text-xl text-purple-200 mb-10 max-w-2xl mx-auto">
+                    Get personalized guidance from an ML Engineer who's successfully navigated the interview process at top companies
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="w-full sm:w-auto bg-white text-purple-900 px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-white/25 transition-all flex items-center justify-center gap-3 btn-glow">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Book on MentorCruise</span>
+                    </a>
+                    <a href="about.html" class="w-full sm:w-auto glass text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all flex items-center justify-center gap-3">
+                        <span>Learn More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                <p class="text-purple-300 text-sm mt-6">
+                    <i class="fas fa-check-circle mr-2"></i>Mock Interviews • Resume Review • Career Strategy
+                </p>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-8">
-                <div>
-                    <h3 class="text-xl font-bold mb-4"><i class="fas fa-brain mr-2"></i>MLInterviewPro</h3>
-                    <p class="text-gray-400">Master ML Engineering interviews with curated resources and expert guidance.</p>
+    <footer class="bg-slate-950 pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-lg"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">MLInterviewPro</span>
+                    </a>
+                    <p class="text-slate-400 text-sm">Master ML Engineering interviews with curated resources and expert guidance.</p>
                 </div>
+
+                <!-- Resources -->
                 <div>
-                    <h4 class="font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="leetcode.html" class="hover:text-white">LeetCode</a></li>
-                        <li><a href="ml-system-design.html" class="hover:text-white">ML System Design</a></li>
-                        <li><a href="behavioral.html" class="hover:text-white">Behavioral</a></li>
-                        <li><a href="cheatsheet.html" class="hover:text-white">ML Cheatsheet</a></li>
-                        <li><a href="resources.html" class="hover:text-white">Books & Tools</a></li>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="leetcode.html" class="text-slate-400 hover:text-purple-400 transition-colors">LeetCode Problems</a></li>
+                        <li><a href="ml-system-design.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML System Design</a></li>
+                        <li><a href="ml-coding.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Coding</a></li>
+                        <li><a href="behavioral.html" class="text-slate-400 hover:text-purple-400 transition-colors">Behavioral Prep</a></li>
                     </ul>
                 </div>
+
+                <!-- More -->
                 <div>
-                    <h4 class="font-semibold mb-4">Get Help</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">1:1 Mentorship</a></li>
-                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">Resume Review</a></li>
-                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="hover:text-white">Mock Interviews</a></li>
+                    <h4 class="font-semibold text-white mb-4">More</h4>
+                    <ul class="space-y-3">
+                        <li><a href="cheatsheet.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Cheatsheet</a></li>
+                        <li><a href="resources.html" class="text-slate-400 hover:text-purple-400 transition-colors">Books & Resources</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-purple-400 transition-colors">About</a></li>
                     </ul>
                 </div>
+
+                <!-- Get Help -->
                 <div>
-                    <h4 class="font-semibold mb-4">Connect</h4>
+                    <h4 class="font-semibold text-white mb-4">Get Help</h4>
+                    <ul class="space-y-3 mb-6">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Mock Interviews</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Resume Review</a></li>
+                    </ul>
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="inline-block bg-gradient-to-r from-pink-500 to-purple-600 px-6 py-3 rounded-full font-semibold hover:shadow-lg transition">
-                        <i class="fas fa-user-tie mr-2"></i>MentorCruise
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all text-sm">
+                        <i class="fas fa-rocket"></i>
+                        <span>Book Session</span>
                     </a>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-                <p>&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-500 text-sm">Made with</span>
+                    <span class="text-red-500"><i class="fas fa-heart"></i></span>
+                    <span class="text-slate-500 text-sm">for ML Engineers</span>
+                </div>
             </div>
         </div>
     </footer>
+
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.stat-number[data-target]');
+        const speed = 200;
+
+        const animateCounter = (counter) => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const inc = target / speed;
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + inc);
+                setTimeout(() => animateCounter(counter), 10);
+            } else {
+                counter.innerText = target + '+';
+            }
+        };
+
+        // Intersection Observer for counters
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>

@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress Tracker - MLInterviewPro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#7c3aed">
+    <meta name="description" content="Track your ML interview preparation progress across LeetCode, ML System Design, and ML Coding. Visualize your progress with detailed statistics and AI-powered insights.">
+    <meta name="keywords" content="ML interview progress, LeetCode tracker, ML system design progress, interview preparation tracker">
+    <meta name="author" content="MLInterviewPro">
+    <link rel="canonical" href="https://amnghd.github.io/mlinterviewpro/progress.html">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://amnghd.github.io/mlinterviewpro/progress.html">
+    <meta property="og:title" content="Progress Tracker - MLInterviewPro">
+    <meta property="og:description" content="Track your ML interview preparation progress with detailed statistics and AI-powered insights.">
+    <meta property="og:image" content="https://amnghd.github.io/mlinterviewpro/images/og-image.png">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://amnghd.github.io/mlinterviewpro/progress.html">
+    <meta name="twitter:title" content="Progress Tracker - MLInterviewPro">
+    <meta name="twitter:description" content="Track your ML interview preparation progress with detailed statistics and AI-powered insights.">
+    <meta name="twitter:image" content="https://amnghd.github.io/mlinterviewpro/images/og-image.png">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6DKFJEHPWR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-6DKFJEHPWR');
+    </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-light {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Circular Progress */
+        .circular-progress {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .circular-progress svg {
+            transform: rotate(-90deg);
+        }
+
+        .circular-progress .progress-ring {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        .circular-progress .percentage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Status badges */
+        .status-solved { background: #dcfce7; color: #166534; }
+        .status-working { background: #fef3c7; color: #92400e; }
+        .status-help { background: #fee2e2; color: #991b1b; }
+        .status-notstarted { background: #f3f4f6; color: #6b7280; }
+
+        /* Card hover effects */
+        .stat-card {
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -12px rgba(168, 85, 247, 0.15);
+        }
+
+        /* Animated gradient background for header */
+        .gradient-mesh {
+            background: linear-gradient(-45deg, #0f0f23, #1a1a3e, #2d1b4e, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Table styling */
+        .progress-table th {
+            background: linear-gradient(135deg, #f3e8ff 0%, #fce7f3 100%);
+        }
+
+        .progress-table tr:hover {
+            background: #faf5ff;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* AI Insights card */
+        .ai-insights {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+
+        .ai-insights::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        /* Shimmer effect for loading */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-brain text-white text-lg"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-slate-900 hidden sm:block">MLInterviewPro</span>
+                </a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="leetcode.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">LeetCode</a>
+                    <a href="ml-system-design.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">System Design</a>
+                    <a href="ml-coding.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">ML Coding</a>
+                    <a href="behavioral.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Behavioral</a>
+                    <a href="cheatsheet.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Cheatsheet</a>
+                    <a href="progress.html" class="px-4 py-2 text-purple-600 font-bold rounded-lg bg-purple-50 transition-all">Progress</a>
+                </div>
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-3">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all">
+                        <i class="fas fa-rocket"></i>
+                        <span>Get Mentorship</span>
+                    </a>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                        <i class="fas fa-bars text-slate-700 text-xl" id="menu-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-4 space-y-1">
+                <a href="leetcode.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Cheatsheet</a>
+                <a href="progress.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-xl font-medium transition">Progress</a>
+                <div class="pt-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="block text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-xl font-semibold">
+                        <i class="fas fa-rocket mr-2"></i>Get Mentorship
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const icon = document.getElementById('menu-icon');
+            menu.classList.toggle('hidden');
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+        }
+    </script>
+
+    <!-- Header Section -->
+    <section class="gradient-mesh text-white pt-24 pb-12 relative overflow-hidden">
+        <div class="orb w-80 h-80 bg-purple-500 -top-20 -left-40"></div>
+        <div class="orb w-64 h-64 bg-pink-500 top-10 right-0"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-chart-line text-2xl"></i>
+                </div>
+                <h1 class="font-display text-3xl md:text-4xl font-bold">Progress Tracker</h1>
+            </div>
+            <p class="text-purple-200 text-lg max-w-2xl">
+                Track your ML interview preparation across all categories. Stay motivated with detailed statistics and AI-powered insights.
+            </p>
+        </div>
+    </section>
+
+    <!-- Overall Progress Section -->
+    <section class="py-12 -mt-8 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl p-8">
+                <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                    <i class="fas fa-bullseye text-purple-600"></i>
+                    Overall Progress
+                </h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- LeetCode Progress -->
+                    <div class="text-center">
+                        <div class="circular-progress mx-auto mb-4" id="leetcode-progress">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="url(#gradient-leetcode)" stroke-width="8"
+                                        class="progress-ring" stroke-linecap="round"
+                                        stroke-dasharray="339.292" stroke-dashoffset="339.292"/>
+                                <defs>
+                                    <linearGradient id="gradient-leetcode" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#22c55e"/>
+                                        <stop offset="100%" stop-color="#10b981"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span class="percentage text-green-600" id="leetcode-percentage">0%</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-700 mb-1">LeetCode</h3>
+                        <p class="text-sm text-slate-500"><span id="leetcode-solved">0</span> / <span id="leetcode-total">314</span> problems</p>
+                    </div>
+
+                    <!-- ML System Design Progress -->
+                    <div class="text-center">
+                        <div class="circular-progress mx-auto mb-4" id="mlsd-progress">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="url(#gradient-mlsd)" stroke-width="8"
+                                        class="progress-ring" stroke-linecap="round"
+                                        stroke-dasharray="339.292" stroke-dashoffset="339.292"/>
+                                <defs>
+                                    <linearGradient id="gradient-mlsd" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#3b82f6"/>
+                                        <stop offset="100%" stop-color="#6366f1"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span class="percentage text-blue-600" id="mlsd-percentage">0%</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-700 mb-1">ML System Design</h3>
+                        <p class="text-sm text-slate-500"><span id="mlsd-solved">0</span> / <span id="mlsd-total">22</span> cases</p>
+                    </div>
+
+                    <!-- ML Coding Progress -->
+                    <div class="text-center">
+                        <div class="circular-progress mx-auto mb-4" id="mlcoding-progress">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="#e2e8f0" stroke-width="8"/>
+                                <circle cx="60" cy="60" r="54" fill="none" stroke="url(#gradient-mlcoding)" stroke-width="8"
+                                        class="progress-ring" stroke-linecap="round"
+                                        stroke-dasharray="339.292" stroke-dashoffset="339.292"/>
+                                <defs>
+                                    <linearGradient id="gradient-mlcoding" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" stop-color="#a855f7"/>
+                                        <stop offset="100%" stop-color="#ec4899"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <span class="percentage text-purple-600" id="mlcoding-percentage">0%</span>
+                        </div>
+                        <h3 class="font-semibold text-slate-700 mb-1">ML Coding</h3>
+                        <p class="text-sm text-slate-500"><span id="mlcoding-solved">0</span> / <span id="mlcoding-total">25</span> problems</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Dashboard -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
+                <i class="fas fa-chart-pie text-purple-600"></i>
+                Statistics Dashboard
+            </h2>
+
+            <!-- Status Cards -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <!-- Solved -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-lg border-l-4 border-green-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-green-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-check-circle text-green-600"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-green-600" id="total-solved">0</span>
+                    </div>
+                    <h3 class="font-medium text-slate-600">Solved</h3>
+                    <p class="text-xs text-slate-400 mt-1">Completed problems</p>
+                </div>
+
+                <!-- In Progress -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-lg border-l-4 border-yellow-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-yellow-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-spinner text-yellow-600"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-yellow-600" id="total-working">0</span>
+                    </div>
+                    <h3 class="font-medium text-slate-600">In Progress</h3>
+                    <p class="text-xs text-slate-400 mt-1">Currently working on</p>
+                </div>
+
+                <!-- Need Help -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-lg border-l-4 border-red-500">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-red-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-question-circle text-red-600"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-red-600" id="total-help">0</span>
+                    </div>
+                    <h3 class="font-medium text-slate-600">Need Help</h3>
+                    <p class="text-xs text-slate-400 mt-1">Stuck on these</p>
+                </div>
+
+                <!-- Not Started -->
+                <div class="stat-card bg-white rounded-2xl p-6 shadow-lg border-l-4 border-slate-400">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="w-10 h-10 bg-slate-100 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-circle text-slate-400"></i>
+                        </div>
+                        <span class="text-3xl font-bold text-slate-500" id="total-notstarted">0</span>
+                    </div>
+                    <h3 class="font-medium text-slate-600">Not Started</h3>
+                    <p class="text-xs text-slate-400 mt-1">Remaining problems</p>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="grid lg:grid-cols-2 gap-6">
+                <!-- Distribution by Category -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="font-semibold text-slate-700 mb-4">Progress by Category</h3>
+                    <div class="h-64">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Status Distribution Pie Chart -->
+                <div class="bg-white rounded-2xl p-6 shadow-lg">
+                    <h3 class="font-semibold text-slate-700 mb-4">Overall Status Distribution</h3>
+                    <div class="h-64">
+                        <canvas id="statusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI-Driven Summary Section -->
+    <section class="py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="ai-insights rounded-3xl p-8 relative overflow-hidden">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-magic text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-xl font-bold text-slate-800">AI-Powered Insights</h2>
+                        <p class="text-sm text-slate-500">Personalized recommendations based on your progress</p>
+                    </div>
+                    <button onclick="generateInsights()" class="ml-auto bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-lg font-medium hover:shadow-lg transition flex items-center gap-2">
+                        <i class="fas fa-sync-alt"></i>
+                        <span class="hidden sm:inline">Refresh</span>
+                    </button>
+                </div>
+
+                <div id="ai-insights-content" class="space-y-4">
+                    <!-- Insights will be generated here -->
+                    <div class="bg-white/50 rounded-xl p-4 border border-purple-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-lightbulb text-yellow-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-1">Progress Summary</h4>
+                                <p class="text-slate-600 text-sm" id="insight-summary">Loading your personalized insights...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/50 rounded-xl p-4 border border-purple-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-target text-green-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-1">Recommended Focus Area</h4>
+                                <p class="text-slate-600 text-sm" id="insight-focus">Analyzing your progress data...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/50 rounded-xl p-4 border border-purple-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-clock text-blue-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-1">Estimated Completion</h4>
+                                <p class="text-slate-600 text-sm" id="insight-completion">Calculating based on your pace...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white/50 rounded-xl p-4 border border-purple-200">
+                        <div class="flex items-start gap-3">
+                            <i class="fas fa-fire text-orange-500 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-slate-700 mb-1">Motivation Boost</h4>
+                                <p class="text-slate-600 text-sm" id="insight-motivation">Preparing your daily motivation...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Detailed Progress Table -->
+    <section class="py-8 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-xl overflow-hidden">
+                <div class="p-6 border-b">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <h2 class="text-xl font-bold text-slate-800 flex items-center gap-2">
+                            <i class="fas fa-list-check text-purple-600"></i>
+                            Detailed Progress
+                        </h2>
+
+                        <!-- Filters -->
+                        <div class="flex flex-wrap gap-3">
+                            <select id="category-filter" onchange="filterTable()" class="px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm">
+                                <option value="all">All Categories</option>
+                                <option value="leetcode">LeetCode</option>
+                                <option value="mlsd">ML System Design</option>
+                                <option value="mlcoding">ML Coding</option>
+                            </select>
+
+                            <select id="status-filter" onchange="filterTable()" class="px-4 py-2 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm">
+                                <option value="all">All Status</option>
+                                <option value="solved">Solved</option>
+                                <option value="working">Working</option>
+                                <option value="help">Need Help</option>
+                                <option value="notstarted">Not Started</option>
+                            </select>
+
+                            <button onclick="resetAllProgress()" class="px-4 py-2 text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition text-sm font-medium">
+                                <i class="fas fa-trash-alt mr-1"></i> Reset All
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full progress-table">
+                        <thead>
+                            <tr>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider cursor-pointer hover:bg-purple-100" onclick="sortTable('name')">
+                                    Problem <i class="fas fa-sort ml-1 text-slate-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider cursor-pointer hover:bg-purple-100" onclick="sortTable('category')">
+                                    Category <i class="fas fa-sort ml-1 text-slate-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider cursor-pointer hover:bg-purple-100" onclick="sortTable('difficulty')">
+                                    Difficulty <i class="fas fa-sort ml-1 text-slate-400"></i>
+                                </th>
+                                <th class="px-6 py-4 text-left text-xs font-semibold text-slate-600 uppercase tracking-wider">
+                                    Status
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="progress-table-body" class="divide-y divide-slate-100">
+                            <!-- Table rows will be generated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="p-4 border-t flex items-center justify-between">
+                    <p class="text-sm text-slate-500">
+                        Showing <span id="showing-start">1</span>-<span id="showing-end">20</span> of <span id="showing-total">0</span> problems
+                    </p>
+                    <div class="flex gap-2">
+                        <button onclick="prevPage()" id="prev-btn" class="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button onclick="nextPage()" id="next-btn" class="px-4 py-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 pt-16 pb-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-lg"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">MLInterviewPro</span>
+                    </a>
+                    <p class="text-slate-400 text-sm">Master ML Engineering interviews with curated resources and expert guidance.</p>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="leetcode.html" class="text-slate-400 hover:text-purple-400 transition-colors">LeetCode Problems</a></li>
+                        <li><a href="ml-system-design.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML System Design</a></li>
+                        <li><a href="ml-coding.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Coding</a></li>
+                        <li><a href="behavioral.html" class="text-slate-400 hover:text-purple-400 transition-colors">Behavioral Prep</a></li>
+                    </ul>
+                </div>
+
+                <!-- More -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">More</h4>
+                    <ul class="space-y-3">
+                        <li><a href="cheatsheet.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Cheatsheet</a></li>
+                        <li><a href="resources.html" class="text-slate-400 hover:text-purple-400 transition-colors">Books & Resources</a></li>
+                        <li><a href="progress.html" class="text-slate-400 hover:text-purple-400 transition-colors">Progress Tracker</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-purple-400 transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get Help -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Get Help</h4>
+                    <ul class="space-y-3 mb-6">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Mock Interviews</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Resume Review</a></li>
+                    </ul>
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all text-sm">
+                        <i class="fas fa-rocket"></i>
+                        <span>Book Session</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-500 text-sm">Made with</span>
+                    <span class="text-red-500"><i class="fas fa-heart"></i></span>
+                    <span class="text-slate-500 text-sm">for ML Engineers</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================
+        // Problem Metadata Definition
+        // ============================================
+        const problemsData = {
+            leetcode: [
+                { id: 'lc_1', name: 'Two Sum', difficulty: 'Easy' },
+                { id: 'lc_3', name: 'Longest Substring Without Repeating', difficulty: 'Medium' },
+                { id: 'lc_15', name: '3Sum', difficulty: 'Medium' },
+                { id: 'lc_56', name: 'Merge Intervals', difficulty: 'Medium' },
+                { id: 'lc_146', name: 'LRU Cache', difficulty: 'Medium' },
+                { id: 'lc_200', name: 'Number of Islands', difficulty: 'Medium' },
+                { id: 'lc_207', name: 'Course Schedule', difficulty: 'Medium' },
+                { id: 'lc_4', name: 'Median of Two Sorted Arrays', difficulty: 'Hard' },
+                { id: 'lc_212', name: 'Word Search II', difficulty: 'Hard' },
+                { id: 'lc_297', name: 'Serialize/Deserialize Tree', difficulty: 'Hard' },
+                { id: 'lc_42', name: 'Trapping Rain Water', difficulty: 'Hard' },
+                { id: 'lc_269', name: 'Alien Dictionary', difficulty: 'Hard' },
+                { id: 'lc_133', name: 'Clone Graph', difficulty: 'Medium' },
+                { id: 'lc_32', name: 'Longest Valid Parentheses', difficulty: 'Hard' },
+                { id: 'lc_20', name: 'Valid Parentheses', difficulty: 'Easy' },
+                { id: 'lc_21', name: 'Merge Two Sorted Lists', difficulty: 'Easy' },
+                { id: 'lc_53', name: 'Maximum Subarray', difficulty: 'Medium' },
+                { id: 'lc_70', name: 'Climbing Stairs', difficulty: 'Easy' },
+                { id: 'lc_121', name: 'Best Time to Buy and Sell Stock', difficulty: 'Easy' },
+                { id: 'lc_139', name: 'Word Break', difficulty: 'Medium' },
+                { id: 'lc_198', name: 'House Robber', difficulty: 'Medium' },
+                { id: 'lc_238', name: 'Product of Array Except Self', difficulty: 'Medium' },
+                { id: 'lc_322', name: 'Coin Change', difficulty: 'Medium' },
+                { id: 'lc_347', name: 'Top K Frequent Elements', difficulty: 'Medium' },
+                { id: 'lc_416', name: 'Partition Equal Subset Sum', difficulty: 'Medium' },
+            ],
+            mlsd: [
+                { id: 'mlsd_1', name: 'Design YouTube Recommendation System', difficulty: 'Hard' },
+                { id: 'mlsd_2', name: 'Design Instagram Feed Ranking', difficulty: 'Hard' },
+                { id: 'mlsd_3', name: 'Design Netflix Movie Recommender', difficulty: 'Hard' },
+                { id: 'mlsd_4', name: 'Design Google Search Autocomplete', difficulty: 'Medium' },
+                { id: 'mlsd_5', name: 'Design Spam Detection System', difficulty: 'Medium' },
+                { id: 'mlsd_6', name: 'Design Fraud Detection for Payments', difficulty: 'Hard' },
+                { id: 'mlsd_7', name: 'Design Real-time Ad Click Prediction', difficulty: 'Hard' },
+                { id: 'mlsd_8', name: 'Design Content Moderation System', difficulty: 'Medium' },
+                { id: 'mlsd_9', name: 'Design Uber ETA Prediction', difficulty: 'Hard' },
+                { id: 'mlsd_10', name: 'Design Amazon Product Search', difficulty: 'Hard' },
+                { id: 'mlsd_11', name: 'Design LinkedIn Job Recommendations', difficulty: 'Hard' },
+                { id: 'mlsd_12', name: 'Design Twitter Trending Topics', difficulty: 'Medium' },
+                { id: 'mlsd_13', name: 'Design Airbnb Price Prediction', difficulty: 'Medium' },
+                { id: 'mlsd_14', name: 'Design News Feed Personalization', difficulty: 'Hard' },
+                { id: 'mlsd_15', name: 'Design Image Search (Visual Search)', difficulty: 'Hard' },
+                { id: 'mlsd_16', name: 'Design Chatbot/Conversational AI', difficulty: 'Hard' },
+                { id: 'mlsd_17', name: 'Design Sentiment Analysis Pipeline', difficulty: 'Medium' },
+                { id: 'mlsd_18', name: 'Design Voice Assistant (Alexa/Siri)', difficulty: 'Hard' },
+                { id: 'mlsd_19', name: 'Design A/B Testing Platform', difficulty: 'Medium' },
+                { id: 'mlsd_20', name: 'Design Anomaly Detection System', difficulty: 'Medium' },
+                { id: 'mlsd_21', name: 'Design Face Recognition System', difficulty: 'Hard' },
+                { id: 'mlsd_22', name: 'Design Document Understanding Pipeline', difficulty: 'Hard' },
+            ],
+            mlcoding: [
+                { id: 'mlc_1', name: 'Implement Linear Regression from Scratch', difficulty: 'Easy' },
+                { id: 'mlc_2', name: 'Implement Logistic Regression from Scratch', difficulty: 'Easy' },
+                { id: 'mlc_3', name: 'Implement K-Means Clustering', difficulty: 'Medium' },
+                { id: 'mlc_4', name: 'Implement Decision Tree', difficulty: 'Medium' },
+                { id: 'mlc_5', name: 'Implement Neural Network (MLP)', difficulty: 'Medium' },
+                { id: 'mlc_6', name: 'Implement Backpropagation', difficulty: 'Hard' },
+                { id: 'mlc_7', name: 'Implement Gradient Descent Variants', difficulty: 'Medium' },
+                { id: 'mlc_8', name: 'Implement K-Nearest Neighbors', difficulty: 'Easy' },
+                { id: 'mlc_9', name: 'Implement Naive Bayes Classifier', difficulty: 'Easy' },
+                { id: 'mlc_10', name: 'Implement PCA from Scratch', difficulty: 'Medium' },
+                { id: 'mlc_11', name: 'Implement SVM from Scratch', difficulty: 'Hard' },
+                { id: 'mlc_12', name: 'Implement Word2Vec', difficulty: 'Hard' },
+                { id: 'mlc_13', name: 'Implement Attention Mechanism', difficulty: 'Hard' },
+                { id: 'mlc_14', name: 'Implement Convolutional Layer', difficulty: 'Medium' },
+                { id: 'mlc_15', name: 'Implement RNN/LSTM Cell', difficulty: 'Hard' },
+                { id: 'mlc_16', name: 'Implement Batch Normalization', difficulty: 'Medium' },
+                { id: 'mlc_17', name: 'Implement Dropout Layer', difficulty: 'Easy' },
+                { id: 'mlc_18', name: 'Implement Cross-Entropy Loss', difficulty: 'Easy' },
+                { id: 'mlc_19', name: 'Implement Adam Optimizer', difficulty: 'Medium' },
+                { id: 'mlc_20', name: 'Implement Softmax Function', difficulty: 'Easy' },
+                { id: 'mlc_21', name: 'Implement ROC-AUC Calculation', difficulty: 'Medium' },
+                { id: 'mlc_22', name: 'Implement Precision/Recall/F1', difficulty: 'Easy' },
+                { id: 'mlc_23', name: 'Implement Data Augmentation', difficulty: 'Medium' },
+                { id: 'mlc_24', name: 'Implement Mini-batch Sampling', difficulty: 'Easy' },
+                { id: 'mlc_25', name: 'Implement Learning Rate Scheduler', difficulty: 'Medium' },
+            ]
+        };
+
+        // ============================================
+        // State Management
+        // ============================================
+        let currentPage = 1;
+        const itemsPerPage = 20;
+        let filteredProblems = [];
+        let sortColumn = 'name';
+        let sortDirection = 'asc';
+
+        // ============================================
+        // localStorage Progress Management
+        // ============================================
+        function getProgress(problemId) {
+            const key = `progress_${problemId}`;
+            return localStorage.getItem(key) || 'notstarted';
+        }
+
+        function setProgress(problemId, status) {
+            const key = `progress_${problemId}`;
+            localStorage.setItem(key, status);
+            updateAllStats();
+            generateInsights();
+        }
+
+        function resetAllProgress() {
+            if (confirm('Are you sure you want to reset all progress? This cannot be undone.')) {
+                Object.values(problemsData).flat().forEach(problem => {
+                    localStorage.removeItem(`progress_${problem.id}`);
+                });
+                updateAllStats();
+                renderTable();
+                generateInsights();
+            }
+        }
+
+        // ============================================
+        // Statistics Calculation
+        // ============================================
+        function calculateStats() {
+            const stats = {
+                leetcode: { solved: 0, working: 0, help: 0, notstarted: 0, total: problemsData.leetcode.length },
+                mlsd: { solved: 0, working: 0, help: 0, notstarted: 0, total: problemsData.mlsd.length },
+                mlcoding: { solved: 0, working: 0, help: 0, notstarted: 0, total: problemsData.mlcoding.length },
+                total: { solved: 0, working: 0, help: 0, notstarted: 0 }
+            };
+
+            Object.entries(problemsData).forEach(([category, problems]) => {
+                problems.forEach(problem => {
+                    const status = getProgress(problem.id);
+                    stats[category][status]++;
+                    stats.total[status]++;
+                });
+            });
+
+            return stats;
+        }
+
+        // ============================================
+        // UI Updates
+        // ============================================
+        function updateCircularProgress(elementId, percentage, solvedId, totalId, solved, total) {
+            const circle = document.querySelector(`#${elementId} .progress-ring`);
+            const percentageEl = document.querySelector(`#${elementId.replace('-progress', '-percentage')}`);
+            const circumference = 339.292;
+            const offset = circumference - (percentage / 100) * circumference;
+
+            circle.style.strokeDashoffset = offset;
+            percentageEl.textContent = `${Math.round(percentage)}%`;
+
+            document.getElementById(solvedId).textContent = solved;
+            document.getElementById(totalId).textContent = total;
+        }
+
+        function updateAllStats() {
+            const stats = calculateStats();
+
+            // Update circular progress
+            const leetcodePercent = (stats.leetcode.solved / stats.leetcode.total) * 100;
+            const mlsdPercent = (stats.mlsd.solved / stats.mlsd.total) * 100;
+            const mlcodingPercent = (stats.mlcoding.solved / stats.mlcoding.total) * 100;
+
+            updateCircularProgress('leetcode-progress', leetcodePercent, 'leetcode-solved', 'leetcode-total', stats.leetcode.solved, stats.leetcode.total);
+            updateCircularProgress('mlsd-progress', mlsdPercent, 'mlsd-solved', 'mlsd-total', stats.mlsd.solved, stats.mlsd.total);
+            updateCircularProgress('mlcoding-progress', mlcodingPercent, 'mlcoding-solved', 'mlcoding-total', stats.mlcoding.solved, stats.mlcoding.total);
+
+            // Update stat cards
+            document.getElementById('total-solved').textContent = stats.total.solved;
+            document.getElementById('total-working').textContent = stats.total.working;
+            document.getElementById('total-help').textContent = stats.total.help;
+            document.getElementById('total-notstarted').textContent = stats.total.notstarted;
+
+            // Update charts
+            updateCharts(stats);
+        }
+
+        // ============================================
+        // Charts
+        // ============================================
+        let categoryChart = null;
+        let statusChart = null;
+
+        function initCharts() {
+            // Category Progress Bar Chart
+            const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+            categoryChart = new Chart(categoryCtx, {
+                type: 'bar',
+                data: {
+                    labels: ['LeetCode', 'ML System Design', 'ML Coding'],
+                    datasets: [
+                        {
+                            label: 'Solved',
+                            data: [0, 0, 0],
+                            backgroundColor: '#22c55e',
+                            borderRadius: 6,
+                        },
+                        {
+                            label: 'Working',
+                            data: [0, 0, 0],
+                            backgroundColor: '#eab308',
+                            borderRadius: 6,
+                        },
+                        {
+                            label: 'Need Help',
+                            data: [0, 0, 0],
+                            backgroundColor: '#ef4444',
+                            borderRadius: 6,
+                        },
+                        {
+                            label: 'Not Started',
+                            data: [0, 0, 0],
+                            backgroundColor: '#94a3b8',
+                            borderRadius: 6,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                        }
+                    }
+                }
+            });
+
+            // Status Distribution Doughnut Chart
+            const statusCtx = document.getElementById('statusChart').getContext('2d');
+            statusChart = new Chart(statusCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Solved', 'Working', 'Need Help', 'Not Started'],
+                    datasets: [{
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#22c55e', '#eab308', '#ef4444', '#94a3b8'],
+                        borderWidth: 0,
+                        hoverOffset: 10,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                        }
+                    },
+                    cutout: '60%',
+                }
+            });
+        }
+
+        function updateCharts(stats) {
+            if (categoryChart) {
+                categoryChart.data.datasets[0].data = [stats.leetcode.solved, stats.mlsd.solved, stats.mlcoding.solved];
+                categoryChart.data.datasets[1].data = [stats.leetcode.working, stats.mlsd.working, stats.mlcoding.working];
+                categoryChart.data.datasets[2].data = [stats.leetcode.help, stats.mlsd.help, stats.mlcoding.help];
+                categoryChart.data.datasets[3].data = [stats.leetcode.notstarted, stats.mlsd.notstarted, stats.mlcoding.notstarted];
+                categoryChart.update();
+            }
+
+            if (statusChart) {
+                statusChart.data.datasets[0].data = [
+                    stats.total.solved,
+                    stats.total.working,
+                    stats.total.help,
+                    stats.total.notstarted
+                ];
+                statusChart.update();
+            }
+        }
+
+        // ============================================
+        // Progress Table
+        // ============================================
+        function getAllProblems() {
+            const all = [];
+            Object.entries(problemsData).forEach(([category, problems]) => {
+                problems.forEach(problem => {
+                    all.push({
+                        ...problem,
+                        category: category,
+                        categoryLabel: category === 'leetcode' ? 'LeetCode' :
+                                       category === 'mlsd' ? 'ML System Design' : 'ML Coding',
+                        status: getProgress(problem.id)
+                    });
+                });
+            });
+            return all;
+        }
+
+        function filterTable() {
+            const categoryFilter = document.getElementById('category-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+
+            let problems = getAllProblems();
+
+            if (categoryFilter !== 'all') {
+                problems = problems.filter(p => p.category === categoryFilter);
+            }
+
+            if (statusFilter !== 'all') {
+                problems = problems.filter(p => p.status === statusFilter);
+            }
+
+            filteredProblems = problems;
+            currentPage = 1;
+            renderTable();
+        }
+
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'asc';
+            }
+
+            filteredProblems.sort((a, b) => {
+                let valA = a[column];
+                let valB = b[column];
+
+                if (column === 'difficulty') {
+                    const order = { 'Easy': 1, 'Medium': 2, 'Hard': 3 };
+                    valA = order[valA];
+                    valB = order[valB];
+                }
+
+                if (sortDirection === 'asc') {
+                    return valA > valB ? 1 : -1;
+                } else {
+                    return valA < valB ? 1 : -1;
+                }
+            });
+
+            renderTable();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('progress-table-body');
+            const start = (currentPage - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const pageItems = filteredProblems.slice(start, end);
+
+            tbody.innerHTML = pageItems.map(problem => `
+                <tr class="hover:bg-purple-50 transition">
+                    <td class="px-6 py-4">
+                        <span class="font-medium text-slate-700">${problem.name}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${
+                            problem.category === 'leetcode' ? 'bg-green-100 text-green-700' :
+                            problem.category === 'mlsd' ? 'bg-blue-100 text-blue-700' :
+                            'bg-purple-100 text-purple-700'
+                        }">${problem.categoryLabel}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium ${
+                            problem.difficulty === 'Easy' ? 'bg-green-100 text-green-700' :
+                            problem.difficulty === 'Medium' ? 'bg-yellow-100 text-yellow-700' :
+                            'bg-red-100 text-red-700'
+                        }">${problem.difficulty}</span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <select onchange="setProgress('${problem.id}', this.value)"
+                                class="px-3 py-2 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 ${
+                                    problem.status === 'solved' ? 'bg-green-50 border-green-200' :
+                                    problem.status === 'working' ? 'bg-yellow-50 border-yellow-200' :
+                                    problem.status === 'help' ? 'bg-red-50 border-red-200' :
+                                    'bg-slate-50'
+                                }">
+                            <option value="notstarted" ${problem.status === 'notstarted' ? 'selected' : ''}>Not Started</option>
+                            <option value="working" ${problem.status === 'working' ? 'selected' : ''}>Working</option>
+                            <option value="help" ${problem.status === 'help' ? 'selected' : ''}>Need Help</option>
+                            <option value="solved" ${problem.status === 'solved' ? 'selected' : ''}>Solved</option>
+                        </select>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Update pagination info
+            document.getElementById('showing-start').textContent = filteredProblems.length === 0 ? 0 : start + 1;
+            document.getElementById('showing-end').textContent = Math.min(end, filteredProblems.length);
+            document.getElementById('showing-total').textContent = filteredProblems.length;
+
+            // Update pagination buttons
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = end >= filteredProblems.length;
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        }
+
+        function nextPage() {
+            const maxPage = Math.ceil(filteredProblems.length / itemsPerPage);
+            if (currentPage < maxPage) {
+                currentPage++;
+                renderTable();
+            }
+        }
+
+        // ============================================
+        // AI-Powered Insights
+        // ============================================
+        function generateInsights() {
+            const stats = calculateStats();
+            const totalProblems = stats.leetcode.total + stats.mlsd.total + stats.mlcoding.total;
+            const totalSolved = stats.total.solved;
+            const overallProgress = Math.round((totalSolved / totalProblems) * 100);
+
+            // Calculate category percentages
+            const leetcodePercent = Math.round((stats.leetcode.solved / stats.leetcode.total) * 100);
+            const mlsdPercent = Math.round((stats.mlsd.solved / stats.mlsd.total) * 100);
+            const mlcodingPercent = Math.round((stats.mlcoding.solved / stats.mlcoding.total) * 100);
+
+            // Progress Summary
+            let summaryText = '';
+            if (totalSolved === 0) {
+                summaryText = "You haven't started yet. Begin with some easy LeetCode problems to build momentum. Aim for 2-3 problems per day to establish a consistent routine.";
+            } else if (overallProgress < 25) {
+                summaryText = `Great start! You've completed ${totalSolved} problems (${overallProgress}%). Keep up the momentum! At your current pace, you're building a solid foundation for ML interviews.`;
+            } else if (overallProgress < 50) {
+                summaryText = `Excellent progress! You're ${overallProgress}% through your preparation with ${totalSolved} problems solved. You're in the sweet spot for building comprehensive interview skills.`;
+            } else if (overallProgress < 75) {
+                summaryText = `Impressive work! At ${overallProgress}% completion, you're well-prepared for most ML interviews. Focus on the remaining challenging problems and review what you've learned.`;
+            } else {
+                summaryText = `Outstanding! You've completed ${overallProgress}% of the curriculum. You're interview-ready! Consider doing mock interviews to polish your skills.`;
+            }
+            document.getElementById('insight-summary').textContent = summaryText;
+
+            // Recommended Focus Area
+            let focusText = '';
+            const categories = [
+                { name: 'LeetCode', percent: leetcodePercent, key: 'leetcode', remaining: stats.leetcode.total - stats.leetcode.solved },
+                { name: 'ML System Design', percent: mlsdPercent, key: 'mlsd', remaining: stats.mlsd.total - stats.mlsd.solved },
+                { name: 'ML Coding', percent: mlcodingPercent, key: 'mlcoding', remaining: stats.mlcoding.total - stats.mlcoding.solved }
+            ];
+
+            // Find the category with lowest progress
+            const weakest = categories.reduce((a, b) => a.percent < b.percent ? a : b);
+
+            if (weakest.percent < 30) {
+                focusText = `Focus on ${weakest.name} - you're at ${weakest.percent}% with ${weakest.remaining} problems remaining. This area needs the most attention for a balanced preparation.`;
+            } else if (stats.total.help > 0) {
+                focusText = `You have ${stats.total.help} problems marked as "Need Help". Consider booking a mentorship session to work through these challenging problems together.`;
+            } else {
+                focusText = `Your preparation is well-balanced! Continue working through all categories. ${weakest.name} at ${weakest.percent}% could use a bit more attention.`;
+            }
+            document.getElementById('insight-focus').textContent = focusText;
+
+            // Estimated Completion
+            let completionText = '';
+            const remaining = totalProblems - totalSolved - stats.total.working;
+            if (remaining === 0) {
+                completionText = "Congratulations! You've completed all problems. Time to focus on mock interviews and refining your solutions.";
+            } else if (totalSolved === 0) {
+                completionText = `With ${remaining} problems remaining, solving 3 problems per day would take about ${Math.ceil(remaining / 3)} days. Start today!`;
+            } else {
+                // Estimate based on "working" problems being half-done
+                const effectiveSolved = totalSolved + (stats.total.working * 0.5);
+                const daysPerProblem = 1 / 3; // Assume 3 problems per day target
+                const estimatedDays = Math.ceil(remaining * daysPerProblem);
+                completionText = `At a pace of 3 problems per day, you could complete the remaining ${remaining} problems in approximately ${estimatedDays} days. You're ${overallProgress}% of the way there!`;
+            }
+            document.getElementById('insight-completion').textContent = completionText;
+
+            // Motivation Boost
+            const motivations = [
+                "Every problem you solve is one step closer to your dream job. Keep pushing!",
+                "ML Engineering is one of the fastest-growing fields. Your preparation today shapes your career tomorrow.",
+                "Remember: Google, Meta, and Amazon engineers all started exactly where you are now.",
+                "Consistency beats intensity. Even 30 minutes of focused practice daily compounds into mastery.",
+                "The best time to prepare for ML interviews was yesterday. The second best time is now.",
+                "Each 'Hard' problem you solve puts you ahead of 90% of other candidates.",
+                "Your brain is building new neural pathways with every problem. That's literal learning!",
+                "Top ML roles are waiting for someone with your dedication. Keep going!"
+            ];
+
+            let motivationText = motivations[Math.floor(Math.random() * motivations.length)];
+
+            // Add personalized touch based on progress
+            if (stats.total.solved >= 10 && stats.total.solved < 50) {
+                motivationText += " You've already proven you can do this - look at your progress!";
+            } else if (stats.total.solved >= 50) {
+                motivationText += " Your dedication is remarkable. You're in the top tier of prepared candidates.";
+            }
+
+            document.getElementById('insight-motivation').textContent = motivationText;
+        }
+
+        // ============================================
+        // Initialization
+        // ============================================
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize charts
+            initCharts();
+
+            // Load all problems and render table
+            filteredProblems = getAllProblems();
+            renderTable();
+
+            // Update all statistics
+            updateAllStats();
+
+            // Generate AI insights
+            generateInsights();
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
+    </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
+</body>
+</html>

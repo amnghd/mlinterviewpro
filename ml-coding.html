@@ -33,59 +33,341 @@
         gtag('js', new Date());
         gtag('config', 'G-6DKFJEHPWR');
     </script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'display': ['Space Grotesk', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        'primary': {
+                            50: '#faf5ff',
+                            100: '#f3e8ff',
+                            200: '#e9d5ff',
+                            300: '#d8b4fe',
+                            400: '#c084fc',
+                            500: '#a855f7',
+                            600: '#9333ea',
+                            700: '#7c3aed',
+                            800: '#6b21a8',
+                            900: '#581c87',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-slow': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+                        'gradient': 'gradient 8s ease infinite',
+                        'shimmer': 'shimmer 2s linear infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
     <style>
-        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .code-card:hover { transform: translateY(-3px); }
-        .premium-blur { filter: blur(4px); pointer-events: none; }
-        .collapsible-content { max-height: 0; overflow: hidden; transition: max-height 0.5s ease-out; }
-        .collapsible-content.open { max-height: 10000px; }
-        pre code { font-size: 13px !important; }
+        * { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: hidden;
+        }
+
+        .font-display { font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+        /* Animated Gradient Background */
+        .gradient-mesh {
+            background: linear-gradient(-45deg, #0f0f23, #1a1a3e, #2d1b4e, #1e1b4b, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        /* Glow Effect */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(168, 85, 247, 0.8); }
+        }
+
+        /* Shimmer Effect */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-text {
+            background: linear-gradient(90deg, #a855f7, #ec4899, #f97316, #a855f7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s linear infinite;
+        }
+
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .gradient-text-blue {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #d946ef 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Floating Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Card Hover Effects */
+        .card-premium {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-premium:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(168, 85, 247, 0.25);
+        }
+
+        /* Button Effects */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+
+        /* Navigation Glass Effect */
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1e1b4b; }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a855f7, #ec4899);
+            border-radius: 4px;
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: rgba(168, 85, 247, 0.3);
+            color: #fff;
+        }
+
+        /* Collapsible Content */
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+
+        .collapsible-content.open {
+            max-height: 10000px;
+        }
+
+        /* Code Block Styling */
+        pre {
+            background: #0d1117 !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            margin: 0;
+        }
+
+        pre code {
+            font-size: 13px !important;
+            line-height: 1.6;
+        }
+
+        .hljs {
+            background: #0d1117 !important;
+            padding: 1.25rem !important;
+        }
+
+        /* Progress Dropdown Styles */
+        .progress-dropdown {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ffffff' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            padding-right: 2.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .progress-dropdown:focus {
+            outline: none;
+            ring: 2px;
+        }
+
+        .progress-not-started {
+            background-color: rgba(107, 114, 128, 0.3);
+            border-color: rgb(107, 114, 128);
+            color: rgb(156, 163, 175);
+        }
+
+        .progress-working {
+            background-color: rgba(59, 130, 246, 0.3);
+            border-color: rgb(59, 130, 246);
+            color: rgb(147, 197, 253);
+        }
+
+        .progress-need-help {
+            background-color: rgba(249, 115, 22, 0.3);
+            border-color: rgb(249, 115, 22);
+            color: rgb(253, 186, 116);
+        }
+
+        .progress-solved {
+            background-color: rgba(34, 197, 94, 0.3);
+            border-color: rgb(34, 197, 94);
+            color: rgb(134, 239, 172);
+        }
+
+        /* Login Prompt */
+        .login-prompt {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        /* Topic Badge */
+        .topic-badge {
+            transition: all 0.3s ease;
+        }
+
+        .topic-badge:hover {
+            transform: scale(1.05);
+        }
     </style>
 </head>
-<body class="bg-gray-50">
+<body class="bg-slate-950 text-white antialiased">
     <!-- Navigation -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
-                <a href="index.html" class="text-xl sm:text-2xl font-bold text-purple-600">
-                    <i class="fas fa-brain mr-2"></i><span class="hidden sm:inline">MLInterviewPro</span><span class="sm:hidden">MLIP</span>
+    <nav class="fixed top-0 left-0 right-0 z-50 nav-glass border-b border-white/10" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 md:h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center gap-2 group">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                        <i class="fas fa-brain text-white text-lg"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl text-slate-900 hidden sm:block">MLInterviewPro</span>
                 </a>
-                <div class="hidden lg:flex space-x-6">
-                    <a href="leetcode.html" class="text-gray-700 hover:text-purple-600 font-medium">LeetCode</a>
-                    <a href="ml-system-design.html" class="text-gray-700 hover:text-purple-600 font-medium">ML System Design</a>
-                    <a href="ml-coding.html" class="text-purple-600 font-bold">ML Coding</a>
-                    <a href="behavioral.html" class="text-gray-700 hover:text-purple-600 font-medium">Behavioral</a>
-                    <a href="cheatsheet.html" class="text-gray-700 hover:text-purple-600 font-medium">Cheatsheet</a>
-                    <a href="resources.html" class="text-gray-700 hover:text-purple-600 font-medium">Resources</a>
-                    <a href="about.html" class="text-gray-700 hover:text-purple-600 font-medium">About</a>
+
+                <!-- Desktop Nav -->
+                <div class="hidden lg:flex items-center gap-1">
+                    <a href="leetcode.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">LeetCode</a>
+                    <a href="ml-system-design.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">System Design</a>
+                    <a href="ml-coding.html" class="px-4 py-2 text-purple-600 font-bold rounded-lg bg-purple-50 transition-all">ML Coding</a>
+                    <a href="behavioral.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Behavioral</a>
+                    <a href="cheatsheet.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Cheatsheet</a>
+                    <a href="resources.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all">Resources</a>
+                    <a href="progress.html" class="px-4 py-2 text-slate-600 hover:text-purple-600 font-medium rounded-lg hover:bg-purple-50 transition-all"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
-                <div class="flex items-center gap-2">
+
+                <!-- CTA Button -->
+                <div class="flex items-center gap-3">
                     <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                       class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base">
-                        <i class="fas fa-user-tie sm:mr-2"></i><span class="hidden sm:inline">Book Mentorship</span>
+                       class="hidden sm:flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
                     </a>
-                    <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                        <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
+                    <button onclick="toggleMobileMenu()" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-slate-100 transition">
+                        <i class="fas fa-bars text-slate-700 text-xl" id="menu-icon"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t">
-            <div class="px-4 py-3 space-y-2">
-                <a href="leetcode.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">LeetCode</a>
-                <a href="ml-system-design.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">ML System Design</a>
-                <a href="ml-coding.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-lg font-medium">ML Coding</a>
-                <a href="behavioral.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Behavioral</a>
-                <a href="cheatsheet.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Cheatsheet</a>
-                <a href="resources.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">Resources</a>
-                <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-lg font-medium">About</a>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-slate-100">
+            <div class="px-4 py-4 space-y-1">
+                <a href="leetcode.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">LeetCode</a>
+                <a href="ml-system-design.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">ML System Design</a>
+                <a href="ml-coding.html" class="block py-3 px-4 bg-purple-50 text-purple-600 rounded-xl font-medium transition">ML Coding</a>
+                <a href="behavioral.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Behavioral</a>
+                <a href="cheatsheet.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Cheatsheet</a>
+                <a href="resources.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition">Resources</a>
+                <a href="progress.html" class="block py-3 px-4 text-slate-700 hover:bg-purple-50 hover:text-purple-600 rounded-xl font-medium transition"><i class="fas fa-chart-line mr-2"></i>Progress</a>
+                <div class="pt-2">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="block text-center bg-gradient-to-r from-purple-600 to-pink-600 text-white py-3 px-4 rounded-xl font-semibold" data-auth="login-button">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                </div>
             </div>
         </div>
     </nav>
+
     <script>
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
@@ -96,104 +378,156 @@
         }
     </script>
 
-    <!-- Hero with Stats -->
-    <section class="gradient-bg text-white py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid md:grid-cols-4 gap-4 mb-8">
-                <div class="bg-white/10 backdrop-blur rounded-xl p-3 text-center">
-                    <div class="text-2xl font-bold">+300%</div>
-                    <div class="text-xs opacity-80">AI Job Growth (LinkedIn)</div>
+    <!-- Hero Section -->
+    <section class="relative gradient-mesh overflow-hidden pt-20">
+        <!-- Floating Orbs -->
+        <div class="orb w-96 h-96 bg-purple-500 top-20 -left-48 animate-float"></div>
+        <div class="orb w-80 h-80 bg-orange-500 top-40 right-0 animate-float-slow"></div>
+
+        <!-- Grid Pattern Overlay -->
+        <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-16">
+            <!-- Stats Row -->
+            <div data-aos="fade-up" data-aos-delay="100" class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+                <div class="glass rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">+300%</div>
+                    <div class="text-purple-300 text-xs mt-1">AI Job Growth (LinkedIn)</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-xl p-3 text-center">
-                    <div class="text-2xl font-bold">88%</div>
-                    <div class="text-xs opacity-80">Companies Using AI (McKinsey)</div>
+                <div class="glass rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">88%</div>
+                    <div class="text-purple-300 text-xs mt-1">Companies Using AI</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-xl p-3 text-center">
-                    <div class="text-2xl font-bold">$185K+</div>
-                    <div class="text-xs opacity-80">Median ML Salary (Forbes)</div>
+                <div class="glass rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">$185K+</div>
+                    <div class="text-purple-300 text-xs mt-1">Median ML Salary</div>
                 </div>
-                <div class="bg-white/10 backdrop-blur rounded-xl p-3 text-center">
-                    <div class="text-2xl font-bold">+53%</div>
-                    <div class="text-xs opacity-80">Salary Increase in 15mo</div>
+                <div class="glass rounded-2xl p-4 text-center">
+                    <div class="text-2xl md:text-3xl font-bold text-white">+53%</div>
+                    <div class="text-purple-300 text-xs mt-1">Salary Increase in 15mo</div>
                 </div>
             </div>
-            <h1 class="text-4xl font-bold mb-4"><i class="fas fa-code mr-3"></i>ML Coding Interview Prep</h1>
-            <p class="text-xl opacity-90">Implement ML algorithms from scratch AND with libraries. Master both for interviews.</p>
+
+            <div class="text-center">
+                <!-- Badge -->
+                <div data-aos="fade-down" data-aos-delay="150" class="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-6">
+                    <span class="w-2 h-2 bg-orange-400 rounded-full animate-pulse"></span>
+                    <span class="text-sm text-purple-200">Hands-on Implementation Practice</span>
+                    <i class="fas fa-laptop-code text-orange-400 ml-1"></i>
+                </div>
+
+                <!-- Main Heading -->
+                <h1 data-aos="fade-up" data-aos-delay="200" class="font-display text-4xl sm:text-5xl md:text-6xl font-bold mb-4 tracking-tight">
+                    <span class="text-white">ML Coding</span>
+                    <span class="gradient-text"> Interview Prep</span>
+                </h1>
+
+                <!-- Subheading -->
+                <p data-aos="fade-up" data-aos-delay="300" class="text-lg sm:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">
+                    Implement ML algorithms from scratch <span class="text-purple-400 font-semibold">AND</span> with libraries. Master both for interviews.
+                </p>
+            </div>
         </div>
     </section>
 
     <!-- Topics Overview -->
-    <section class="py-8 bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid grid-cols-3 md:grid-cols-6 gap-4 text-center text-sm">
-                <div class="p-3 rounded-lg bg-blue-50">
-                    <div class="font-bold text-blue-600">KNN</div>
-                    <div class="text-xs text-gray-500">Classification</div>
+    <section class="py-8 bg-slate-900 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-3 md:grid-cols-6 gap-4 text-center">
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-blue-400">KNN</div>
+                    <div class="text-xs text-slate-400 mt-1">Classification</div>
                 </div>
-                <div class="p-3 rounded-lg bg-green-50">
-                    <div class="font-bold text-green-600">SVM</div>
-                    <div class="text-xs text-gray-500">Classification</div>
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-green-400">SVM</div>
+                    <div class="text-xs text-slate-400 mt-1">Classification</div>
                 </div>
-                <div class="p-3 rounded-lg bg-purple-50">
-                    <div class="font-bold text-purple-600">PCA</div>
-                    <div class="text-xs text-gray-500">Dimensionality</div>
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-purple-400">PCA</div>
+                    <div class="text-xs text-slate-400 mt-1">Dimensionality</div>
                 </div>
-                <div class="p-3 rounded-lg bg-orange-50">
-                    <div class="font-bold text-orange-600">DNN</div>
-                    <div class="text-xs text-gray-500">Deep Learning</div>
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-orange-400">DNN</div>
+                    <div class="text-xs text-slate-400 mt-1">Deep Learning</div>
                 </div>
-                <div class="p-3 rounded-lg bg-red-50">
-                    <div class="font-bold text-red-600">CNN</div>
-                    <div class="text-xs text-gray-500">Computer Vision</div>
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-red-400">CNN</div>
+                    <div class="text-xs text-slate-400 mt-1">Computer Vision</div>
                 </div>
-                <div class="p-3 rounded-lg bg-cyan-50">
-                    <div class="font-bold text-cyan-600">RNN</div>
-                    <div class="text-xs text-gray-500">Sequences</div>
+                <div class="topic-badge glass rounded-xl p-4 cursor-default">
+                    <div class="font-bold text-cyan-400">RNN</div>
+                    <div class="text-xs text-slate-400 mt-1">Sequences</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Free Examples -->
-    <section class="py-12">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-unlock text-green-500 mr-3"></i>Free Examples - From Scratch & With Libraries
-            </h2>
+    <!-- Free Examples Section -->
+    <section class="py-16 bg-slate-950 relative overflow-hidden">
+        <div class="orb w-80 h-80 bg-blue-600 -top-40 -right-40"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-emerald-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-unlock text-xl text-white"></i>
+                </div>
+                <div>
+                    <h2 data-aos="fade-up" class="font-display text-2xl md:text-3xl font-bold text-white">
+                        Free Examples
+                    </h2>
+                    <p class="text-slate-400 text-sm">From Scratch & With Libraries</p>
+                </div>
+            </div>
 
             <div class="space-y-8">
                 <!-- KNN -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden code-card transition-all duration-300">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">Classification</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Free</span>
-                                <h3 class="text-2xl font-bold mt-2">K-Nearest Neighbors (KNN)</h3>
-                                <p class="text-gray-600">Instance-based learning algorithm for classification and regression</p>
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm font-medium">Classification</span>
+                                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                                        <i class="fas fa-unlock-alt mr-1"></i>Free
+                                    </span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">K-Nearest Neighbors (KNN)</h3>
+                                <p class="text-slate-400 mt-1">Instance-based learning algorithm for classification and regression</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-knn" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('knn', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                         </div>
 
-                        <button onclick="toggleContent('knn')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                        <button onclick="toggleContent('knn')" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-blue-500/25 transition-all btn-glow mb-4">
                             <i class="fas fa-eye mr-2"></i>View Implementation
                         </button>
 
                         <div id="knn" class="collapsible-content">
                             <!-- Theory -->
-                            <div class="bg-blue-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-bold text-blue-800 mb-2"><i class="fas fa-lightbulb mr-2"></i>Key Concepts</h4>
-                                <ul class="text-sm text-gray-700 space-y-1">
-                                    <li><strong>Time Complexity:</strong> O(n*d) per prediction where n=samples, d=dimensions</li>
-                                    <li><strong>Space Complexity:</strong> O(n*d) - stores all training data</li>
-                                    <li><strong>Key Hyperparameter:</strong> k (number of neighbors) - odd numbers avoid ties</li>
-                                    <li><strong>Distance Metric:</strong> Euclidean, Manhattan, or Minkowski</li>
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-blue-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">Time Complexity:</span> O(n*d) per prediction where n=samples, d=dimensions</li>
+                                    <li><span class="text-white font-medium">Space Complexity:</span> O(n*d) - stores all training data</li>
+                                    <li><span class="text-white font-medium">Key Hyperparameter:</span> k (number of neighbors) - odd numbers avoid ties</li>
+                                    <li><span class="text-white font-medium">Distance Metric:</span> Euclidean, Manhattan, or Minkowski</li>
                                 </ul>
                             </div>
 
                             <!-- From Scratch -->
-                            <div class="mb-4">
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fab fa-python mr-2"></i>From Scratch (NumPy only)</h4>
-                                <pre class="rounded-lg"><code class="language-python">import numpy as np
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
 from collections import Counter
 
 class KNNFromScratch:
@@ -258,8 +592,10 @@ if __name__ == "__main__":
 
                             <!-- With Library -->
                             <div>
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-box mr-2"></i>With Scikit-Learn</h4>
-                                <pre class="rounded-lg"><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With Scikit-Learn
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">from sklearn.neighbors import KNeighborsClassifier
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
@@ -297,35 +633,53 @@ for k in [3, 5, 7, 9]:
                 </div>
 
                 <!-- PCA -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden code-card transition-all duration-300">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-medium">Dimensionality Reduction</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Free</span>
-                                <h3 class="text-2xl font-bold mt-2">Principal Component Analysis (PCA)</h3>
-                                <p class="text-gray-600">Linear dimensionality reduction using SVD</p>
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm font-medium">Dimensionality Reduction</span>
+                                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                                        <i class="fas fa-unlock-alt mr-1"></i>Free
+                                    </span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Principal Component Analysis (PCA)</h3>
+                                <p class="text-slate-400 mt-1">Linear dimensionality reduction using SVD</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-pca" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('pca', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                         </div>
 
-                        <button onclick="toggleContent('pca')" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                        <button onclick="toggleContent('pca')" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all btn-glow mb-4">
                             <i class="fas fa-eye mr-2"></i>View Implementation
                         </button>
 
                         <div id="pca" class="collapsible-content">
-                            <div class="bg-purple-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-bold text-purple-800 mb-2"><i class="fas fa-lightbulb mr-2"></i>Key Concepts</h4>
-                                <ul class="text-sm text-gray-700 space-y-1">
-                                    <li><strong>Goal:</strong> Find directions (principal components) of maximum variance</li>
-                                    <li><strong>Steps:</strong> Center data → Compute covariance → Eigendecomposition → Project</li>
-                                    <li><strong>Explained Variance:</strong> eigenvalue_i / sum(eigenvalues)</li>
-                                    <li><strong>Time Complexity:</strong> O(min(n*d², n²*d)) using SVD</li>
+                            <!-- Theory -->
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-purple-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">Goal:</span> Find directions (principal components) of maximum variance</li>
+                                    <li><span class="text-white font-medium">Steps:</span> Center data -> Compute covariance -> Eigendecomposition -> Project</li>
+                                    <li><span class="text-white font-medium">Explained Variance:</span> eigenvalue_i / sum(eigenvalues)</li>
+                                    <li><span class="text-white font-medium">Time Complexity:</span> O(min(n*d^2, n^2*d)) using SVD</li>
                                 </ul>
                             </div>
 
-                            <div class="mb-4">
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fab fa-python mr-2"></i>From Scratch (NumPy only)</h4>
-                                <pre class="rounded-lg"><code class="language-python">import numpy as np
+                            <!-- From Scratch -->
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
 
 class PCAFromScratch:
     def __init__(self, n_components):
@@ -396,9 +750,12 @@ if __name__ == "__main__":
     print(f"Total variance explained: {sum(pca.explained_variance_ratio):.4f}")</code></pre>
                             </div>
 
+                            <!-- With Library -->
                             <div>
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-box mr-2"></i>With Scikit-Learn</h4>
-                                <pre class="rounded-lg"><code class="language-python">from sklearn.decomposition import PCA
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With Scikit-Learn
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">from sklearn.decomposition import PCA
 from sklearn.datasets import load_iris
 from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
@@ -433,35 +790,53 @@ print(f"Components needed for 95% variance: {n_components_95}")</code></pre>
                 </div>
 
                 <!-- DNN (Neural Network) -->
-                <div class="bg-white rounded-xl shadow-lg overflow-hidden code-card transition-all duration-300">
-                    <div class="p-6">
-                        <div class="flex items-start justify-between mb-4">
-                            <div>
-                                <span class="bg-orange-100 text-orange-800 px-3 py-1 rounded-full text-sm font-medium">Deep Learning</span>
-                                <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium ml-2">Free</span>
-                                <h3 class="text-2xl font-bold mt-2">Deep Neural Network (DNN)</h3>
-                                <p class="text-gray-600">Multi-layer perceptron with backpropagation</p>
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm font-medium">Deep Learning</span>
+                                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">
+                                        <i class="fas fa-unlock-alt mr-1"></i>Free
+                                    </span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Deep Neural Network (DNN)</h3>
+                                <p class="text-slate-400 mt-1">Multi-layer perceptron with backpropagation</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-dnn" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('dnn', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
                             </div>
                         </div>
 
-                        <button onclick="toggleContent('dnn')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition mb-4">
+                        <button onclick="toggleContent('dnn')" class="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-orange-500/25 transition-all btn-glow mb-4">
                             <i class="fas fa-eye mr-2"></i>View Implementation
                         </button>
 
                         <div id="dnn" class="collapsible-content">
-                            <div class="bg-orange-50 rounded-lg p-4 mb-4">
-                                <h4 class="font-bold text-orange-800 mb-2"><i class="fas fa-lightbulb mr-2"></i>Key Concepts</h4>
-                                <ul class="text-sm text-gray-700 space-y-1">
-                                    <li><strong>Forward Pass:</strong> z = Wx + b, a = activation(z)</li>
-                                    <li><strong>Backward Pass:</strong> Compute gradients via chain rule</li>
-                                    <li><strong>Weight Update:</strong> W = W - lr * dL/dW</li>
-                                    <li><strong>Key:</strong> Xavier/He initialization, batch normalization, dropout</li>
+                            <!-- Theory -->
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-orange-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">Forward Pass:</span> z = Wx + b, a = activation(z)</li>
+                                    <li><span class="text-white font-medium">Backward Pass:</span> Compute gradients via chain rule</li>
+                                    <li><span class="text-white font-medium">Weight Update:</span> W = W - lr * dL/dW</li>
+                                    <li><span class="text-white font-medium">Key:</span> Xavier/He initialization, batch normalization, dropout</li>
                                 </ul>
                             </div>
 
-                            <div class="mb-4">
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fab fa-python mr-2"></i>From Scratch (NumPy only)</h4>
-                                <pre class="rounded-lg"><code class="language-python">import numpy as np
+                            <!-- From Scratch -->
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
 
 class NeuralNetworkFromScratch:
     def __init__(self, layer_sizes, learning_rate=0.01):
@@ -593,9 +968,12 @@ if __name__ == "__main__":
     print(f"\nTest Accuracy: {nn.score(X_test, y_test):.4f}")</code></pre>
                             </div>
 
+                            <!-- With Library -->
                             <div>
-                                <h4 class="font-bold text-gray-800 mb-2"><i class="fas fa-box mr-2"></i>With PyTorch</h4>
-                                <pre class="rounded-lg"><code class="language-python">import torch
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With PyTorch
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import torch
 import torch.nn as nn
 import torch.optim as optim
 from sklearn.datasets import load_iris
@@ -667,61 +1045,756 @@ with torch.no_grad():
         </div>
     </section>
 
-    <!-- Premium Section -->
-    <section class="py-12 bg-gradient-to-br from-purple-50 to-pink-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">
-                <i class="fas fa-lock text-purple-500 mr-3"></i>Premium ML Coding (Unlock with Mentorship)
-            </h2>
+    <!-- Advanced ML Coding Section -->
+    <section class="py-16 relative overflow-hidden">
+        <!-- Gradient Background -->
+        <div class="absolute inset-0 bg-gradient-to-r from-purple-900 via-pink-900 to-purple-900"></div>
+        <div class="absolute inset-0 opacity-30" style="background-image: radial-gradient(circle at 1px 1px, white 1px, transparent 0); background-size: 40px 40px;"></div>
 
-            <div class="relative">
-                <div class="grid md:grid-cols-3 gap-6 premium-blur">
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">Classification</span>
-                        <h3 class="font-bold mt-2">Support Vector Machine (SVM)</h3>
-                        <p class="text-sm text-gray-600">Kernel trick, margin maximization, soft vs hard margin...</p>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Login Prompt Banner -->
+            <div class="login-prompt rounded-2xl p-4 mb-8 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-user text-white"></i>
                     </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Computer Vision</span>
-                        <h3 class="font-bold mt-2">Convolutional Neural Network (CNN)</h3>
-                        <p class="text-sm text-gray-600">Conv layers, pooling, feature maps, backprop through conv...</p>
-                    </div>
-                    <div class="bg-white rounded-xl shadow p-6">
-                        <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-xs">Sequences</span>
-                        <h3 class="font-bold mt-2">Recurrent Neural Network (RNN/LSTM)</h3>
-                        <p class="text-sm text-gray-600">Hidden states, BPTT, vanishing gradients, LSTM gates...</p>
+                    <p class="text-white font-medium">Login to track your progress</p>
+                </div>
+                <button class="px-6 py-2 bg-white/20 hover:bg-white/30 text-white rounded-lg font-medium transition-all">
+                    <i class="fas fa-sign-in-alt mr-2"></i>Login
+                </button>
+            </div>
+
+            <div class="flex items-center gap-3 mb-10">
+                <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-600 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-star text-xl text-white"></i>
+                </div>
+                <div>
+                    <h2 data-aos="fade-up" class="font-display text-2xl md:text-3xl font-bold text-white">
+                        Advanced ML Coding
+                    </h2>
+                    <p class="text-purple-200 text-sm">Full implementations with explanations</p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <!-- SVM -->
+                <div data-aos="fade-up" data-aos-delay="100" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm font-medium">Classification</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Support Vector Machine (SVM)</h3>
+                                <p class="text-slate-400 mt-1">Kernel trick, margin maximization, soft vs hard margin</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-svm" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('svm', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleContent('svm')" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-green-500/25 transition-all btn-glow mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Implementation
+                        </button>
+
+                        <div id="svm" class="collapsible-content">
+                            <!-- Theory -->
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-green-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">Goal:</span> Find hyperplane that maximizes margin between classes</li>
+                                    <li><span class="text-white font-medium">Kernel Trick:</span> Map to higher dimensions without explicit computation</li>
+                                    <li><span class="text-white font-medium">Soft Margin:</span> Allow some misclassifications with slack variables</li>
+                                    <li><span class="text-white font-medium">Time Complexity:</span> O(n^2) to O(n^3) depending on kernel</li>
+                                </ul>
+                            </div>
+
+                            <!-- From Scratch -->
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
+
+class SVMFromScratch:
+    def __init__(self, learning_rate=0.001, lambda_param=0.01, n_iters=1000):
+        self.lr = learning_rate
+        self.lambda_param = lambda_param
+        self.n_iters = n_iters
+        self.w = None
+        self.b = None
+
+    def fit(self, X, y):
+        """Train SVM using gradient descent"""
+        n_samples, n_features = X.shape
+
+        # Convert labels to -1, 1
+        y_ = np.where(y <= 0, -1, 1)
+
+        # Initialize weights
+        self.w = np.zeros(n_features)
+        self.b = 0
+
+        for _ in range(self.n_iters):
+            for idx, x_i in enumerate(X):
+                # Check if correctly classified with margin
+                condition = y_[idx] * (np.dot(x_i, self.w) - self.b) >= 1
+
+                if condition:
+                    # Only regularization gradient
+                    self.w -= self.lr * (2 * self.lambda_param * self.w)
+                else:
+                    # Hinge loss gradient
+                    self.w -= self.lr * (2 * self.lambda_param * self.w - np.dot(x_i, y_[idx]))
+                    self.b -= self.lr * y_[idx]
+
+    def predict(self, X):
+        """Predict class labels"""
+        linear_output = np.dot(X, self.w) - self.b
+        return np.sign(linear_output)
+
+    def score(self, X, y):
+        """Calculate accuracy"""
+        y_ = np.where(y <= 0, -1, 1)
+        predictions = self.predict(X)
+        return np.mean(predictions == y_)
+
+# Usage
+if __name__ == "__main__":
+    from sklearn.datasets import make_classification
+    from sklearn.model_selection import train_test_split
+
+    X, y = make_classification(n_samples=1000, n_features=10, random_state=42)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+    svm = SVMFromScratch(learning_rate=0.001, n_iters=1000)
+    svm.fit(X_train, y_train)
+    print(f"Accuracy: {svm.score(X_test, y_test):.4f}")</code></pre>
+                            </div>
+
+                            <!-- With Library -->
+                            <div>
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With Scikit-Learn
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">from sklearn.svm import SVC
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+
+# Generate data
+X, y = make_classification(n_samples=1000, n_features=10, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+
+# Scale features (important for SVM!)
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+# Train SVM with RBF kernel
+svm = SVC(kernel='rbf', C=1.0, gamma='scale')
+svm.fit(X_train_scaled, y_train)
+
+print(f"Test Accuracy: {svm.score(X_test_scaled, y_test):.4f}")
+
+# Hyperparameter tuning
+param_grid = {
+    'C': [0.1, 1, 10],
+    'gamma': ['scale', 'auto', 0.1, 1],
+    'kernel': ['rbf', 'linear', 'poly']
+}
+grid_search = GridSearchCV(SVC(), param_grid, cv=5, scoring='accuracy')
+grid_search.fit(X_train_scaled, y_train)
+print(f"Best params: {grid_search.best_params_}")</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="absolute inset-0 flex items-center justify-center">
-                    <div class="bg-white rounded-2xl shadow-2xl p-8 text-center max-w-md">
-                        <i class="fas fa-crown text-5xl text-yellow-500 mb-4"></i>
-                        <h3 class="text-2xl font-bold mb-2">Unlock All ML Coding</h3>
-                        <p class="text-gray-600 mb-4">SVM, CNN, RNN/LSTM implementations with full explanations</p>
-                        <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
-                           class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-3 rounded-full font-bold hover:shadow-lg transition inline-block">
-                            <i class="fas fa-user-tie mr-2"></i>Book Mentorship
-                        </a>
+                <!-- CNN -->
+                <div data-aos="fade-up" data-aos-delay="200" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm font-medium">Computer Vision</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Convolutional Neural Network (CNN)</h3>
+                                <p class="text-slate-400 mt-1">Conv layers, pooling, feature maps, backprop through conv</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-cnn" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('cnn', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleContent('cnn')" class="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-red-500/25 transition-all btn-glow mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Implementation
+                        </button>
+
+                        <div id="cnn" class="collapsible-content">
+                            <!-- Theory -->
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-red-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">Convolution:</span> Sliding filter over input to detect features</li>
+                                    <li><span class="text-white font-medium">Pooling:</span> Reduce spatial dimensions (max/avg pooling)</li>
+                                    <li><span class="text-white font-medium">Feature Maps:</span> Output of convolution operations</li>
+                                    <li><span class="text-white font-medium">Output Size:</span> (W - F + 2P) / S + 1</li>
+                                </ul>
+                            </div>
+
+                            <!-- From Scratch -->
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
+
+class Conv2D:
+    def __init__(self, num_filters, filter_size):
+        self.num_filters = num_filters
+        self.filter_size = filter_size
+        # Xavier initialization
+        self.filters = np.random.randn(num_filters, filter_size, filter_size) / (filter_size ** 2)
+
+    def iterate_regions(self, image):
+        """Generate all 3x3 image regions"""
+        h, w = image.shape
+        for i in range(h - self.filter_size + 1):
+            for j in range(w - self.filter_size + 1):
+                region = image[i:i+self.filter_size, j:j+self.filter_size]
+                yield region, i, j
+
+    def forward(self, input):
+        """Forward pass through conv layer"""
+        self.last_input = input
+        h, w = input.shape
+        output_h = h - self.filter_size + 1
+        output_w = w - self.filter_size + 1
+        output = np.zeros((self.num_filters, output_h, output_w))
+
+        for region, i, j in self.iterate_regions(input):
+            output[:, i, j] = np.sum(region * self.filters, axis=(1, 2))
+
+        return output
+
+    def backward(self, d_L_d_out, learn_rate):
+        """Backward pass - compute gradients"""
+        d_L_d_filters = np.zeros(self.filters.shape)
+
+        for region, i, j in self.iterate_regions(self.last_input):
+            for f in range(self.num_filters):
+                d_L_d_filters[f] += d_L_d_out[f, i, j] * region
+
+        self.filters -= learn_rate * d_L_d_filters
+        return None  # Simplified - not returning input gradient
+
+class MaxPool2D:
+    def __init__(self, pool_size=2):
+        self.pool_size = pool_size
+
+    def iterate_regions(self, image):
+        """Generate pooling regions"""
+        n_filters, h, w = image.shape
+        new_h = h // self.pool_size
+        new_w = w // self.pool_size
+
+        for i in range(new_h):
+            for j in range(new_w):
+                region = image[:,
+                    i*self.pool_size:(i+1)*self.pool_size,
+                    j*self.pool_size:(j+1)*self.pool_size
+                ]
+                yield region, i, j
+
+    def forward(self, input):
+        """Forward pass - max pooling"""
+        self.last_input = input
+        n_filters, h, w = input.shape
+        output = np.zeros((n_filters, h // self.pool_size, w // self.pool_size))
+
+        for region, i, j in self.iterate_regions(input):
+            output[:, i, j] = np.amax(region, axis=(1, 2))
+
+        return output
+
+# Usage example
+if __name__ == "__main__":
+    # Create sample image (28x28)
+    image = np.random.randn(28, 28)
+
+    conv = Conv2D(8, 3)  # 8 filters, 3x3
+    pool = MaxPool2D(2)  # 2x2 pooling
+
+    out = conv.forward(image)  # (8, 26, 26)
+    out = pool.forward(out)    # (8, 13, 13)
+    print(f"Output shape: {out.shape}")</code></pre>
+                            </div>
+
+                            <!-- With Library -->
+                            <div>
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With PyTorch
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import torch
+import torch.nn as nn
+import torch.optim as optim
+from torchvision import datasets, transforms
+from torch.utils.data import DataLoader
+
+class CNN(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.conv_layers = nn.Sequential(
+            nn.Conv2d(1, 32, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm2d(32),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(32, 64, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm2d(64),
+            nn.MaxPool2d(2),
+
+            nn.Conv2d(64, 128, kernel_size=3, padding=1),
+            nn.ReLU(),
+            nn.BatchNorm2d(128),
+            nn.AdaptiveAvgPool2d(1)
+        )
+        self.fc = nn.Linear(128, 10)
+
+    def forward(self, x):
+        x = self.conv_layers(x)
+        x = x.view(x.size(0), -1)
+        return self.fc(x)
+
+# Data loading
+transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.1307,), (0.3081,))
+])
+train_data = datasets.MNIST('./data', train=True, download=True, transform=transform)
+train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
+
+# Training
+model = CNN()
+criterion = nn.CrossEntropyLoss()
+optimizer = optim.Adam(model.parameters(), lr=0.001)
+
+for epoch in range(5):
+    for images, labels in train_loader:
+        optimizer.zero_grad()
+        outputs = model(images)
+        loss = criterion(outputs, labels)
+        loss.backward()
+        optimizer.step()
+    print(f"Epoch {epoch+1} completed")</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RNN/LSTM -->
+                <div data-aos="fade-up" data-aos-delay="300" class="glass-dark rounded-3xl overflow-hidden card-premium">
+                    <div class="p-6 md:p-8">
+                        <div class="flex flex-wrap items-start justify-between gap-4 mb-6">
+                            <div class="flex-1">
+                                <div class="flex flex-wrap gap-2 mb-3">
+                                    <span class="px-3 py-1 bg-cyan-500/20 text-cyan-400 rounded-full text-sm font-medium">Sequences</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Recurrent Neural Network (RNN/LSTM)</h3>
+                                <p class="text-slate-400 mt-1">Hidden states, BPTT, vanishing gradients, LSTM gates</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <select id="progress-rnn" class="progress-dropdown progress-not-started px-4 py-2 rounded-lg border text-sm font-medium" onchange="updateProgress('rnn', this.value)">
+                                    <option value="not-started">Not Started</option>
+                                    <option value="working">Working</option>
+                                    <option value="need-help">Need Help</option>
+                                    <option value="solved">Solved</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="toggleContent('rnn')" class="w-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg hover:shadow-cyan-500/25 transition-all btn-glow mb-4">
+                            <i class="fas fa-eye mr-2"></i>View Implementation
+                        </button>
+
+                        <div id="rnn" class="collapsible-content">
+                            <!-- Theory -->
+                            <div class="glass rounded-xl p-5 mb-6">
+                                <h4 class="font-bold text-cyan-400 mb-3 flex items-center gap-2">
+                                    <i class="fas fa-lightbulb"></i>Key Concepts
+                                </h4>
+                                <ul class="text-sm text-slate-300 space-y-2">
+                                    <li><span class="text-white font-medium">RNN:</span> h_t = tanh(W_hh * h_{t-1} + W_xh * x_t + b)</li>
+                                    <li><span class="text-white font-medium">LSTM Gates:</span> Forget, Input, Output gates control information flow</li>
+                                    <li><span class="text-white font-medium">Vanishing Gradient:</span> LSTM solves with additive cell state updates</li>
+                                    <li><span class="text-white font-medium">BPTT:</span> Backpropagation through time - unroll and backprop</li>
+                                </ul>
+                            </div>
+
+                            <!-- From Scratch -->
+                            <div class="mb-6">
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fab fa-python text-yellow-400"></i>From Scratch (NumPy only)
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import numpy as np
+
+class RNNCell:
+    def __init__(self, input_size, hidden_size):
+        self.hidden_size = hidden_size
+        # Xavier initialization
+        scale = np.sqrt(2.0 / (input_size + hidden_size))
+        self.W_xh = np.random.randn(input_size, hidden_size) * scale
+        self.W_hh = np.random.randn(hidden_size, hidden_size) * scale
+        self.b_h = np.zeros((1, hidden_size))
+
+    def forward(self, x, h_prev):
+        """Single RNN step"""
+        self.x = x
+        self.h_prev = h_prev
+
+        # h_t = tanh(W_xh * x_t + W_hh * h_{t-1} + b)
+        self.h_raw = np.dot(x, self.W_xh) + np.dot(h_prev, self.W_hh) + self.b_h
+        self.h = np.tanh(self.h_raw)
+        return self.h
+
+class LSTMCell:
+    def __init__(self, input_size, hidden_size):
+        self.hidden_size = hidden_size
+        scale = np.sqrt(2.0 / (input_size + hidden_size))
+
+        # Forget gate
+        self.W_f = np.random.randn(input_size + hidden_size, hidden_size) * scale
+        self.b_f = np.zeros((1, hidden_size))
+
+        # Input gate
+        self.W_i = np.random.randn(input_size + hidden_size, hidden_size) * scale
+        self.b_i = np.zeros((1, hidden_size))
+
+        # Candidate values
+        self.W_c = np.random.randn(input_size + hidden_size, hidden_size) * scale
+        self.b_c = np.zeros((1, hidden_size))
+
+        # Output gate
+        self.W_o = np.random.randn(input_size + hidden_size, hidden_size) * scale
+        self.b_o = np.zeros((1, hidden_size))
+
+    def sigmoid(self, x):
+        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))
+
+    def forward(self, x, h_prev, c_prev):
+        """Single LSTM step"""
+        # Concatenate input and previous hidden state
+        combined = np.concatenate([x, h_prev], axis=1)
+
+        # Forget gate: what to forget from cell state
+        f = self.sigmoid(np.dot(combined, self.W_f) + self.b_f)
+
+        # Input gate: what new info to store
+        i = self.sigmoid(np.dot(combined, self.W_i) + self.b_i)
+
+        # Candidate values
+        c_tilde = np.tanh(np.dot(combined, self.W_c) + self.b_c)
+
+        # New cell state
+        c = f * c_prev + i * c_tilde
+
+        # Output gate
+        o = self.sigmoid(np.dot(combined, self.W_o) + self.b_o)
+
+        # New hidden state
+        h = o * np.tanh(c)
+
+        return h, c
+
+# Usage
+if __name__ == "__main__":
+    input_size = 10
+    hidden_size = 20
+    seq_length = 5
+    batch_size = 1
+
+    # RNN example
+    rnn = RNNCell(input_size, hidden_size)
+    h = np.zeros((batch_size, hidden_size))
+
+    for t in range(seq_length):
+        x_t = np.random.randn(batch_size, input_size)
+        h = rnn.forward(x_t, h)
+    print(f"RNN output shape: {h.shape}")
+
+    # LSTM example
+    lstm = LSTMCell(input_size, hidden_size)
+    h = np.zeros((batch_size, hidden_size))
+    c = np.zeros((batch_size, hidden_size))
+
+    for t in range(seq_length):
+        x_t = np.random.randn(batch_size, input_size)
+        h, c = lstm.forward(x_t, h, c)
+    print(f"LSTM output shape: {h.shape}")</code></pre>
+                            </div>
+
+                            <!-- With Library -->
+                            <div>
+                                <h4 class="font-bold text-white mb-3 flex items-center gap-2">
+                                    <i class="fas fa-box text-purple-400"></i>With PyTorch
+                                </h4>
+                                <pre class="rounded-xl overflow-hidden"><code class="language-python">import torch
+import torch.nn as nn
+
+class LSTMModel(nn.Module):
+    def __init__(self, vocab_size, embed_dim, hidden_dim, num_layers, num_classes):
+        super().__init__()
+        self.embedding = nn.Embedding(vocab_size, embed_dim)
+        self.lstm = nn.LSTM(
+            embed_dim,
+            hidden_dim,
+            num_layers=num_layers,
+            batch_first=True,
+            dropout=0.2,
+            bidirectional=True
+        )
+        self.fc = nn.Linear(hidden_dim * 2, num_classes)  # *2 for bidirectional
+        self.dropout = nn.Dropout(0.3)
+
+    def forward(self, x):
+        # x: (batch, seq_len)
+        embedded = self.embedding(x)  # (batch, seq_len, embed_dim)
+
+        lstm_out, (h_n, c_n) = self.lstm(embedded)
+        # lstm_out: (batch, seq_len, hidden_dim * 2)
+
+        # Use last hidden state for classification
+        # Concatenate forward and backward final states
+        hidden = torch.cat((h_n[-2], h_n[-1]), dim=1)
+
+        output = self.dropout(hidden)
+        output = self.fc(output)
+        return output
+
+# Usage for sentiment analysis
+vocab_size = 10000
+embed_dim = 128
+hidden_dim = 256
+num_layers = 2
+num_classes = 2
+
+model = LSTMModel(vocab_size, embed_dim, hidden_dim, num_layers, num_classes)
+
+# Example forward pass
+batch_size = 32
+seq_length = 50
+x = torch.randint(0, vocab_size, (batch_size, seq_length))
+output = model(x)
+print(f"Output shape: {output.shape}")  # (32, 2)</code></pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- CTA Section -->
+    <section class="py-20 bg-slate-950 relative overflow-hidden">
+        <div class="orb w-64 h-64 bg-purple-500 top-0 right-0"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div data-aos="zoom-in" class="glass rounded-3xl p-10 md:p-14">
+                <span class="inline-block px-4 py-2 bg-white/10 text-white rounded-full text-sm font-medium mb-6">
+                    <i class="fas fa-graduation-cap mr-2"></i>Level Up Your Skills
+                </span>
+                <h2 class="font-display text-3xl md:text-4xl font-bold text-white mb-4">
+                    Want to <span class="shimmer-text">Master ML Coding?</span>
+                </h2>
+                <p class="text-lg text-purple-200 mb-8 max-w-2xl mx-auto">
+                    Get personalized guidance from an ML Engineer who's helped candidates land roles at top companies
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="w-full sm:w-auto bg-gradient-to-r from-purple-600 to-pink-600 text-white px-10 py-4 rounded-2xl font-bold text-lg hover:shadow-2xl hover:shadow-purple-500/25 transition-all flex items-center justify-center gap-3 btn-glow">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Book a Session</span>
+                    </a>
+                    <a href="index.html" class="w-full sm:w-auto glass text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-white/10 transition-all flex items-center justify-center gap-3">
+                        <span>Explore More</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Footer -->
-    <footer class="bg-gray-900 text-white py-8">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <p class="mb-4">Want to master ML coding interviews? <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-pink-400 hover:underline">Book a session</a></p>
-            <p class="text-gray-500">&copy; 2025 MLInterviewPro</p>
+    <footer class="bg-slate-950 pt-16 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="md:col-span-1">
+                    <a href="index.html" class="flex items-center gap-2 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center">
+                            <i class="fas fa-brain text-white text-lg"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">MLInterviewPro</span>
+                    </a>
+                    <p class="text-slate-400 text-sm">Master ML Engineering interviews with curated resources and expert guidance.</p>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="leetcode.html" class="text-slate-400 hover:text-purple-400 transition-colors">LeetCode Problems</a></li>
+                        <li><a href="ml-system-design.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML System Design</a></li>
+                        <li><a href="ml-coding.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Coding</a></li>
+                        <li><a href="behavioral.html" class="text-slate-400 hover:text-purple-400 transition-colors">Behavioral Prep</a></li>
+                    </ul>
+                </div>
+
+                <!-- More -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">More</h4>
+                    <ul class="space-y-3">
+                        <li><a href="cheatsheet.html" class="text-slate-400 hover:text-purple-400 transition-colors">ML Cheatsheet</a></li>
+                        <li><a href="resources.html" class="text-slate-400 hover:text-purple-400 transition-colors">Books & Resources</a></li>
+                        <li><a href="about.html" class="text-slate-400 hover:text-purple-400 transition-colors">About</a></li>
+                    </ul>
+                </div>
+
+                <!-- Get Help -->
+                <div>
+                    <h4 class="font-semibold text-white mb-4">Get Help</h4>
+                    <ul class="space-y-3 mb-6">
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">1:1 Mentorship</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Mock Interviews</a></li>
+                        <li><a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-slate-400 hover:text-purple-400 transition-colors">Resume Review</a></li>
+                    </ul>
+                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                       class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-5 py-2.5 rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all text-sm">
+                        <i class="fas fa-rocket"></i>
+                        <span>Book Session</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
+                <p class="text-slate-500 text-sm">&copy; 2025 MLInterviewPro. Built with real interview experience.</p>
+                <div class="flex items-center gap-4">
+                    <span class="text-slate-500 text-sm">Made with</span>
+                    <span class="text-red-500"><i class="fas fa-heart"></i></span>
+                    <span class="text-slate-500 text-sm">for ML Engineers</span>
+                </div>
+            </div>
         </div>
     </footer>
 
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 50
+        });
+
+        // Toggle collapsible content
         function toggleContent(id) {
             const content = document.getElementById(id);
             content.classList.toggle('open');
         }
+
+        // Progress tracking functions
+        function updateProgress(problemId, status) {
+            // Save to localStorage
+            localStorage.setItem(`progress_mlcoding_${problemId}`, status);
+
+            // Update dropdown styling
+            updateDropdownStyle(problemId, status);
+        }
+
+        function updateDropdownStyle(problemId, status) {
+            const dropdown = document.getElementById(`progress-${problemId}`);
+            if (!dropdown) return;
+
+            // Remove all status classes
+            dropdown.classList.remove('progress-not-started', 'progress-working', 'progress-need-help', 'progress-solved');
+
+            // Add appropriate class based on status
+            switch(status) {
+                case 'not-started':
+                    dropdown.classList.add('progress-not-started');
+                    break;
+                case 'working':
+                    dropdown.classList.add('progress-working');
+                    break;
+                case 'need-help':
+                    dropdown.classList.add('progress-need-help');
+                    break;
+                case 'solved':
+                    dropdown.classList.add('progress-solved');
+                    break;
+            }
+        }
+
+        function loadAllProgress() {
+            const problems = ['knn', 'pca', 'dnn', 'svm', 'cnn', 'rnn'];
+
+            problems.forEach(problemId => {
+                const savedStatus = localStorage.getItem(`progress_mlcoding_${problemId}`);
+                if (savedStatus) {
+                    const dropdown = document.getElementById(`progress-${problemId}`);
+                    if (dropdown) {
+                        dropdown.value = savedStatus;
+                        updateDropdownStyle(problemId, savedStatus);
+                    }
+                }
+            });
+        }
+
+        // Load saved progress on page load
+        document.addEventListener('DOMContentLoaded', loadAllProgress);
+
+        // Initialize syntax highlighting
         hljs.highlightAll();
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+            } else {
+                navbar.classList.remove('shadow-lg');
+            }
+        });
     </script>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+    <!-- Auth & Database modules -->
+    <script src="js/auth.js"></script>
+    <script src="js/database.js"></script>
+    <script src="js/auth-ui.js"></script>
 </body>
 </html>
