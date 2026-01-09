@@ -62,10 +62,10 @@
     </script>
 
     <!-- Header -->
-    <section class="gradient-bg text-white py-12">
+    <section class="gradient-bg text-white py-8 sm:py-12">
         <div class="max-w-7xl mx-auto px-4">
-            <h1 class="text-4xl font-bold mb-4"><i class="fas fa-book-open mr-3"></i>Books & Learning Resources</h1>
-            <p class="text-xl opacity-90">Curated resources that helped me ace ML interviews at top companies</p>
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4"><i class="fas fa-book-open mr-2 sm:mr-3"></i>Books & Learning Resources</h1>
+            <p class="text-base sm:text-lg md:text-xl opacity-90">Curated resources that helped me ace ML interviews at top companies</p>
         </div>
     </section>
 
@@ -330,27 +330,349 @@
         </div>
     </section>
 
-    <!-- Video Tutorials -->
+    <!-- YouTube Playlists - Free Learning -->
     <section class="py-12">
         <div class="max-w-7xl mx-auto px-4">
-            <h2 class="text-2xl font-bold mb-8 flex items-center">
-                <i class="fas fa-video text-red-500 mr-3"></i>Video Tutorials
+            <h2 class="text-2xl font-bold mb-4 flex items-center">
+                <i class="fab fa-youtube text-red-500 mr-3"></i>Free YouTube Courses & Playlists
             </h2>
+            <p class="text-gray-600 mb-8">World-class ML education from top universities and industry experts - completely free</p>
 
-            <div class="bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl p-12 text-center">
-                <i class="fas fa-hammer text-6xl text-gray-400 mb-4"></i>
-                <h3 class="text-2xl font-bold text-gray-600 mb-2">Coming Soon</h3>
-                <p class="text-gray-500 mb-6">We're curating the best video resources for ML interviews</p>
-                <div class="flex flex-wrap justify-center gap-4 text-sm text-gray-500">
-                    <span class="bg-white px-4 py-2 rounded-full shadow">Stanford CS229</span>
-                    <span class="bg-white px-4 py-2 rounded-full shadow">MIT Deep Learning</span>
-                    <span class="bg-white px-4 py-2 rounded-full shadow">Fast.ai</span>
-                    <span class="bg-white px-4 py-2 rounded-full shadow">3Blue1Brown</span>
+            <div class="grid md:grid-cols-2 gap-6">
+
+                <!-- Andrej Karpathy: Neural Networks Zero to Hero -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-red-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fab fa-youtube text-2xl text-red-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Neural Networks: Zero to Hero</h3>
+                                    <p class="text-gray-500 text-sm">Andrej Karpathy</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">10/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Former Tesla AI Director and OpenAI founding member teaches neural networks from absolute scratch. Build GPT, backprop, and transformers by hand. The gold standard for understanding deep learning internals.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> Interviewers love candidates who understand backpropagation and attention from first principles. This series builds that intuition better than any textbook.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Fundamentals</span>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Transformers</span>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">From Scratch</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~25 hours total</span>
+                            <a href="https://www.youtube.com/playlist?list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ" target="_blank" class="text-red-600 font-semibold hover:underline text-sm">
+                                Watch Playlist <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                <p class="mt-8 text-gray-600">
-                    Want personalized recommendations?
-                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank" class="text-purple-600 font-semibold hover:underline">Book a mentorship session</a>
-                </p>
+
+                <!-- Andrej Karpathy: Let's Build GPT -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-purple-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-purple-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fab fa-youtube text-2xl text-purple-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Let's Build GPT</h3>
+                                    <p class="text-gray-500 text-sm">Andrej Karpathy</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">10/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Build a GPT from scratch in a single 2-hour video. Covers tokenization, attention mechanisms, and transformer architecture with live coding. The most-watched LLM tutorial on YouTube.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> LLM questions dominate 2024-2025 interviews. Understanding how GPT works under the hood sets you apart from candidates who only use APIs.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">LLMs</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">GPT</span>
+                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">Live Coding</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>2 hours</span>
+                            <a href="https://www.youtube.com/watch?v=kCc8FmEb1nY" target="_blank" class="text-purple-600 font-semibold hover:underline text-sm">
+                                Watch Video <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stanford CS229: Machine Learning -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-red-600">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-red-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-university text-2xl text-red-700"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">CS229: Machine Learning</h3>
+                                    <p class="text-gray-500 text-sm">Stanford University (Andrew Ng)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">9/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">The legendary Stanford ML course taught by Andrew Ng. Covers supervised learning, unsupervised learning, SVMs, neural networks, and reinfortic learning with rigorous mathematical foundations.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> Classic ML concepts (SVMs, PCA, k-means) still appear in interviews. This course provides the mathematical rigor that impresses senior interviewers.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Classic ML</span>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Math Heavy</span>
+                            <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-xs">Stanford</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~30 hours</span>
+                            <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMiGQp3WXShtMGgzqpfVfbU" target="_blank" class="text-red-600 font-semibold hover:underline text-sm">
+                                Watch Playlist <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Berkeley CS182: Deep Learning -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-blue-600">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-university text-2xl text-blue-700"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">CS182: Deep Learning</h3>
+                                    <p class="text-gray-500 text-sm">UC Berkeley</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">9/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Berkeley's comprehensive deep learning course covering CNNs, RNNs, transformers, generative models, reinforcement learning, and modern architectures. Excellent balance of theory and practice.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> Covers the full spectrum of deep learning with clear explanations. Great preparation for ML system design and architecture discussions.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Deep Learning</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">CNNs/RNNs</span>
+                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">Berkeley</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~40 hours</span>
+                            <a href="https://www.youtube.com/playlist?list=PL_iWQOsE6TfVmKkQHucjPAoRtIJYt8a5A" target="_blank" class="text-blue-600 font-semibold hover:underline text-sm">
+                                Watch Playlist <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Stack Deep Learning -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-orange-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-orange-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-layer-group text-2xl text-orange-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Full Stack Deep Learning</h3>
+                                    <p class="text-gray-500 text-sm">FSDL Team (Berkeley Alumni)</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">9/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Production ML from Berkeley instructors. Covers MLOps, deployment, monitoring, data management, and building real ML products. Updated annually with latest tools (2024 includes LLMOps).</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> ML system design interviews focus on production concerns. This course teaches exactly what companies ask: deployment, monitoring, and MLOps best practices.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">MLOps</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">Production</span>
+                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs">LLMOps</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~20 hours</span>
+                            <a href="https://www.youtube.com/c/FullStackDeepLearning" target="_blank" class="text-orange-600 font-semibold hover:underline text-sm">
+                                Watch Channel <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stanford CS224N: NLP with Deep Learning -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-teal-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-teal-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-university text-2xl text-teal-700"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">CS224N: NLP with Deep Learning</h3>
+                                    <p class="text-gray-500 text-sm">Stanford University</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">9/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Stanford's premier NLP course covering word vectors, RNNs, attention, transformers, BERT, GPT, and modern LLMs. Taught by Chris Manning, a pioneer in computational linguistics.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> NLP is central to modern ML roles. This course provides deep understanding of transformers and language models that interviewers expect.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded text-xs">NLP</span>
+                            <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded text-xs">Transformers</span>
+                            <span class="bg-teal-100 text-teal-800 px-2 py-1 rounded text-xs">LLMs</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~35 hours</span>
+                            <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rMFqRtEuo6SGjY4XbRIVRd4" target="_blank" class="text-teal-600 font-semibold hover:underline text-sm">
+                                Watch Playlist <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stanford CS25: Transformers United -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-indigo-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-indigo-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-university text-2xl text-indigo-700"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">CS25: Transformers United</h3>
+                                    <p class="text-gray-500 text-sm">Stanford University</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">8/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">Cutting-edge seminar featuring talks from researchers at OpenAI, Google, Meta, and Anthropic. Covers latest advances in transformers, multimodal models, and AI agents.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> Stay current with latest research. Great for discussing recent advances and showing you follow the cutting edge during interviews.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Cutting Edge</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Research</span>
+                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs">Seminars</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~15 hours</span>
+                            <a href="https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM" target="_blank" class="text-indigo-600 font-semibold hover:underline text-sm">
+                                Watch Playlist <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stanford CS329: Building AI Agents (Agentic AI) -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden book-card transition-all duration-300 border-l-4 border-pink-500">
+                    <div class="p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex items-center">
+                                <div class="w-14 h-14 bg-pink-100 rounded-xl flex items-center justify-center mr-4">
+                                    <i class="fas fa-robot text-2xl text-pink-600"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-lg">Building AI Agents (Agentic AI)</h3>
+                                    <p class="text-gray-500 text-sm">Stanford / Industry Experts</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center bg-green-100 px-3 py-1 rounded-full">
+                                <i class="fas fa-star text-yellow-500 mr-1"></i>
+                                <span class="font-bold text-green-800">9/10</span>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm mb-4">The hottest topic in ML right now! Learn to build autonomous AI agents using LLMs, tool use, planning, and multi-agent systems. Covers LangChain, AutoGPT architectures, and production agent design.</p>
+                        <div class="bg-blue-50 rounded-lg p-3 mb-4">
+                            <p class="text-sm text-blue-800"><i class="fas fa-lightbulb mr-2"></i><strong>Why you need this:</strong> AI agents are the #1 hiring priority in 2024-2025. Companies like OpenAI, Anthropic, and Google are racing to build agentic systems. This knowledge is invaluable.</p>
+                        </div>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">AI Agents</span>
+                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">LangChain</span>
+                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs">Hot Topic</span>
+                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">FREE</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500"><i class="fas fa-clock mr-1"></i>~10 hours</span>
+                            <a href="https://www.youtube.com/results?search_query=stanford+ai+agents+course" target="_blank" class="text-pink-600 font-semibold hover:underline text-sm">
+                                Search Videos <i class="fas fa-external-link-alt ml-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Learning Path Recommendation -->
+            <div class="mt-10 bg-gradient-to-r from-purple-50 to-pink-50 rounded-xl p-6 border-2 border-purple-200">
+                <h3 class="text-xl font-bold mb-4 flex items-center">
+                    <i class="fas fa-route text-purple-600 mr-3"></i>Recommended Learning Path
+                </h3>
+                <div class="grid md:grid-cols-4 gap-4">
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-green-600">1</span>
+                        </div>
+                        <p class="text-sm font-medium">Karpathy's Zero to Hero</p>
+                        <p class="text-xs text-gray-500 mt-1">Build foundations</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-blue-600">2</span>
+                        </div>
+                        <p class="text-sm font-medium">Berkeley CS182</p>
+                        <p class="text-xs text-gray-500 mt-1">Deep learning breadth</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-orange-600">3</span>
+                        </div>
+                        <p class="text-sm font-medium">Full Stack DL</p>
+                        <p class="text-xs text-gray-500 mt-1">Production skills</p>
+                    </div>
+                    <div class="bg-white rounded-lg p-4 text-center shadow">
+                        <div class="w-10 h-10 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <span class="font-bold text-pink-600">4</span>
+                        </div>
+                        <p class="text-sm font-medium">Agentic AI</p>
+                        <p class="text-xs text-gray-500 mt-1">Current trends</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
