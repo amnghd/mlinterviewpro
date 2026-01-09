@@ -1,0 +1,546 @@
+{
+  "metadata": {
+    "totalProblems": 314,
+    "lastUpdated": "2026-01-08",
+    "categories": ["Array", "String", "Hash Table", "Dynamic Programming", "Math", "Sorting", "Greedy", "Depth-First Search", "Binary Search", "Tree", "Breadth-First Search", "Stack", "Graph", "Linked List", "Heap", "Two Pointers", "Sliding Window", "Backtracking", "Union Find", "Trie", "Monotonic Stack", "Bit Manipulation"]
+  },
+  "problems": [
+    {
+      "id": 1,
+      "title": "Two Sum",
+      "difficulty": "Easy",
+      "description": "Given an array of integers nums and an integer target, return indices of the two numbers that add up to target.",
+      "companies": ["Google", "Amazon", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Hash Map", "Two Pointers"],
+      "leetcodeUrl": "https://leetcode.com/problems/two-sum/",
+      "solutions": [
+        {
+          "approach": "Brute Force",
+          "timeComplexity": "O(n²)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding only",
+          "isOptimal": false,
+          "code": "def twoSum(nums, target):\n    \"\"\"\n    Brute Force: Check all pairs\n    Time: O(n²) - nested loops\n    Space: O(1) - no extra space\n    \"\"\"\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n    return []\n\n# ======== TEST CASES ========\nprint(\"=== Two Sum - Brute Force ===\")\n\n# Test 1: Basic\nnums = [2, 7, 11, 15]\ntarget = 9\nresult = twoSum(nums, target)\nprint(f\"Input: {nums}, target={target}\")\nprint(f\"Output: {result}\")  # [0, 1]\nprint(f\"Check: nums[{result[0]}] + nums[{result[1]}] = {nums[result[0]]} + {nums[result[1]]} = {nums[result[0]] + nums[result[1]]}\")\nprint()\n\n# Test 2: Middle elements\nnums = [3, 2, 4]\ntarget = 6\nresult = twoSum(nums, target)\nprint(f\"Input: {nums}, target={target}\")\nprint(f\"Output: {result}\")  # [1, 2]",
+          "expectedOutput": "=== Two Sum - Brute Force ===\nInput: [2, 7, 11, 15], target=9\nOutput: [0, 1]\nCheck: nums[0] + nums[1] = 2 + 7 = 9\n\nInput: [3, 2, 4], target=6\nOutput: [1, 2]"
+        },
+        {
+          "approach": "Hash Map",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def twoSum(nums, target):\n    \"\"\"\n    Hash Map: O(1) lookup for complement\n    Time: O(n) - single pass\n    Space: O(n) - hash map storage\n    \n    Key insight: For each num, check if (target - num) exists\n    \"\"\"\n    seen = {}  # value -> index\n    \n    for i, num in enumerate(nums):\n        complement = target - num\n        \n        if complement in seen:\n            return [seen[complement], i]\n        \n        seen[num] = i\n    \n    return []\n\n# ======== TEST CASES ========\nprint(\"=== Two Sum - Hash Map (Optimal) ===\")\n\n# Test 1\nnums = [2, 7, 11, 15]\ntarget = 9\nresult = twoSum(nums, target)\nprint(f\"Input: {nums}, target={target}\")\nprint(f\"Output: {result}\")\nprint(f\"Verify: {nums[result[0]]} + {nums[result[1]]} = {target} ✓\")\nprint()\n\n# Test 2: Large array\nnums = [1, 5, 3, 7, 2, 8, 4, 6]\ntarget = 10\nresult = twoSum(nums, target)\nprint(f\"Input: {nums}, target={target}\")\nprint(f\"Output: {result}\")\nprint(f\"Verify: {nums[result[0]]} + {nums[result[1]]} = {target}\")",
+          "expectedOutput": "=== Two Sum - Hash Map (Optimal) ===\nInput: [2, 7, 11, 15], target=9\nOutput: [0, 1]\nVerify: 2 + 7 = 9 ✓\n\nInput: [1, 5, 3, 7, 2, 8, 4, 6], target=10\nOutput: [1, 3]\nVerify: 5 + 7 = 10"
+        },
+        {
+          "approach": "Two Pointers (Sorted)",
+          "timeComplexity": "O(n log n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Pre-sorted array",
+          "isOptimal": false,
+          "code": "def twoSum(nums, target):\n    \"\"\"\n    Two Pointers: For sorted array or when we can sort\n    Time: O(n log n) for sort + O(n) for two pointers\n    Space: O(n) to preserve original indices\n    \n    Note: Use this when array is already sorted\n    \"\"\"\n    # Store (value, original_index) to preserve indices\n    indexed = [(num, i) for i, num in enumerate(nums)]\n    indexed.sort(key=lambda x: x[0])\n    \n    left, right = 0, len(nums) - 1\n    \n    while left < right:\n        current_sum = indexed[left][0] + indexed[right][0]\n        \n        if current_sum == target:\n            return [indexed[left][1], indexed[right][1]]\n        elif current_sum < target:\n            left += 1\n        else:\n            right -= 1\n    \n    return []\n\n# For already sorted array (LeetCode 167)\ndef twoSumSorted(numbers, target):\n    \"\"\"Two pointers for sorted array - O(n) time, O(1) space\"\"\"\n    left, right = 0, len(numbers) - 1\n    \n    while left < right:\n        s = numbers[left] + numbers[right]\n        if s == target:\n            return [left + 1, right + 1]  # 1-indexed\n        elif s < target:\n            left += 1\n        else:\n            right -= 1\n    return []\n\n# ======== TEST CASES ========\nprint(\"=== Two Sum - Two Pointers ===\")\n\nnums = [2, 7, 11, 15]\ntarget = 9\nresult = twoSum(nums, target)\nprint(f\"Unsorted: {nums}, target={target}\")\nprint(f\"Output: {result}\")",
+          "expectedOutput": "=== Two Sum - Two Pointers ===\nUnsorted: [2, 7, 11, 15], target=9\nOutput: [0, 1]"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Add Two Numbers",
+      "difficulty": "Medium",
+      "description": "You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order. Add the two numbers and return the sum as a linked list.",
+      "companies": ["Amazon", "Microsoft", "Google", "Meta"],
+      "patterns": ["Linked List", "Math"],
+      "leetcodeUrl": "https://leetcode.com/problems/add-two-numbers/",
+      "solutions": [
+        {
+          "approach": "Elementary Math with Carry",
+          "timeComplexity": "O(max(m,n))",
+          "spaceComplexity": "O(max(m,n))",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef addTwoNumbers(l1, l2):\n    \"\"\"\n    Elementary Math: Add digit by digit with carry\n    Time: O(max(m, n)) - traverse both lists once\n    Space: O(max(m, n)) - new list for result\n    \n    Key insight: Use dummy head to simplify edge cases\n    \"\"\"\n    dummy = ListNode(0)\n    current = dummy\n    carry = 0\n    \n    while l1 or l2 or carry:\n        # Get values (0 if list exhausted)\n        x = l1.val if l1 else 0\n        y = l2.val if l2 else 0\n        \n        # Calculate sum and carry\n        total = x + y + carry\n        carry = total // 10\n        current.next = ListNode(total % 10)\n        current = current.next\n        \n        # Move to next nodes\n        if l1: l1 = l1.next\n        if l2: l2 = l2.next\n    \n    return dummy.next\n\n# Helper to create list from array\ndef create_list(arr):\n    dummy = ListNode(0)\n    curr = dummy\n    for val in arr:\n        curr.next = ListNode(val)\n        curr = curr.next\n    return dummy.next\n\n# Helper to convert list to array\ndef list_to_arr(node):\n    arr = []\n    while node:\n        arr.append(node.val)\n        node = node.next\n    return arr\n\n# ======== TEST CASES ========\nprint(\"=== Add Two Numbers ===\")\n\n# Test 1: 342 + 465 = 807\nl1 = create_list([2, 4, 3])  # 342\nl2 = create_list([5, 6, 4])  # 465\nresult = addTwoNumbers(l1, l2)\nprint(f\"[2,4,3] + [5,6,4] = {list_to_arr(result)}\")  # [7,0,8] = 807\n\n# Test 2: 0 + 0 = 0\nl1 = create_list([0])\nl2 = create_list([0])\nresult = addTwoNumbers(l1, l2)\nprint(f\"[0] + [0] = {list_to_arr(result)}\")  # [0]\n\n# Test 3: Different lengths with carry\nl1 = create_list([9, 9, 9, 9, 9, 9, 9])\nl2 = create_list([9, 9, 9, 9])\nresult = addTwoNumbers(l1, l2)\nprint(f\"[9,9,9,9,9,9,9] + [9,9,9,9] = {list_to_arr(result)}\")",
+          "expectedOutput": "=== Add Two Numbers ===\n[2,4,3] + [5,6,4] = [7, 0, 8]\n[0] + [0] = [0]\n[9,9,9,9,9,9,9] + [9,9,9,9] = [8, 9, 9, 9, 0, 0, 0, 1]"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Longest Substring Without Repeating Characters",
+      "difficulty": "Medium",
+      "description": "Find the length of the longest substring without repeating characters.",
+      "companies": ["Amazon", "Google", "Microsoft", "Meta", "Apple"],
+      "patterns": ["Sliding Window", "Hash Map"],
+      "leetcodeUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+      "solutions": [
+        {
+          "approach": "Brute Force",
+          "timeComplexity": "O(n³)",
+          "spaceComplexity": "O(min(n,m))",
+          "bestFor": "Understanding only",
+          "isOptimal": false,
+          "code": "def lengthOfLongestSubstring(s):\n    \"\"\"\n    Brute Force: Check all substrings\n    Time: O(n³) - O(n²) substrings, O(n) to check each\n    Space: O(min(n, m)) - set for unique chars\n    \"\"\"\n    def all_unique(s, start, end):\n        chars = set()\n        for i in range(start, end):\n            if s[i] in chars:\n                return False\n            chars.add(s[i])\n        return True\n    \n    n = len(s)\n    max_len = 0\n    for i in range(n):\n        for j in range(i + 1, n + 1):\n            if all_unique(s, i, j):\n                max_len = max(max_len, j - i)\n    return max_len\n\n# Test\nprint(f\"Brute force 'abcabcbb': {lengthOfLongestSubstring('abcabcbb')}\")  # 3",
+          "expectedOutput": "Brute force 'abcabcbb': 3"
+        },
+        {
+          "approach": "Sliding Window + Set",
+          "timeComplexity": "O(2n)",
+          "spaceComplexity": "O(min(n,m))",
+          "bestFor": "Easy to understand",
+          "isOptimal": false,
+          "code": "def lengthOfLongestSubstring(s):\n    \"\"\"\n    Sliding Window with Set\n    Time: O(2n) - each char visited at most twice\n    Space: O(min(n, m)) - set for window chars\n    \n    Pattern: Expand right, shrink left when duplicate\n    \"\"\"\n    char_set = set()\n    left = 0\n    max_len = 0\n    \n    for right in range(len(s)):\n        # Shrink window while duplicate exists\n        while s[right] in char_set:\n            char_set.remove(s[left])\n            left += 1\n        \n        # Add current char and update max\n        char_set.add(s[right])\n        max_len = max(max_len, right - left + 1)\n    \n    return max_len\n\n# Test\nprint(\"=== Sliding Window + Set ===\")\nfor s in [\"abcabcbb\", \"bbbbb\", \"pwwkew\", \"\"]:\n    print(f\"  '{s}' -> {lengthOfLongestSubstring(s)}\")",
+          "expectedOutput": "=== Sliding Window + Set ===\n  'abcabcbb' -> 3\n  'bbbbb' -> 1\n  'pwwkew' -> 3\n  '' -> 0"
+        },
+        {
+          "approach": "Optimized Sliding Window",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(min(n,m))",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def lengthOfLongestSubstring(s):\n    \"\"\"\n    Optimized Sliding Window with Hash Map\n    Time: O(n) - single pass\n    Space: O(min(n, m)) where m is charset size\n    \n    Key insight: Jump left pointer directly to position after duplicate\n    \"\"\"\n    char_index = {}  # char -> last seen index\n    left = 0\n    max_len = 0\n    \n    for right, char in enumerate(s):\n        # If char was seen and is within current window\n        if char in char_index and char_index[char] >= left:\n            # Jump past the duplicate\n            left = char_index[char] + 1\n        \n        # Update max length and store current index\n        max_len = max(max_len, right - left + 1)\n        char_index[char] = right\n    \n    return max_len\n\n# ======== TEST CASES ========\nprint(\"=== Longest Substring Without Repeating Characters ===\")\n\ntest_cases = [\n    (\"abcabcbb\", 3),  # \"abc\"\n    (\"bbbbb\", 1),     # \"b\"\n    (\"pwwkew\", 3),    # \"wke\" or \"kew\"\n    (\"\", 0),          # empty\n    (\"dvdf\", 3),      # \"vdf\"\n    (\"abba\", 2),      # \"ab\" or \"ba\"\n    (\"tmmzuxt\", 5),   # \"mzuxt\"\n]\n\nfor s, expected in test_cases:\n    result = lengthOfLongestSubstring(s)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f'  {status} \"{s}\" -> {result} (expected: {expected})')",
+          "expectedOutput": "=== Longest Substring Without Repeating Characters ===\n  ✓ \"abcabcbb\" -> 3 (expected: 3)\n  ✓ \"bbbbb\" -> 1 (expected: 1)\n  ✓ \"pwwkew\" -> 3 (expected: 3)\n  ✓ \"\" -> 0 (expected: 0)\n  ✓ \"dvdf\" -> 3 (expected: 3)\n  ✓ \"abba\" -> 2 (expected: 2)\n  ✓ \"tmmzuxt\" -> 5 (expected: 5)"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Median of Two Sorted Arrays",
+      "difficulty": "Hard",
+      "description": "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+      "companies": ["Google", "Amazon", "Microsoft", "Meta"],
+      "patterns": ["Binary Search", "Divide and Conquer"],
+      "leetcodeUrl": "https://leetcode.com/problems/median-of-two-sorted-arrays/",
+      "solutions": [
+        {
+          "approach": "Merge and Find",
+          "timeComplexity": "O(m+n)",
+          "spaceComplexity": "O(m+n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def findMedianSortedArrays(nums1, nums2):\n    \"\"\"\n    Merge and Find Median\n    Time: O(m+n) - merge both arrays\n    Space: O(m+n) - merged array\n    \n    Note: Not optimal but easy to understand\n    \"\"\"\n    merged = []\n    i = j = 0\n    \n    while i < len(nums1) and j < len(nums2):\n        if nums1[i] <= nums2[j]:\n            merged.append(nums1[i])\n            i += 1\n        else:\n            merged.append(nums2[j])\n            j += 1\n    \n    merged.extend(nums1[i:])\n    merged.extend(nums2[j:])\n    \n    n = len(merged)\n    if n % 2 == 0:\n        return (merged[n//2 - 1] + merged[n//2]) / 2\n    return merged[n//2]\n\n# Test\nprint(f\"Merge approach [1,3] [2]: {findMedianSortedArrays([1,3], [2])}\")  # 2.0",
+          "expectedOutput": "Merge approach [1,3] [2]: 2.0"
+        },
+        {
+          "approach": "Binary Search",
+          "timeComplexity": "O(log(min(m,n)))",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews (required)",
+          "isOptimal": true,
+          "code": "def findMedianSortedArrays(nums1, nums2):\n    \"\"\"\n    Binary Search: Partition both arrays\n    Time: O(log(min(m, n))) - binary search on smaller array\n    Space: O(1) - constant space\n    \n    Key insight: Find partition where left elements <= right elements\n    \"\"\"\n    # Ensure nums1 is smaller for O(log(min)) complexity\n    if len(nums1) > len(nums2):\n        nums1, nums2 = nums2, nums1\n    \n    m, n = len(nums1), len(nums2)\n    left, right = 0, m\n    \n    while left <= right:\n        # Partition indices\n        i = (left + right) // 2\n        j = (m + n + 1) // 2 - i\n        \n        # Edge values (handle boundaries)\n        maxLeft1 = float('-inf') if i == 0 else nums1[i - 1]\n        minRight1 = float('inf') if i == m else nums1[i]\n        maxLeft2 = float('-inf') if j == 0 else nums2[j - 1]\n        minRight2 = float('inf') if j == n else nums2[j]\n        \n        # Check if partition is correct\n        if maxLeft1 <= minRight2 and maxLeft2 <= minRight1:\n            # Found correct partition\n            if (m + n) % 2 == 0:\n                return (max(maxLeft1, maxLeft2) + min(minRight1, minRight2)) / 2\n            return float(max(maxLeft1, maxLeft2))\n        elif maxLeft1 > minRight2:\n            # Too far right in nums1\n            right = i - 1\n        else:\n            # Too far left in nums1\n            left = i + 1\n    \n    return 0.0\n\n# ======== TEST CASES ========\nprint(\"=== Median of Two Sorted Arrays ===\")\n\ntest_cases = [\n    ([1, 3], [2], 2.0),\n    ([1, 2], [3, 4], 2.5),\n    ([0, 0], [0, 0], 0.0),\n    ([], [1], 1.0),\n    ([2], [], 2.0),\n]\n\nfor nums1, nums2, expected in test_cases:\n    result = findMedianSortedArrays(nums1, nums2)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} nums1={nums1}, nums2={nums2} -> {result}\")",
+          "expectedOutput": "=== Median of Two Sorted Arrays ===\n  ✓ nums1=[1, 3], nums2=[2] -> 2.0\n  ✓ nums1=[1, 2], nums2=[3, 4] -> 2.5\n  ✓ nums1=[0, 0], nums2=[0, 0] -> 0.0\n  ✓ nums1=[], nums2=[1] -> 1.0\n  ✓ nums1=[2], nums2=[] -> 2.0"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Longest Palindromic Substring",
+      "difficulty": "Medium",
+      "description": "Given a string s, return the longest palindromic substring in s.",
+      "companies": ["Amazon", "Microsoft", "Google", "Meta"],
+      "patterns": ["Dynamic Programming", "Two Pointers"],
+      "leetcodeUrl": "https://leetcode.com/problems/longest-palindromic-substring/",
+      "solutions": [
+        {
+          "approach": "Expand Around Center",
+          "timeComplexity": "O(n²)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def longestPalindrome(s):\n    \"\"\"\n    Expand Around Center\n    Time: O(n²) - n centers, expand up to n\n    Space: O(1) - only store indices\n    \n    Key insight: Every palindrome has a center (or two for even length)\n    \"\"\"\n    if not s:\n        return \"\"\n    \n    def expand(left, right):\n        \"\"\"Expand from center while palindrome\"\"\"\n        while left >= 0 and right < len(s) and s[left] == s[right]:\n            left -= 1\n            right += 1\n        return left + 1, right - 1\n    \n    start, end = 0, 0\n    \n    for i in range(len(s)):\n        # Odd length palindrome (single center)\n        l1, r1 = expand(i, i)\n        # Even length palindrome (double center)\n        l2, r2 = expand(i, i + 1)\n        \n        # Update if longer found\n        if r1 - l1 > end - start:\n            start, end = l1, r1\n        if r2 - l2 > end - start:\n            start, end = l2, r2\n    \n    return s[start:end + 1]\n\n# ======== TEST CASES ========\nprint(\"=== Longest Palindromic Substring ===\")\n\ntest_cases = [\n    (\"babad\", [\"bab\", \"aba\"]),  # Either is valid\n    (\"cbbd\", [\"bb\"]),\n    (\"a\", [\"a\"]),\n    (\"ac\", [\"a\", \"c\"]),\n    (\"racecar\", [\"racecar\"]),\n]\n\nfor s, valid_answers in test_cases:\n    result = longestPalindrome(s)\n    status = \"✓\" if result in valid_answers else \"✗\"\n    print(f'  {status} \"{s}\" -> \"{result}\"')",
+          "expectedOutput": "=== Longest Palindromic Substring ===\n  ✓ \"babad\" -> \"bab\"\n  ✓ \"cbbd\" -> \"bb\"\n  ✓ \"a\" -> \"a\"\n  ✓ \"ac\" -> \"a\"\n  ✓ \"racecar\" -> \"racecar\""
+        },
+        {
+          "approach": "Dynamic Programming",
+          "timeComplexity": "O(n²)",
+          "spaceComplexity": "O(n²)",
+          "bestFor": "Learning DP",
+          "isOptimal": false,
+          "code": "def longestPalindrome(s):\n    \"\"\"\n    Dynamic Programming\n    Time: O(n²) - fill DP table\n    Space: O(n²) - DP table\n    \n    dp[i][j] = True if s[i:j+1] is palindrome\n    \"\"\"\n    n = len(s)\n    if n < 2:\n        return s\n    \n    dp = [[False] * n for _ in range(n)]\n    start, max_len = 0, 1\n    \n    # All single chars are palindromes\n    for i in range(n):\n        dp[i][i] = True\n    \n    # Check substrings of length 2 and more\n    for length in range(2, n + 1):\n        for i in range(n - length + 1):\n            j = i + length - 1\n            \n            if length == 2:\n                dp[i][j] = (s[i] == s[j])\n            else:\n                dp[i][j] = (s[i] == s[j]) and dp[i + 1][j - 1]\n            \n            if dp[i][j] and length > max_len:\n                start = i\n                max_len = length\n    \n    return s[start:start + max_len]\n\n# Test\nprint(f\"DP approach 'babad': {longestPalindrome('babad')}\")",
+          "expectedOutput": "DP approach 'babad': bab"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Container With Most Water",
+      "difficulty": "Medium",
+      "description": "Given n non-negative integers representing the heights of vertical lines, find two lines that together with the x-axis forms a container, that contains the most water.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Two Pointers", "Greedy"],
+      "leetcodeUrl": "https://leetcode.com/problems/container-with-most-water/",
+      "solutions": [
+        {
+          "approach": "Brute Force",
+          "timeComplexity": "O(n²)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def maxArea(height):\n    \"\"\"\n    Brute Force: Check all pairs\n    Time: O(n²) - all pairs\n    Space: O(1)\n    \"\"\"\n    max_water = 0\n    n = len(height)\n    for i in range(n):\n        for j in range(i + 1, n):\n            water = min(height[i], height[j]) * (j - i)\n            max_water = max(max_water, water)\n    return max_water\n\nprint(f\"Brute force [1,8,6,2,5,4,8,3,7]: {maxArea([1,8,6,2,5,4,8,3,7])}\")  # 49",
+          "expectedOutput": "Brute force [1,8,6,2,5,4,8,3,7]: 49"
+        },
+        {
+          "approach": "Two Pointers",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def maxArea(height):\n    \"\"\"\n    Two Pointers: Always move the shorter line\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: Moving the shorter line might find taller one,\n    but moving the taller line can only make container smaller\n    \"\"\"\n    left, right = 0, len(height) - 1\n    max_water = 0\n    \n    while left < right:\n        # Calculate water for current container\n        width = right - left\n        h = min(height[left], height[right])\n        max_water = max(max_water, width * h)\n        \n        # Move pointer with smaller height\n        if height[left] < height[right]:\n            left += 1\n        else:\n            right -= 1\n    \n    return max_water\n\n# ======== TEST CASES ========\nprint(\"=== Container With Most Water ===\")\n\ntest_cases = [\n    ([1, 8, 6, 2, 5, 4, 8, 3, 7], 49),\n    ([1, 1], 1),\n    ([4, 3, 2, 1, 4], 16),\n    ([1, 2, 1], 2),\n]\n\nfor height, expected in test_cases:\n    result = maxArea(height)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} {height} -> {result}\")",
+          "expectedOutput": "=== Container With Most Water ===\n  ✓ [1, 8, 6, 2, 5, 4, 8, 3, 7] -> 49\n  ✓ [1, 1] -> 1\n  ✓ [4, 3, 2, 1, 4] -> 16\n  ✓ [1, 2, 1] -> 2"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "3Sum",
+      "difficulty": "Medium",
+      "description": "Find all unique triplets in the array which gives the sum of zero.",
+      "companies": ["Meta", "Amazon", "Google", "Microsoft", "Apple"],
+      "patterns": ["Two Pointers", "Sorting"],
+      "leetcodeUrl": "https://leetcode.com/problems/3sum/",
+      "solutions": [
+        {
+          "approach": "Sort + Two Pointers",
+          "timeComplexity": "O(n²)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def threeSum(nums):\n    \"\"\"\n    Sort + Two Pointers\n    Time: O(n²) - O(n log n) sort + O(n²) two pointers\n    Space: O(1) excluding output\n    \n    Key insight: Sort first, fix one element, use two pointers for rest\n    \"\"\"\n    nums.sort()\n    result = []\n    n = len(nums)\n    \n    for i in range(n - 2):\n        # Skip duplicates for first element\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        \n        # Early termination: if smallest is positive, no solution\n        if nums[i] > 0:\n            break\n        \n        left, right = i + 1, n - 1\n        target = -nums[i]\n        \n        while left < right:\n            current_sum = nums[left] + nums[right]\n            \n            if current_sum == target:\n                result.append([nums[i], nums[left], nums[right]])\n                \n                # Skip duplicates\n                while left < right and nums[left] == nums[left + 1]:\n                    left += 1\n                while left < right and nums[right] == nums[right - 1]:\n                    right -= 1\n                \n                left += 1\n                right -= 1\n            elif current_sum < target:\n                left += 1\n            else:\n                right -= 1\n    \n    return result\n\n# ======== TEST CASES ========\nprint(\"=== 3Sum ===\")\n\ntest_cases = [\n    ([-1, 0, 1, 2, -1, -4], [[-1, -1, 2], [-1, 0, 1]]),\n    ([0, 1, 1], []),\n    ([0, 0, 0], [[0, 0, 0]]),\n    ([-2, 0, 1, 1, 2], [[-2, 0, 2], [-2, 1, 1]]),\n]\n\nfor nums, expected in test_cases:\n    result = threeSum(nums[:])\n    print(f\"  Input: {nums}\")\n    print(f\"  Output: {result}\")\n    print()",
+          "expectedOutput": "=== 3Sum ===\n  Input: [-1, 0, 1, 2, -1, -4]\n  Output: [[-1, -1, 2], [-1, 0, 1]]\n\n  Input: [0, 1, 1]\n  Output: []\n\n  Input: [0, 0, 0]\n  Output: [[0, 0, 0]]\n\n  Input: [-2, 0, 1, 1, 2]\n  Output: [[-2, 0, 2], [-2, 1, 1]]"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Letter Combinations of a Phone Number",
+      "difficulty": "Medium",
+      "description": "Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Backtracking", "Recursion"],
+      "leetcodeUrl": "https://leetcode.com/problems/letter-combinations-of-a-phone-number/",
+      "solutions": [
+        {
+          "approach": "Backtracking",
+          "timeComplexity": "O(4^n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def letterCombinations(digits):\n    \"\"\"\n    Backtracking: Build combinations recursively\n    Time: O(4^n * n) - 4^n combinations, n to build each\n    Space: O(n) - recursion depth\n    \n    Key insight: At each digit, branch to all possible letters\n    \"\"\"\n    if not digits:\n        return []\n    \n    phone_map = {\n        '2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl',\n        '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz'\n    }\n    \n    result = []\n    \n    def backtrack(index, current):\n        # Base case: built full combination\n        if index == len(digits):\n            result.append(current)\n            return\n        \n        # Try each letter for current digit\n        for letter in phone_map[digits[index]]:\n            backtrack(index + 1, current + letter)\n    \n    backtrack(0, \"\")\n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Letter Combinations of Phone Number ===\")\n\ntest_cases = [\n    (\"23\", [\"ad\", \"ae\", \"af\", \"bd\", \"be\", \"bf\", \"cd\", \"ce\", \"cf\"]),\n    (\"\", []),\n    (\"2\", [\"a\", \"b\", \"c\"]),\n]\n\nfor digits, expected in test_cases:\n    result = letterCombinations(digits)\n    status = \"✓\" if sorted(result) == sorted(expected) else \"✗\"\n    print(f'  {status} \"{digits}\" -> {result}')",
+          "expectedOutput": "=== Letter Combinations of Phone Number ===\n  ✓ \"23\" -> ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']\n  ✓ \"\" -> []\n  ✓ \"2\" -> ['a', 'b', 'c']"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Remove Nth Node From End of List",
+      "difficulty": "Medium",
+      "description": "Given the head of a linked list, remove the nth node from the end of the list and return its head.",
+      "companies": ["Amazon", "Google", "Meta"],
+      "patterns": ["Linked List", "Two Pointers"],
+      "leetcodeUrl": "https://leetcode.com/problems/remove-nth-node-from-end-of-list/",
+      "solutions": [
+        {
+          "approach": "Two Pass",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef removeNthFromEnd(head, n):\n    \"\"\"\n    Two Pass: Count length, then remove\n    Time: O(n) - two passes\n    Space: O(1)\n    \"\"\"\n    # First pass: count length\n    length = 0\n    curr = head\n    while curr:\n        length += 1\n        curr = curr.next\n    \n    # Edge case: remove head\n    if length == n:\n        return head.next\n    \n    # Second pass: find node before target\n    curr = head\n    for _ in range(length - n - 1):\n        curr = curr.next\n    \n    curr.next = curr.next.next\n    return head",
+          "expectedOutput": ""
+        },
+        {
+          "approach": "One Pass - Two Pointers",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef removeNthFromEnd(head, n):\n    \"\"\"\n    One Pass: Two pointers with n gap\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: When fast reaches end, slow is at (n+1)th from end\n    \"\"\"\n    dummy = ListNode(0, head)\n    slow = fast = dummy\n    \n    # Move fast n+1 steps ahead\n    for _ in range(n + 1):\n        fast = fast.next\n    \n    # Move both until fast reaches end\n    while fast:\n        slow = slow.next\n        fast = fast.next\n    \n    # Remove the nth node\n    slow.next = slow.next.next\n    return dummy.next\n\n# Helper functions\ndef create_list(arr):\n    dummy = ListNode(0)\n    curr = dummy\n    for val in arr:\n        curr.next = ListNode(val)\n        curr = curr.next\n    return dummy.next\n\ndef list_to_arr(node):\n    arr = []\n    while node:\n        arr.append(node.val)\n        node = node.next\n    return arr\n\n# ======== TEST CASES ========\nprint(\"=== Remove Nth Node From End ===\")\n\ntest_cases = [\n    ([1, 2, 3, 4, 5], 2, [1, 2, 3, 5]),\n    ([1], 1, []),\n    ([1, 2], 1, [1]),\n    ([1, 2], 2, [2]),\n]\n\nfor arr, n, expected in test_cases:\n    head = create_list(arr)\n    result = removeNthFromEnd(head, n)\n    result_arr = list_to_arr(result)\n    status = \"✓\" if result_arr == expected else \"✗\"\n    print(f\"  {status} {arr}, n={n} -> {result_arr}\")",
+          "expectedOutput": "=== Remove Nth Node From End ===\n  ✓ [1, 2, 3, 4, 5], n=2 -> [1, 2, 3, 5]\n  ✓ [1], n=1 -> []\n  ✓ [1, 2], n=1 -> [1]\n  ✓ [1, 2], n=2 -> [2]"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Valid Parentheses",
+      "difficulty": "Easy",
+      "description": "Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Stack", "String"],
+      "leetcodeUrl": "https://leetcode.com/problems/valid-parentheses/",
+      "solutions": [
+        {
+          "approach": "Stack",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "def isValid(s):\n    \"\"\"\n    Stack: Push opening, pop and match closing\n    Time: O(n) - single pass\n    Space: O(n) - stack\n    \n    Key insight: Map closing to opening for easy matching\n    \"\"\"\n    stack = []\n    mapping = {')': '(', '}': '{', ']': '['}\n    \n    for char in s:\n        if char in mapping:\n            # Closing bracket: check match\n            if not stack or stack.pop() != mapping[char]:\n                return False\n        else:\n            # Opening bracket: push to stack\n            stack.append(char)\n    \n    return len(stack) == 0\n\n# ======== TEST CASES ========\nprint(\"=== Valid Parentheses ===\")\n\ntest_cases = [\n    (\"()\", True),\n    (\"()[]{}\", True),\n    (\"(]\", False),\n    (\"([)]\", False),\n    (\"{[]}\", True),\n    (\"\", True),\n    (\"(((\", False),\n]\n\nfor s, expected in test_cases:\n    result = isValid(s)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f'  {status} \"{s}\" -> {result}')",
+          "expectedOutput": "=== Valid Parentheses ===\n  ✓ \"()\" -> True\n  ✓ \"()[]{}\" -> True\n  ✓ \"(]\" -> False\n  ✓ \"([)]\" -> False\n  ✓ \"{[]}\" -> True\n  ✓ \"\" -> True\n  ✓ \"(((\" -> False"
+        }
+      ]
+    },
+    {
+      "id": 21,
+      "title": "Merge Two Sorted Lists",
+      "difficulty": "Easy",
+      "description": "Merge two sorted linked lists and return it as a sorted list.",
+      "companies": ["Amazon", "Microsoft", "Google", "Meta"],
+      "patterns": ["Linked List", "Recursion"],
+      "leetcodeUrl": "https://leetcode.com/problems/merge-two-sorted-lists/",
+      "solutions": [
+        {
+          "approach": "Iterative",
+          "timeComplexity": "O(n+m)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "class ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n\ndef mergeTwoLists(list1, list2):\n    \"\"\"\n    Iterative: Use dummy head, compare and link\n    Time: O(n + m) - visit each node once\n    Space: O(1) - only pointers\n    \n    Key insight: Dummy head simplifies edge cases\n    \"\"\"\n    dummy = ListNode(0)\n    current = dummy\n    \n    while list1 and list2:\n        if list1.val <= list2.val:\n            current.next = list1\n            list1 = list1.next\n        else:\n            current.next = list2\n            list2 = list2.next\n        current = current.next\n    \n    # Attach remaining nodes\n    current.next = list1 or list2\n    \n    return dummy.next\n\n# Helper functions\ndef create_list(arr):\n    dummy = ListNode(0)\n    curr = dummy\n    for val in arr:\n        curr.next = ListNode(val)\n        curr = curr.next\n    return dummy.next\n\ndef list_to_arr(node):\n    arr = []\n    while node:\n        arr.append(node.val)\n        node = node.next\n    return arr\n\n# ======== TEST CASES ========\nprint(\"=== Merge Two Sorted Lists ===\")\n\ntest_cases = [\n    ([1, 2, 4], [1, 3, 4], [1, 1, 2, 3, 4, 4]),\n    ([], [], []),\n    ([], [0], [0]),\n]\n\nfor arr1, arr2, expected in test_cases:\n    l1 = create_list(arr1)\n    l2 = create_list(arr2)\n    result = mergeTwoLists(l1, l2)\n    result_arr = list_to_arr(result)\n    status = \"✓\" if result_arr == expected else \"✗\"\n    print(f\"  {status} {arr1} + {arr2} -> {result_arr}\")",
+          "expectedOutput": "=== Merge Two Sorted Lists ===\n  ✓ [1, 2, 4] + [1, 3, 4] -> [1, 1, 2, 3, 4, 4]\n  ✓ [] + [] -> []\n  ✓ [] + [0] -> [0]"
+        },
+        {
+          "approach": "Recursive",
+          "timeComplexity": "O(n+m)",
+          "spaceComplexity": "O(n+m)",
+          "bestFor": "Elegant code",
+          "isOptimal": false,
+          "code": "def mergeTwoLists(list1, list2):\n    \"\"\"\n    Recursive: Smaller node links to merged rest\n    Time: O(n + m)\n    Space: O(n + m) - recursion stack\n    \"\"\"\n    if not list1:\n        return list2\n    if not list2:\n        return list1\n    \n    if list1.val <= list2.val:\n        list1.next = mergeTwoLists(list1.next, list2)\n        return list1\n    else:\n        list2.next = mergeTwoLists(list1, list2.next)\n        return list2",
+          "expectedOutput": ""
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Generate Parentheses",
+      "difficulty": "Medium",
+      "description": "Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Backtracking", "Recursion"],
+      "leetcodeUrl": "https://leetcode.com/problems/generate-parentheses/",
+      "solutions": [
+        {
+          "approach": "Backtracking",
+          "timeComplexity": "O(4^n/√n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "def generateParenthesis(n):\n    \"\"\"\n    Backtracking: Track open/close counts\n    Time: O(4^n / √n) - nth Catalan number\n    Space: O(n) - recursion depth\n    \n    Key insight: Can add '(' if open < n, ')' if close < open\n    \"\"\"\n    result = []\n    \n    def backtrack(current, open_count, close_count):\n        # Base case: built valid combination\n        if len(current) == 2 * n:\n            result.append(current)\n            return\n        \n        # Add open paren if available\n        if open_count < n:\n            backtrack(current + '(', open_count + 1, close_count)\n        \n        # Add close paren if valid (close < open)\n        if close_count < open_count:\n            backtrack(current + ')', open_count, close_count + 1)\n    \n    backtrack('', 0, 0)\n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Generate Parentheses ===\")\n\ntest_cases = [\n    (1, [\"()\"]),\n    (2, [\"(())\", \"()()\"]),\n    (3, [\"((()))\", \"(()())\", \"(())()\", \"()(())\", \"()()()\"]),\n]\n\nfor n, expected in test_cases:\n    result = generateParenthesis(n)\n    status = \"✓\" if sorted(result) == sorted(expected) else \"✗\"\n    print(f\"  {status} n={n} -> {result}\")",
+          "expectedOutput": "=== Generate Parentheses ===\n  ✓ n=1 -> ['()']\n  ✓ n=2 -> ['(())', '()()']\n  ✓ n=3 -> ['((()))', '(()())', '(())()', '()(())', '()()()']"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Merge k Sorted Lists",
+      "difficulty": "Hard",
+      "description": "Merge k sorted linked lists and return it as one sorted list.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Linked List", "Heap", "Divide and Conquer"],
+      "leetcodeUrl": "https://leetcode.com/problems/merge-k-sorted-lists/",
+      "solutions": [
+        {
+          "approach": "Min Heap",
+          "timeComplexity": "O(n log k)",
+          "spaceComplexity": "O(k)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "import heapq\n\nclass ListNode:\n    def __init__(self, val=0, next=None):\n        self.val = val\n        self.next = next\n    \n    def __lt__(self, other):\n        return self.val < other.val\n\ndef mergeKLists(lists):\n    \"\"\"\n    Min Heap: Always extract minimum from k lists\n    Time: O(n log k) - n nodes, log k for heap ops\n    Space: O(k) - heap size\n    \n    Key insight: Heap maintains smallest of k current nodes\n    \"\"\"\n    heap = []\n    \n    # Add first node from each list\n    for lst in lists:\n        if lst:\n            heapq.heappush(heap, lst)\n    \n    dummy = ListNode(0)\n    current = dummy\n    \n    while heap:\n        # Extract minimum\n        node = heapq.heappop(heap)\n        current.next = node\n        current = current.next\n        \n        # Add next from same list\n        if node.next:\n            heapq.heappush(heap, node.next)\n    \n    return dummy.next\n\n# Helper functions\ndef create_list(arr):\n    if not arr:\n        return None\n    dummy = ListNode(0)\n    curr = dummy\n    for val in arr:\n        curr.next = ListNode(val)\n        curr = curr.next\n    return dummy.next\n\ndef list_to_arr(node):\n    arr = []\n    while node:\n        arr.append(node.val)\n        node = node.next\n    return arr\n\n# ======== TEST CASES ========\nprint(\"=== Merge k Sorted Lists ===\")\n\nlists = [\n    create_list([1, 4, 5]),\n    create_list([1, 3, 4]),\n    create_list([2, 6])\n]\nresult = mergeKLists(lists)\nprint(f\"  [[1,4,5],[1,3,4],[2,6]] -> {list_to_arr(result)}\")",
+          "expectedOutput": "=== Merge k Sorted Lists ===\n  [[1,4,5],[1,3,4],[2,6]] -> [1, 1, 2, 3, 4, 4, 5, 6]"
+        },
+        {
+          "approach": "Divide and Conquer",
+          "timeComplexity": "O(n log k)",
+          "spaceComplexity": "O(log k)",
+          "bestFor": "Elegant",
+          "isOptimal": true,
+          "code": "def mergeKLists(lists):\n    \"\"\"\n    Divide and Conquer: Pair-wise merge\n    Time: O(n log k) - log k levels, n nodes per level\n    Space: O(log k) - recursion depth\n    \"\"\"\n    if not lists:\n        return None\n    \n    def merge2Lists(l1, l2):\n        dummy = ListNode(0)\n        curr = dummy\n        while l1 and l2:\n            if l1.val <= l2.val:\n                curr.next = l1\n                l1 = l1.next\n            else:\n                curr.next = l2\n                l2 = l2.next\n            curr = curr.next\n        curr.next = l1 or l2\n        return dummy.next\n    \n    # Pair-wise merge until one list remains\n    while len(lists) > 1:\n        merged = []\n        for i in range(0, len(lists), 2):\n            l1 = lists[i]\n            l2 = lists[i + 1] if i + 1 < len(lists) else None\n            merged.append(merge2Lists(l1, l2))\n        lists = merged\n    \n    return lists[0]",
+          "expectedOutput": ""
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "title": "Search in Rotated Sorted Array",
+      "difficulty": "Medium",
+      "description": "Search for a target value in a rotated sorted array.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Binary Search"],
+      "leetcodeUrl": "https://leetcode.com/problems/search-in-rotated-sorted-array/",
+      "solutions": [
+        {
+          "approach": "Modified Binary Search",
+          "timeComplexity": "O(log n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def search(nums, target):\n    \"\"\"\n    Modified Binary Search: Identify sorted half\n    Time: O(log n) - binary search\n    Space: O(1)\n    \n    Key insight: One half is always sorted, use it to determine direction\n    \"\"\"\n    left, right = 0, len(nums) - 1\n    \n    while left <= right:\n        mid = (left + right) // 2\n        \n        if nums[mid] == target:\n            return mid\n        \n        # Left half is sorted\n        if nums[left] <= nums[mid]:\n            if nums[left] <= target < nums[mid]:\n                right = mid - 1\n            else:\n                left = mid + 1\n        # Right half is sorted\n        else:\n            if nums[mid] < target <= nums[right]:\n                left = mid + 1\n            else:\n                right = mid - 1\n    \n    return -1\n\n# ======== TEST CASES ========\nprint(\"=== Search in Rotated Sorted Array ===\")\n\ntest_cases = [\n    ([4, 5, 6, 7, 0, 1, 2], 0, 4),\n    ([4, 5, 6, 7, 0, 1, 2], 3, -1),\n    ([1], 0, -1),\n    ([1], 1, 0),\n    ([3, 1], 1, 1),\n]\n\nfor nums, target, expected in test_cases:\n    result = search(nums, target)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} {nums}, target={target} -> {result}\")",
+          "expectedOutput": "=== Search in Rotated Sorted Array ===\n  ✓ [4, 5, 6, 7, 0, 1, 2], target=0 -> 4\n  ✓ [4, 5, 6, 7, 0, 1, 2], target=3 -> -1\n  ✓ [1], target=0 -> -1\n  ✓ [1], target=1 -> 0\n  ✓ [3, 1], target=1 -> 1"
+        }
+      ]
+    },
+    {
+      "id": 42,
+      "title": "Trapping Rain Water",
+      "difficulty": "Hard",
+      "description": "Given n non-negative integers representing an elevation map, compute how much water it can trap after raining.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Two Pointers", "Stack", "Dynamic Programming"],
+      "leetcodeUrl": "https://leetcode.com/problems/trapping-rain-water/",
+      "solutions": [
+        {
+          "approach": "Dynamic Programming",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Understanding",
+          "isOptimal": false,
+          "code": "def trap(height):\n    \"\"\"\n    DP: Pre-compute left and right max heights\n    Time: O(n) - three passes\n    Space: O(n) - two arrays\n    \n    Water at i = min(leftMax[i], rightMax[i]) - height[i]\n    \"\"\"\n    if not height:\n        return 0\n    \n    n = len(height)\n    left_max = [0] * n\n    right_max = [0] * n\n    \n    # Fill left max\n    left_max[0] = height[0]\n    for i in range(1, n):\n        left_max[i] = max(left_max[i-1], height[i])\n    \n    # Fill right max\n    right_max[n-1] = height[n-1]\n    for i in range(n-2, -1, -1):\n        right_max[i] = max(right_max[i+1], height[i])\n    \n    # Calculate water\n    water = 0\n    for i in range(n):\n        water += min(left_max[i], right_max[i]) - height[i]\n    \n    return water\n\nprint(f\"DP approach: {trap([0,1,0,2,1,0,1,3,2,1,2,1])}\")  # 6",
+          "expectedOutput": "DP approach: 6"
+        },
+        {
+          "approach": "Two Pointers",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def trap(height):\n    \"\"\"\n    Two Pointers: Process from both ends\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: Water at position depends on smaller of two maxes,\n    so process side with smaller max first\n    \"\"\"\n    if not height:\n        return 0\n    \n    left, right = 0, len(height) - 1\n    left_max = right_max = 0\n    water = 0\n    \n    while left < right:\n        if height[left] < height[right]:\n            if height[left] >= left_max:\n                left_max = height[left]\n            else:\n                water += left_max - height[left]\n            left += 1\n        else:\n            if height[right] >= right_max:\n                right_max = height[right]\n            else:\n                water += right_max - height[right]\n            right -= 1\n    \n    return water\n\n# ======== TEST CASES ========\nprint(\"=== Trapping Rain Water ===\")\n\ntest_cases = [\n    ([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], 6),\n    ([4, 2, 0, 3, 2, 5], 9),\n    ([1, 2, 3, 4, 5], 0),\n    ([5, 4, 3, 2, 1], 0),\n]\n\nfor height, expected in test_cases:\n    result = trap(height)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} {height} -> {result}\")",
+          "expectedOutput": "=== Trapping Rain Water ===\n  ✓ [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1] -> 6\n  ✓ [4, 2, 0, 3, 2, 5] -> 9\n  ✓ [1, 2, 3, 4, 5] -> 0\n  ✓ [5, 4, 3, 2, 1] -> 0"
+        },
+        {
+          "approach": "Monotonic Stack",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Stack patterns",
+          "isOptimal": false,
+          "code": "def trap(height):\n    \"\"\"\n    Monotonic Stack: Process horizontal layers\n    Time: O(n) - each index pushed/popped once\n    Space: O(n) - stack\n    \n    Key insight: Find boundaries for each \"pool\"\n    \"\"\"\n    stack = []  # indices of decreasing heights\n    water = 0\n    \n    for i, h in enumerate(height):\n        while stack and height[stack[-1]] < h:\n            bottom = stack.pop()\n            if not stack:\n                break\n            \n            width = i - stack[-1] - 1\n            bounded_height = min(h, height[stack[-1]]) - height[bottom]\n            water += width * bounded_height\n        \n        stack.append(i)\n    \n    return water\n\nprint(f\"Stack approach: {trap([0,1,0,2,1,0,1,3,2,1,2,1])}\")  # 6",
+          "expectedOutput": "Stack approach: 6"
+        }
+      ]
+    },
+    {
+      "id": 46,
+      "title": "Permutations",
+      "difficulty": "Medium",
+      "description": "Given an array nums of distinct integers, return all the possible permutations.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Backtracking"],
+      "leetcodeUrl": "https://leetcode.com/problems/permutations/",
+      "solutions": [
+        {
+          "approach": "Backtracking with Used Set",
+          "timeComplexity": "O(n!)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "def permute(nums):\n    \"\"\"\n    Backtracking: Build permutations by choosing unused elements\n    Time: O(n!) - n! permutations\n    Space: O(n) - recursion depth and current permutation\n    \n    Pattern: Pick or skip with tracking of used elements\n    \"\"\"\n    result = []\n    \n    def backtrack(current, used):\n        if len(current) == len(nums):\n            result.append(current[:])\n            return\n        \n        for i, num in enumerate(nums):\n            if i in used:\n                continue\n            \n            current.append(num)\n            used.add(i)\n            backtrack(current, used)\n            current.pop()\n            used.remove(i)\n    \n    backtrack([], set())\n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Permutations ===\")\n\ntest_cases = [\n    ([1, 2, 3], [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]),\n    ([0, 1], [[0,1],[1,0]]),\n    ([1], [[1]]),\n]\n\nfor nums, expected in test_cases:\n    result = permute(nums)\n    print(f\"  Input: {nums}\")\n    print(f\"  Output: {result}\")\n    print(f\"  Count: {len(result)} permutations\")\n    print()",
+          "expectedOutput": "=== Permutations ===\n  Input: [1, 2, 3]\n  Output: [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]\n  Count: 6 permutations\n\n  Input: [0, 1]\n  Output: [[0, 1], [1, 0]]\n  Count: 2 permutations\n\n  Input: [1]\n  Output: [[1]]\n  Count: 1 permutations"
+        }
+      ]
+    },
+    {
+      "id": 49,
+      "title": "Group Anagrams",
+      "difficulty": "Medium",
+      "description": "Given an array of strings, group the anagrams together.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Hash Map", "String"],
+      "leetcodeUrl": "https://leetcode.com/problems/group-anagrams/",
+      "solutions": [
+        {
+          "approach": "Sorted String Key",
+          "timeComplexity": "O(n * k log k)",
+          "spaceComplexity": "O(n * k)",
+          "bestFor": "Simple implementation",
+          "isOptimal": false,
+          "code": "from collections import defaultdict\n\ndef groupAnagrams(strs):\n    \"\"\"\n    Sorted Key: Anagrams have same sorted form\n    Time: O(n * k log k) - n strings, k max length, sort each\n    Space: O(n * k) - store all strings\n    \"\"\"\n    groups = defaultdict(list)\n    \n    for s in strs:\n        # Sorted string as key\n        key = ''.join(sorted(s))\n        groups[key].append(s)\n    \n    return list(groups.values())\n\nprint(\"Sorted key approach:\")\nresult = groupAnagrams([\"eat\",\"tea\",\"tan\",\"ate\",\"nat\",\"bat\"])\nfor group in result:\n    print(f\"  {group}\")",
+          "expectedOutput": "Sorted key approach:\n  ['eat', 'tea', 'ate']\n  ['tan', 'nat']\n  ['bat']"
+        },
+        {
+          "approach": "Character Count Key",
+          "timeComplexity": "O(n * k)",
+          "spaceComplexity": "O(n * k)",
+          "bestFor": "Better time complexity",
+          "isOptimal": true,
+          "code": "from collections import defaultdict\n\ndef groupAnagrams(strs):\n    \"\"\"\n    Count Key: Use char frequency as key\n    Time: O(n * k) - n strings, k max length\n    Space: O(n * k)\n    \n    Key insight: Char count tuple is unique for anagrams\n    \"\"\"\n    groups = defaultdict(list)\n    \n    for s in strs:\n        # Count frequency of each character\n        count = [0] * 26\n        for c in s:\n            count[ord(c) - ord('a')] += 1\n        \n        # Use tuple of counts as key (hashable)\n        key = tuple(count)\n        groups[key].append(s)\n    \n    return list(groups.values())\n\n# ======== TEST CASES ========\nprint(\"=== Group Anagrams ===\")\n\ntest_cases = [\n    [\"eat\", \"tea\", \"tan\", \"ate\", \"nat\", \"bat\"],\n    [\"\"],\n    [\"a\"],\n]\n\nfor strs in test_cases:\n    result = groupAnagrams(strs)\n    print(f\"  Input: {strs}\")\n    print(f\"  Output: {result}\")\n    print()",
+          "expectedOutput": "=== Group Anagrams ===\n  Input: ['eat', 'tea', 'tan', 'ate', 'nat', 'bat']\n  Output: [['eat', 'tea', 'ate'], ['tan', 'nat'], ['bat']]\n\n  Input: ['']\n  Output: [['']]\n\n  Input: ['a']\n  Output: [['a']]"
+        }
+      ]
+    },
+    {
+      "id": 53,
+      "title": "Maximum Subarray",
+      "difficulty": "Medium",
+      "description": "Find the contiguous subarray with the largest sum.",
+      "companies": ["Amazon", "Google", "Microsoft", "Meta", "Apple"],
+      "patterns": ["Dynamic Programming", "Divide and Conquer"],
+      "leetcodeUrl": "https://leetcode.com/problems/maximum-subarray/",
+      "solutions": [
+        {
+          "approach": "Kadane's Algorithm",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "def maxSubArray(nums):\n    \"\"\"\n    Kadane's Algorithm\n    Time: O(n) - single pass\n    Space: O(1)\n    \n    Key insight: At each position, decide to extend or start new subarray\n    current_sum = max(num, current_sum + num)\n    \"\"\"\n    if not nums:\n        return 0\n    \n    current_sum = max_sum = nums[0]\n    \n    for num in nums[1:]:\n        # Either extend current subarray or start new\n        current_sum = max(num, current_sum + num)\n        max_sum = max(max_sum, current_sum)\n    \n    return max_sum\n\n# ======== TEST CASES ========\nprint(\"=== Maximum Subarray ===\")\n\ntest_cases = [\n    ([-2, 1, -3, 4, -1, 2, 1, -5, 4], 6),  # [4,-1,2,1]\n    ([1], 1),\n    ([5, 4, -1, 7, 8], 23),\n    ([-1], -1),\n    ([-2, -1], -1),\n]\n\nfor nums, expected in test_cases:\n    result = maxSubArray(nums)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} {nums} -> {result}\")",
+          "expectedOutput": "=== Maximum Subarray ===\n  ✓ [-2, 1, -3, 4, -1, 2, 1, -5, 4] -> 6\n  ✓ [1] -> 1\n  ✓ [5, 4, -1, 7, 8] -> 23\n  ✓ [-1] -> -1\n  ✓ [-2, -1] -> -1"
+        }
+      ]
+    },
+    {
+      "id": 56,
+      "title": "Merge Intervals",
+      "difficulty": "Medium",
+      "description": "Given an array of intervals, merge all overlapping intervals.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft", "Apple"],
+      "patterns": ["Sorting", "Intervals"],
+      "leetcodeUrl": "https://leetcode.com/problems/merge-intervals/",
+      "solutions": [
+        {
+          "approach": "Sort and Merge",
+          "timeComplexity": "O(n log n)",
+          "spaceComplexity": "O(n)",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "def merge(intervals):\n    \"\"\"\n    Sort + Merge: Process intervals in order\n    Time: O(n log n) - sorting dominates\n    Space: O(n) - result array\n    \n    Key insight: After sorting by start, only need to check overlap with last\n    \"\"\"\n    if not intervals:\n        return []\n    \n    # Sort by start time\n    intervals.sort(key=lambda x: x[0])\n    result = [intervals[0]]\n    \n    for current in intervals[1:]:\n        last = result[-1]\n        \n        # Check if overlapping\n        if current[0] <= last[1]:\n            # Merge by extending end\n            last[1] = max(last[1], current[1])\n        else:\n            # No overlap, add new interval\n            result.append(current)\n    \n    return result\n\n# ======== TEST CASES ========\nprint(\"=== Merge Intervals ===\")\n\ntest_cases = [\n    ([[1,3],[2,6],[8,10],[15,18]], [[1,6],[8,10],[15,18]]),\n    ([[1,4],[4,5]], [[1,5]]),\n    ([[1,4],[0,4]], [[0,4]]),\n    ([[1,4],[2,3]], [[1,4]]),\n]\n\nfor intervals, expected in test_cases:\n    result = merge([i[:] for i in intervals])\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} {intervals} -> {result}\")",
+          "expectedOutput": "=== Merge Intervals ===\n  ✓ [[1, 3], [2, 6], [8, 10], [15, 18]] -> [[1, 6], [8, 10], [15, 18]]\n  ✓ [[1, 4], [4, 5]] -> [[1, 5]]\n  ✓ [[1, 4], [0, 4]] -> [[0, 4]]\n  ✓ [[1, 4], [2, 3]] -> [[1, 4]]"
+        }
+      ]
+    },
+    {
+      "id": 70,
+      "title": "Climbing Stairs",
+      "difficulty": "Easy",
+      "description": "You can climb 1 or 2 steps at a time. How many distinct ways can you climb to the top?",
+      "companies": ["Amazon", "Google", "Microsoft"],
+      "patterns": ["Dynamic Programming", "Fibonacci"],
+      "leetcodeUrl": "https://leetcode.com/problems/climbing-stairs/",
+      "solutions": [
+        {
+          "approach": "Dynamic Programming",
+          "timeComplexity": "O(n)",
+          "spaceComplexity": "O(1)",
+          "bestFor": "All cases",
+          "isOptimal": true,
+          "code": "def climbStairs(n):\n    \"\"\"\n    Fibonacci Pattern: dp[i] = dp[i-1] + dp[i-2]\n    Time: O(n)\n    Space: O(1) - only track last two values\n    \n    Key insight: This is Fibonacci! To reach step n, you came from n-1 or n-2\n    \"\"\"\n    if n <= 2:\n        return n\n    \n    prev2, prev1 = 1, 2\n    \n    for _ in range(3, n + 1):\n        current = prev1 + prev2\n        prev2 = prev1\n        prev1 = current\n    \n    return prev1\n\n# ======== TEST CASES ========\nprint(\"=== Climbing Stairs ===\")\n\ntest_cases = [\n    (1, 1),\n    (2, 2),\n    (3, 3),\n    (4, 5),\n    (5, 8),\n    (10, 89),\n]\n\nfor n, expected in test_cases:\n    result = climbStairs(n)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f\"  {status} n={n} -> {result}\")",
+          "expectedOutput": "=== Climbing Stairs ===\n  ✓ n=1 -> 1\n  ✓ n=2 -> 2\n  ✓ n=3 -> 3\n  ✓ n=4 -> 5\n  ✓ n=5 -> 8\n  ✓ n=10 -> 89"
+        }
+      ]
+    },
+    {
+      "id": 76,
+      "title": "Minimum Window Substring",
+      "difficulty": "Hard",
+      "description": "Find the minimum window substring of s such that every character in t is included in the window.",
+      "companies": ["Amazon", "Google", "Meta", "Microsoft"],
+      "patterns": ["Sliding Window", "Hash Map"],
+      "leetcodeUrl": "https://leetcode.com/problems/minimum-window-substring/",
+      "solutions": [
+        {
+          "approach": "Sliding Window",
+          "timeComplexity": "O(m+n)",
+          "spaceComplexity": "O(m+n)",
+          "bestFor": "Interviews",
+          "isOptimal": true,
+          "code": "from collections import Counter\n\ndef minWindow(s, t):\n    \"\"\"\n    Sliding Window: Expand right to include, shrink left to minimize\n    Time: O(m + n) - each char visited at most twice\n    Space: O(m + n) - counter for both strings\n    \n    Key insight: Track how many unique chars are satisfied\n    \"\"\"\n    if not s or not t or len(s) < len(t):\n        return \"\"\n    \n    # Count required characters\n    t_count = Counter(t)\n    required = len(t_count)\n    formed = 0\n    window_counts = {}\n    \n    left = 0\n    ans = float(\"inf\"), None, None\n    \n    for right, c in enumerate(s):\n        # Add character to window\n        window_counts[c] = window_counts.get(c, 0) + 1\n        \n        # Check if this char satisfies requirement\n        if c in t_count and window_counts[c] == t_count[c]:\n            formed += 1\n        \n        # Try to shrink window\n        while left <= right and formed == required:\n            # Update answer if smaller window found\n            if right - left + 1 < ans[0]:\n                ans = (right - left + 1, left, right)\n            \n            # Remove leftmost char\n            char = s[left]\n            window_counts[char] -= 1\n            if char in t_count and window_counts[char] < t_count[char]:\n                formed -= 1\n            left += 1\n    \n    return \"\" if ans[0] == float(\"inf\") else s[ans[1]:ans[2]+1]\n\n# ======== TEST CASES ========\nprint(\"=== Minimum Window Substring ===\")\n\ntest_cases = [\n    (\"ADOBECODEBANC\", \"ABC\", \"BANC\"),\n    (\"a\", \"a\", \"a\"),\n    (\"a\", \"aa\", \"\"),\n]\n\nfor s, t, expected in test_cases:\n    result = minWindow(s, t)\n    status = \"✓\" if result == expected else \"✗\"\n    print(f'  {status} s=\"{s}\", t=\"{t}\" -> \"{result}\"')",
+          "expectedOutput": "=== Minimum Window Substring ===\n  ✓ s=\"ADOBECODEBANC\", t=\"ABC\" -> \"BANC\"\n  ✓ s=\"a\", t=\"a\" -> \"a\"\n  ✓ s=\"a\", t=\"aa\" -> \"\""
+        }
+      ]
+    }
+  ]
+}

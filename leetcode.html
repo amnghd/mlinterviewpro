@@ -94,10 +94,19 @@
                     <a href="progress.html" class="text-gray-700 hover:text-purple-600 font-medium"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                    <!-- Login button (shown when not authenticated) -->
+                    <button onclick="MLInterviewAuth.showLoginModal()"
                        class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base" data-auth="login-button">
                         <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
-                    </a>
+                    </button>
+                    <!-- User profile (shown when authenticated) -->
+                    <div data-auth="user-profile" style="display: none;" class="flex items-center gap-2">
+                        <img data-auth="user-avatar" src="" alt="User" class="w-8 h-8 rounded-full">
+                        <span data-auth="user-name" class="hidden sm:inline text-sm font-medium text-gray-700"></span>
+                        <button onclick="MLInterviewAuth.signOut()" class="text-gray-500 hover:text-red-500 text-sm" title="Sign Out">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
                     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
                     </button>
@@ -167,8 +176,35 @@
         </div>
     </section>
 
-    <!-- Free Problems -->
+    <!-- Problem Filters and Stats -->
+    <section class="py-6 bg-white border-b">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+                <div id="problem-stats" class="flex flex-wrap gap-2">
+                    <!-- Stats will be populated by JS -->
+                </div>
+            </div>
+            <div id="problem-filters">
+                <!-- Filters will be populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Problems Container -->
     <section class="py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div id="problems-container">
+                <!-- Problems will be dynamically rendered here -->
+                <div class="text-center py-8">
+                    <i class="fas fa-spinner fa-spin text-4xl text-purple-600"></i>
+                    <p class="text-gray-600 mt-4">Loading problems...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Legacy Free Problems (kept for reference) -->
+    <section class="py-12 hidden" id="legacy-problems">
         <div class="max-w-7xl mx-auto px-4">
             <h2 class="text-2xl font-bold mb-6 flex items-center">
                 <i class="fas fa-unlock text-green-500 mr-3"></i>Free Problems with Complete Runnable Solutions (10)
@@ -1734,6 +1770,9 @@ print(f"maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3) = {maxSlidingWindow([1,3,-1,-3,
             if (dropdown) {
                 updateDropdownStyle(dropdown, status);
             }
+
+            // Sync to Firebase if user is logged in
+            syncProgressToFirebase(problemId, status);
         }
 
         function updateDropdownStyle(dropdown, status) {
@@ -1770,8 +1809,12 @@ print(f"maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3) = {maxSlidingWindow([1,3,-1,-3,
             });
         }
 
-        function showLoginPrompt() {
-            alert('Login functionality coming soon! Your progress is currently saved locally in your browser.');
+        // Progress syncing with Firebase (when authenticated)
+        function syncProgressToFirebase(problemId, status) {
+            const user = window.MLInterviewAuth?.getCurrentUser?.();
+            if (user && window.MLInterviewDB) {
+                window.MLInterviewDB.updateProblemProgress(user.uid, `lc_${problemId}`, status);
+            }
         }
 
         // Load saved progress on page load
@@ -1789,5 +1832,8 @@ print(f"maxSlidingWindow([1,3,-1,-3,5,3,6,7], 3) = {maxSlidingWindow([1,3,-1,-3,
     <script src="js/auth.js"></script>
     <script src="js/database.js"></script>
     <script src="js/auth-ui.js"></script>
+
+    <!-- LeetCode Dynamic Renderer -->
+    <script src="js/leetcode-renderer.js"></script>
 </body>
 </html>

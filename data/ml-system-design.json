@@ -1,0 +1,550 @@
+{
+  "metadata": {
+    "totalCases": 22,
+    "lastUpdated": "2026-01-08",
+    "categories": ["RecSys", "Search/Ranking", "Content Moderation", "Ads/Pricing"]
+  },
+  "cases": [
+    {
+      "id": "youtube-rec",
+      "title": "YouTube Video Recommendation System",
+      "category": "RecSys",
+      "company": "YouTube",
+      "description": "Design a recommendation system for YouTube's homepage feed",
+      "excalidrawFile": "YT Video Recommendation.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "What is the scope? Homepage recommendations vs. related videos vs. search?",
+          "What are the key metrics? Watch time, CTR, user satisfaction?",
+          "What is the scale? Billions of videos, billions of users?",
+          "Real-time constraints? Personalization latency requirements?",
+          "Cold start handling for new users and new videos?"
+        ],
+        "highLevel": {
+          "goal": "Maximize user engagement (watch time) while maintaining content diversity and freshness",
+          "pipeline": [
+            "Candidate Generation: Reduce from billions to thousands using retrieval models",
+            "Ranking: Score candidates using deep learning models with user/video features",
+            "Re-ranking: Apply business rules, diversity, freshness constraints"
+          ]
+        },
+        "dataConstruction": {
+          "positives": ["Watched > 30s", "Liked", "Subscribed after watching"],
+          "negatives": ["Impressions with no click", "Clicked but < 10s watch time"],
+          "sampling": "Negative downsampling 10:1 ratio"
+        },
+        "features": {
+          "user": ["Watch history embeddings", "Demographics", "Device/context", "Subscription list"],
+          "video": ["Title/description embeddings", "Thumbnail embeddings", "Category", "Channel features", "Engagement stats"],
+          "cross": ["User-video affinity", "User-channel history", "Temporal features"]
+        },
+        "modeling": {
+          "retrieval": "Two-tower model with contrastive learning, ANN index for fast retrieval",
+          "ranking": "Deep DNN with DCNv2 for feature crosses, multi-task learning for CTR/watch time",
+          "reranking": "Diversity injection, freshness boost, creator fairness"
+        },
+        "evaluation": {
+          "offline": ["NDCG@K", "AUC", "Calibration (ECE)"],
+          "online": ["Watch time per session", "DAU", "User satisfaction surveys"]
+        },
+        "serving": {
+          "latency": "< 100ms p99",
+          "stages": ["Retrieval (30ms)", "Ranking (50ms)", "Re-ranking (20ms)"],
+          "optimization": ["Model quantization", "Feature caching", "Batch inference"]
+        }
+      }
+    },
+    {
+      "id": "airbnb-rec",
+      "title": "Airbnb Recommendation for Guests",
+      "category": "RecSys",
+      "company": "Airbnb",
+      "description": "Design a listing recommendation system for Airbnb's homepage feed",
+      "excalidrawFile": "Airbnb recommendation.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "What part of funnel? Discovery feed (homepage/search suggestions) or booking page?",
+          "KPIs: conversion rate (booking), guest engagement (wishlist, view, share), host exposure fairness?",
+          "Guardrails: complaint rate, bounce rate, diversity of listings, latency (<150ms p99)?",
+          "Scope: multi-lingual, multi-country, large catalogue (100M+ listings)?",
+          "Cold start for new guests/listings?"
+        ],
+        "highLevel": {
+          "goal": "Maximize booking probability per impression while maintaining diversity, freshness, and fairness across hosts",
+          "pipeline": [
+            "Candidate Generation (Retrieval): Reduce from O(100M) to O(1K)",
+            "Ranking Model: Optimize multi-task engagement (click, wishlist, booking)",
+            "Reranker: Inject freshness, diversity, fairness"
+          ]
+        },
+        "dataConstruction": {
+          "positives": ["Booked", "Added to wishlist"],
+          "secondaryPositives": ["Clicked", "Viewed > 30s", "Shared"],
+          "negatives": ["Impressions with no engagement"],
+          "weightedLabel": "0.6 x book + 0.2 x wishlist + 0.2 x click",
+          "sampling": "Downsample negatives 10x, temporal split for validation"
+        },
+        "features": {
+          "user": [
+            "User ID embedding",
+            "Demographics (age, country, device cluster)",
+            "Travel history (destinations, seasonality, price band)",
+            "Stay intent (short/long term, leisure/business - BERT embedding from query)",
+            "Aggregated embeddings of past booked listings (GRU sequence model)"
+          ],
+          "listing": [
+            "Listing ID embedding (learned)",
+            "Text description embedding (DistilBERT)",
+            "Location (lat/long bucketized, walkability, POI density)",
+            "Host features (rating, response time, cancel rate)",
+            "Price (log-scaled, seasonal discounts)",
+            "Visual embeddings (CLIP for images)"
+          ],
+          "context": [
+            "Device, session language, geo, local time",
+            "Query intent (semantic embedding)",
+            "Stay lead time, length of stay"
+          ],
+          "cross": [
+            "User-Listing affinity (price match, amenity overlap)",
+            "User-Host history (past bookings, rating correlation)",
+            "Recency decay of interactions"
+          ]
+        },
+        "modeling": {
+          "retrieval": "Two-tower model (user tower + listing tower), contrastive softmax loss, FAISS/SCANN ANN index",
+          "ranking": "Single-tower DNN with DCNv2, MMOE for multi-task (click, wishlist, booking), focal loss for rare bookings",
+          "reranking": "Freshness boost for new listings, diversity penalty, fairness for host exposure"
+        },
+        "evaluation": {
+          "offline": ["NDCG@K (weighted by booking relevance)", "AUC for binary tasks", "Calibration (Brier score)", "Diversity score"],
+          "online": ["Booking rate", "Wishlist rate", "DAU", "Revenue per session"]
+        },
+        "serving": {
+          "latency": "< 150ms p99",
+          "stages": ["Retrieval 30ms (Two-tower ANN, Top 1K)", "Ranker 70ms (DNN with cross features, Top 100)", "Reranker 30ms (Diversity, Freshness, Fairness, Top 20)"],
+          "optimization": ["Embedding quantization (AQT)", "Geo + user segment cache", "Streaming feature updates"]
+        },
+        "biasAndFairness": {
+          "biasControl": "Popularity penalty in reranker + epsilon-greedy exploration (epsilon=0.05)",
+          "coldStartListing": "Content-based tower (text + image embeddings) for new items",
+          "coldStartGuest": "Cluster-based priors + country/season baseline model",
+          "fairness": "Exposure parity by host and region (weighted sampling during training)"
+        }
+      }
+    },
+    {
+      "id": "linkedin-feed",
+      "title": "LinkedIn Feed Ranking",
+      "category": "Search/Ranking",
+      "company": "LinkedIn",
+      "description": "Design a feed ranking system for LinkedIn's main feed",
+      "excalidrawFile": "Linkedin Feed ranking.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "What content types? Posts, articles, job updates, ads?",
+          "Engagement metrics? Likes, comments, shares, dwell time?",
+          "Real-time requirements? New posts visibility?",
+          "Business constraints? Ad placement, creator exposure?"
+        ],
+        "highLevel": {
+          "goal": "Maximize professional engagement while maintaining feed quality and diversity",
+          "pipeline": [
+            "Candidate Sourcing: Collect posts from connections, followed topics, viral content",
+            "First-pass Ranking: Lightweight model for initial scoring",
+            "Heavy Ranking: Deep model with full feature set",
+            "Re-ranking: Diversity, ad insertion, business rules"
+          ]
+        },
+        "features": {
+          "user": ["Professional interests", "Industry", "Engagement patterns", "Network graph embeddings"],
+          "content": ["Post type", "Text embeddings", "Author reputation", "Engagement velocity"],
+          "context": ["Time of day", "Device", "Session history"]
+        },
+        "modeling": {
+          "objective": "Multi-task: CTR, comment probability, share probability, dwell time",
+          "architecture": "Transformer-based model with attention over user history"
+        }
+      }
+    },
+    {
+      "id": "linkedin-pymk",
+      "title": "LinkedIn People You May Know (PYMK)",
+      "category": "RecSys",
+      "company": "LinkedIn",
+      "description": "Design the People You May Know recommendation system",
+      "excalidrawFile": "PYMK.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Optimize for connection acceptance rate or profile views?",
+          "Privacy constraints on using network data?",
+          "Scale: 800M+ members, trillions of potential pairs?",
+          "Cold start for new users?"
+        ],
+        "highLevel": {
+          "goal": "Recommend relevant professional connections to grow user networks",
+          "pipeline": [
+            "Candidate Generation: Friends of friends, same company/school, similar profiles",
+            "Scoring: Predict connection acceptance probability",
+            "Filtering: Privacy, spam, already connected"
+          ]
+        },
+        "features": {
+          "network": ["Common connections count", "Industry overlap", "Company/school overlap"],
+          "profile": ["Job title similarity", "Skills overlap", "Location proximity"],
+          "behavioral": ["Profile view patterns", "Past connection acceptance"]
+        }
+      }
+    },
+    {
+      "id": "linkedin-jobs",
+      "title": "LinkedIn Job Recommendation Engine",
+      "category": "RecSys",
+      "company": "LinkedIn",
+      "description": "Design the job recommendation system for LinkedIn",
+      "excalidrawFile": "Linkedin Job recommendation engine.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Two-sided marketplace: optimize for job seekers, employers, or both?",
+          "Key metrics: Apply rate, hire rate, time to hire?",
+          "Privacy: Can we use salary expectations, job search status?",
+          "Scale: Millions of jobs, hundreds of millions of candidates?"
+        ],
+        "highLevel": {
+          "goal": "Match candidates with relevant job opportunities, maximize apply rates and hires",
+          "pipeline": [
+            "Candidate Retrieval: Filter by location, experience level, skills match",
+            "Ranking: Score job-candidate pairs by match quality",
+            "Calibration: Ensure fair exposure for all job postings"
+          ]
+        },
+        "features": {
+          "candidate": ["Skills embeddings", "Experience timeline", "Education", "Location preferences", "Career trajectory"],
+          "job": ["Required skills", "Job title embedding", "Company features", "Compensation range"],
+          "match": ["Skills overlap score", "Experience level match", "Location fit", "Company culture fit"]
+        }
+      }
+    },
+    {
+      "id": "airbnb-search",
+      "title": "Airbnb Search Ranking",
+      "category": "Search/Ranking",
+      "company": "Airbnb",
+      "description": "Design the search ranking system for Airbnb listings",
+      "excalidrawFile": "Airbnb Search ranking.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Ranking for search results or map view?",
+          "Balance between guest preference and host exposure?",
+          "Real-time availability and pricing considerations?",
+          "Location-based vs. interest-based ranking?"
+        ],
+        "highLevel": {
+          "goal": "Surface most relevant and bookable listings for search queries",
+          "pipeline": [
+            "Query Understanding: Parse dates, location, amenities from query",
+            "Retrieval: Filter by availability, location, price range",
+            "Ranking: Score by relevance, quality, and booking probability"
+          ]
+        }
+      }
+    },
+    {
+      "id": "airbnb-pricing",
+      "title": "Airbnb Dynamic Pricing",
+      "category": "Ads/Pricing",
+      "company": "Airbnb",
+      "description": "Design the Smart Pricing feature for Airbnb hosts",
+      "excalidrawFile": "Airbnb Dynamic Pricing.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Optimize for host revenue or occupancy rate?",
+          "How to handle seasonal demand fluctuations?",
+          "Price sensitivity by market?",
+          "Competitive pricing vs. similar listings?"
+        ],
+        "highLevel": {
+          "goal": "Recommend optimal pricing to maximize host revenue while maintaining high occupancy",
+          "pipeline": [
+            "Demand Forecasting: Predict demand for dates/locations",
+            "Price Elasticity: Model how price affects booking probability",
+            "Optimization: Find revenue-maximizing price point"
+          ]
+        },
+        "features": {
+          "listing": ["Location", "Amenities", "Capacity", "Quality score", "Historical performance"],
+          "market": ["Local event calendar", "Seasonality", "Competitor prices", "Supply/demand ratio"],
+          "temporal": ["Day of week", "Booking lead time", "Holiday flags"]
+        }
+      }
+    },
+    {
+      "id": "youtube-search",
+      "title": "YouTube Video Search",
+      "category": "Search/Ranking",
+      "company": "YouTube",
+      "description": "Design the video search ranking system for YouTube",
+      "excalidrawFile": "Youtube Video Search.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Query understanding for video content?",
+          "Balance between relevance and engagement?",
+          "Fresh content vs. evergreen content?",
+          "Creator fairness in search results?"
+        ],
+        "highLevel": {
+          "goal": "Return most relevant videos for user queries while considering engagement potential",
+          "pipeline": [
+            "Query Understanding: Intent classification, entity extraction",
+            "Retrieval: Text matching, semantic search",
+            "Ranking: Multi-factor scoring (relevance, engagement, freshness)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "pinterest-feed",
+      "title": "Pinterest Feed Ranking (Pins)",
+      "category": "Search/Ranking",
+      "company": "Pinterest",
+      "description": "Design the home feed ranking system for Pinterest Pins",
+      "excalidrawFile": "Feed ranking for Pins.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Visual discovery vs. text-based?",
+          "Pin save vs. click-through as primary metric?",
+          "Fresh content injection strategy?",
+          "Topic diversity in feed?"
+        ],
+        "highLevel": {
+          "goal": "Surface inspiring visual content that drives saves and engagement",
+          "pipeline": [
+            "Candidate Generation: Interest-based, visual similarity, trending",
+            "Ranking: Predict save probability",
+            "Diversification: Topic and source diversity"
+          ]
+        }
+      }
+    },
+    {
+      "id": "yelp-rec",
+      "title": "Yelp Restaurant Recommendation",
+      "category": "RecSys",
+      "company": "Yelp",
+      "description": "Design the restaurant recommendation system for Yelp",
+      "excalidrawFile": "Yelp.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Recommendation vs. search ranking?",
+          "Local vs. travel use case?",
+          "Cuisine preference learning?",
+          "Deal/promotion integration?"
+        ],
+        "highLevel": {
+          "goal": "Recommend restaurants matching user preferences and context",
+          "pipeline": [
+            "Location-based filtering",
+            "Preference matching (cuisine, price, rating)",
+            "Personalized ranking"
+          ]
+        }
+      }
+    },
+    {
+      "id": "event-rec",
+      "title": "Event Recommendation System",
+      "category": "RecSys",
+      "company": "Eventbrite/Meetup",
+      "description": "Design an event recommendation system for local events",
+      "excalidrawFile": "Event recommednation.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Event types: concerts, meetups, conferences?",
+          "Temporal constraints: upcoming events only?",
+          "Social features: friends attending?",
+          "Cold start for new event types?"
+        ],
+        "highLevel": {
+          "goal": "Match users with relevant local events",
+          "pipeline": [
+            "Event filtering by location/date",
+            "Interest matching",
+            "Social signals (friends, similar users)"
+          ]
+        }
+      }
+    },
+    {
+      "id": "bot-detection",
+      "title": "Social Media Bot Detection",
+      "category": "Content Moderation",
+      "company": "Twitter/Meta",
+      "description": "Design a bot detection system for social media platforms",
+      "excalidrawFile": "Bot detection in social media.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Types of bots: spam, fake engagement, misinformation?",
+          "Real-time detection vs. batch analysis?",
+          "Precision vs. recall trade-off?",
+          "Adversarial robustness?"
+        ],
+        "highLevel": {
+          "goal": "Identify and flag automated/fake accounts to maintain platform integrity",
+          "pipeline": [
+            "Feature Extraction: Behavioral patterns, network analysis, content analysis",
+            "Classification: Multi-stage filtering (rules, ML, manual review)",
+            "Action: Shadow ban, suspension, verification requirement"
+          ]
+        },
+        "features": {
+          "behavioral": ["Posting frequency", "Time patterns", "Action sequences", "API usage"],
+          "network": ["Follower/following ratio", "Cluster analysis", "Coordination patterns"],
+          "content": ["Text similarity", "Image duplicates", "Link patterns"]
+        }
+      }
+    },
+    {
+      "id": "scam-detection",
+      "title": "Scam Content Detection",
+      "category": "Content Moderation",
+      "company": "Meta/TikTok",
+      "description": "Design a scam and fraud content detection system",
+      "excalidrawFile": "Scam content.excalidraw",
+      "difficulty": "Hard",
+      "sections": {
+        "clarifyingQuestions": [
+          "Types: financial scams, romance scams, phishing?",
+          "Cross-platform considerations?",
+          "User reporting integration?",
+          "Legal compliance requirements?"
+        ],
+        "highLevel": {
+          "goal": "Proactively detect and remove scam content to protect users",
+          "pipeline": [
+            "Content Analysis: Text, images, links",
+            "User Behavior: Account age, activity patterns",
+            "Network Analysis: Connection patterns, coordination"
+          ]
+        }
+      }
+    },
+    {
+      "id": "airbnb-cancel",
+      "title": "Airbnb Cancellation Prediction",
+      "category": "Ads/Pricing",
+      "company": "Airbnb",
+      "description": "Design a system to predict and prevent booking cancellations",
+      "excalidrawFile": "AirBnB calcelation.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Guest vs. host cancellation?",
+          "Prediction timing: at booking, days before?",
+          "Intervention strategy?",
+          "Business impact quantification?"
+        ],
+        "highLevel": {
+          "goal": "Predict cancellation risk and take proactive actions to prevent them",
+          "pipeline": [
+            "Risk Scoring: At booking time and ongoing",
+            "Root Cause: Identify cancellation reasons",
+            "Intervention: Targeted communication, incentives"
+          ]
+        },
+        "features": {
+          "booking": ["Lead time", "Price", "Duration", "Seasonality"],
+          "guest": ["Past cancellation history", "Review history", "Tenure"],
+          "listing": ["Host response time", "Cancellation policy", "Past cancellations"],
+          "external": ["Weather forecast", "Event calendar", "Flight prices"]
+        }
+      }
+    },
+    {
+      "id": "airbnb-similar",
+      "title": "Airbnb Similar Listings",
+      "category": "RecSys",
+      "company": "Airbnb",
+      "description": "Design the 'Similar Listings' feature for Airbnb",
+      "excalidrawFile": "AIrBNB Similar listing.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Similar by what criteria? Location, price, amenities?",
+          "Cross-sell vs. alternatives?",
+          "Availability consideration?",
+          "Host diversity?"
+        ],
+        "highLevel": {
+          "goal": "Surface relevant alternatives when viewing a listing",
+          "pipeline": [
+            "Seed listing analysis",
+            "Candidate retrieval by similarity",
+            "Ranking by relevance and availability"
+          ]
+        }
+      }
+    },
+    {
+      "id": "airbnb-retrieval",
+      "title": "Airbnb Search Retrieval",
+      "category": "Search/Ranking",
+      "company": "Airbnb",
+      "description": "Design the retrieval layer for Airbnb search",
+      "excalidrawFile": "AIrBNB Search Retraival.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Exact match vs. semantic search?",
+          "Geographic constraints?",
+          "Filter complexity?",
+          "Latency requirements?"
+        ],
+        "highLevel": {
+          "goal": "Efficiently retrieve relevant listings from large catalog",
+          "pipeline": [
+            "Query parsing and normalization",
+            "Multi-stage retrieval (geo, availability, semantics)",
+            "Candidate fusion and deduplication"
+          ]
+        }
+      }
+    },
+    {
+      "id": "airbnb-next",
+      "title": "Airbnb Next Listing Prediction",
+      "category": "RecSys",
+      "company": "Airbnb",
+      "description": "Design a system to predict the next listing a user will book",
+      "excalidrawFile": "ArBNB Next listing.excalidraw",
+      "difficulty": "Medium",
+      "sections": {
+        "clarifyingQuestions": [
+          "Session-based vs. long-term prediction?",
+          "Repeat booking vs. new destination?",
+          "Cross-session signals?",
+          "Marketing use case (email) vs. real-time?"
+        ],
+        "highLevel": {
+          "goal": "Predict user's next travel destination and listing preferences",
+          "pipeline": [
+            "Session analysis: Current search patterns",
+            "Historical patterns: Past bookings, seasonality",
+            "Sequential modeling: Transformer over user journey"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -77,10 +77,19 @@
                     <a href="progress.html" class="text-gray-700 hover:text-purple-600 font-medium"><i class="fas fa-chart-line mr-1"></i>Progress</a>
                 </div>
                 <div class="flex items-center gap-2">
-                    <a href="https://mentorcruise.com/mentor/AminGhaderi/" target="_blank"
+                    <!-- Login button (shown when not authenticated) -->
+                    <button onclick="MLInterviewAuth.showLoginModal()"
                        class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-3 sm:px-4 py-2 rounded-full font-semibold hover:shadow-lg transition text-sm sm:text-base" data-auth="login-button">
                         <i class="fas fa-sign-in-alt sm:mr-2"></i><span class="hidden sm:inline">Login</span>
-                    </a>
+                    </button>
+                    <!-- User profile (shown when authenticated) -->
+                    <div data-auth="user-profile" style="display: none;" class="flex items-center gap-2">
+                        <img data-auth="user-avatar" src="" alt="User" class="w-8 h-8 rounded-full">
+                        <span data-auth="user-name" class="hidden sm:inline text-sm font-medium text-gray-700"></span>
+                        <button onclick="MLInterviewAuth.signOut()" class="text-gray-500 hover:text-red-500 text-sm" title="Sign Out">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
                     <button onclick="toggleMobileMenu()" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 min-w-[44px] min-h-[44px] flex items-center justify-center">
                         <i class="fas fa-bars text-xl text-gray-700" id="menu-icon"></i>
                     </button>
